@@ -1,11 +1,21 @@
 <html>
 <head>
-	
+	<style>
+		.button {
+		    background-color: #4CAF50; /* Green */
+		    border: none;
+		    color: white;
+		    text-align: center;
+		    text-decoration: none;
+		    display: inline-block;
+		    font-size: 48px;
+		}	
+	</style>
 </head>
 <body>
-<button onclick="onReadButtonClick()">connect</button>
-<button id="writeButton" onclick="onWriteButtonClick()">send</button>
-<input id="description" type="text" placeholder="Command">
+<button class="button" onclick="onReadButtonClick()">connect</button>
+<button class="button" id="writeButton" onclick="onWriteButtonClick()">send</button>
+<input class="button" id="description" type="text" placeholder="Command">
 <canvas id="canvasSurfaceGame"></canvas>	
 
 <script>
