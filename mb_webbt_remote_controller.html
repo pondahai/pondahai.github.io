@@ -6,12 +6,23 @@
 		}	
 	</style>
 </head>
-<body>
-<button class="button" onclick="onReadButtonClick()">connect</button>
+<body onload="onLoadFunction()">
+<button class="button" id="readButton" onclick="onReadButtonClick()">connect</button>
 <button class="button" id="writeButton" onclick="onWriteButtonClick()">send</button>
 <input class="button" id="description" type="text" placeholder="Command">
 <canvas id="canvasSurfaceGame"></canvas>	
 
+<script>
+	function onLoadFunction(){
+	  var el = document.getElementsByTagName("readButton")[0];
+	  el.addEventListener("touchstart", onReadButtonClick, false);
+	  el.addEventListener("touchend", null, false);
+	  el.addEventListener("touchcancel", null, false);
+	  el.addEventListener("touchmove", null, false);
+	  log("initialized.");
+		
+	}	
+</script>
 <script>
 function log(x){
 	console.log(x);
