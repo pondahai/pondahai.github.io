@@ -30,7 +30,7 @@
 		}	
 	</style>
 </head>
-version:105
+version:106
 <body onload="onLoadFunction()">
 <button class="button" id="readButton" onclick="onReadButtonClick()">connect</button>
 <button class="button" id="writeButton" onclick="onWriteButtonClick()">send</button>
@@ -647,6 +647,7 @@ function onWriteButtonClick() {
 		}
 
 		function onPointerMove(e) {
+				e.preventDefault();
 		    if (leftPointerID == e.pointerId) {
 		        leftPointerPos.reset(e.clientX, e.clientY);
 		        leftVector.copyFrom(leftPointerPos);
