@@ -30,7 +30,7 @@
 		}	
 	</style>
 </head>
-version:104
+version:105
 <body onload="onLoadFunction()">
 <button class="button" id="readButton" onclick="onReadButtonClick()">connect</button>
 <button class="button" id="writeButton" onclick="onWriteButtonClick()">send</button>
@@ -487,6 +487,7 @@ function onWriteButtonClick() {
 		const COMMANDFPS = 30;
 		var command_fps_count = 0;
 
+		touchable = 'createTouch' in document,
 		var touches; // collections of pointers
 		var ship;
 		bullets = [],
@@ -507,6 +508,14 @@ function onWriteButtonClick() {
 		    canvas.addEventListener('pointerup', onPointerUp, false);
 		    canvas.addEventListener('pointerout', onPointerUp, false);
 		    requestAnimFrame(draw);
+				
+				if(touchable) {
+					canvas.addEventListener( 'touchstart', onPointerDown, false );
+					canvas.addEventListener( 'touchmove', onPointerMove, false );
+					canvas.addEventListener( 'touchend', onPointerUp, false );
+					window.onorientationchange = resetCanvas;  
+					window.onresize = resetCanvas;  
+				}
 		}
 
 		function resetCanvas(e) {
