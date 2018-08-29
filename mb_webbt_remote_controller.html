@@ -4,20 +4,28 @@
     		html, body {
         		height: 100%;
         		margin: 0;
-					  overflow: hidden;
-					  overscroll-behavior: contain;
     		}
 		.button {
 		    font-size: 32px;
 		}	
+		#container {
+			width		: 100%;
+			height		: 100%;
+			overflow	: hidden;
+			padding		: 0;
+			margin		: 0;
+			-webkit-user-select	: none;
+			-moz-user-select	: none;
+		}
 	</style>
 </head>
 <body onload="onLoadFunction()">
 <button class="button" id="readButton" onclick="onReadButtonClick()">connect</button>
 <button class="button" id="writeButton" onclick="onWriteButtonClick()">send</button>
 <input class="button" id="description" type="text" placeholder="Command">
+<div id="container">
 <canvas id="canvasSurfaceGame"></canvas>	
-
+</div>
 <script src="http://threejs.org/build/three.min.js"></script>
 <script>
 	var renderer = new THREE.WebGLRenderer();
