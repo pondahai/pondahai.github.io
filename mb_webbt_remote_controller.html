@@ -16,7 +16,16 @@
 <input class="button" id="description" type="text" placeholder="Command">
 <canvas id="canvasSurfaceGame"></canvas>	
 
+<script src="http://threejs.org/build/three.min.js"></script>
 <script>
+	var renderer = new THREE.WebGLRenderer();
+	renderer.setSize(window.innerWidth, window.innerHeight);
+	document.body.appendChild(renderer.domElement);
+	window.addEventListener('resize', onWindowResize, false); 
+
+	function onWindowResize(){
+		renderer.setSize( window.innerWidth, window.innerHeight );   
+	}	
 	function onLoadFunction(){
 	  var el = document.getElementsByTagName("readButton")[0];
 	  el.addEventListener("touchstart", onReadButtonClick, false);
