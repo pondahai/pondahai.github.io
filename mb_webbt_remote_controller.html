@@ -38,23 +38,23 @@ version:102
 </div>
 <script src="http://threejs.org/build/three.min.js"></script>
 <script>
-	var renderer = new THREE.WebGLRenderer();
-	renderer.setSize(window.innerWidth, window.innerHeight);
-	document.body.appendChild(renderer.domElement);
-	window.addEventListener('resize', onWindowResize, false); 
-
-	function onWindowResize(){
-		renderer.setSize( window.innerWidth, window.innerHeight );   
-	}	
-	function onLoadFunction(){
-	  var el = document.getElementsByTagName("readButton")[0];
-	  el.addEventListener("touchstart", onReadButtonClick, false);
-	  el.addEventListener("touchend", null, false);
-	  el.addEventListener("touchcancel", null, false);
-	  el.addEventListener("touchmove", null, false);
-	  log("initialized.");
-		
-	}	
+	// var renderer = new THREE.WebGLRenderer();
+	// renderer.setSize(window.innerWidth, window.innerHeight);
+	// document.body.appendChild(renderer.domElement);
+	// window.addEventListener('resize', onWindowResize, false);
+	//
+	// function onWindowResize(){
+	// 	renderer.setSize( window.innerWidth, window.innerHeight );
+	// }
+	// function onLoadFunction(){
+	//   var el = document.getElementsByTagName("readButton")[0];
+	//   el.addEventListener("touchstart", onReadButtonClick, false);
+	//   el.addEventListener("touchend", null, false);
+	//   el.addEventListener("touchcancel", null, false);
+	//   el.addEventListener("touchmove", null, false);
+	//   log("initialized.");
+	//
+	// }
 </script>
 <script>
 function log(x){
