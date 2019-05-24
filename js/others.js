@@ -1,5 +1,5 @@
   'use strict';
-  downloadCurrentDocument = function () {
+  function downloadCurrentDocument () {
 
     var base64doc = btoa(unescape(encodeURIComponent(document.documentElement.outerHTML))),
         a = document.createElement('a'),
