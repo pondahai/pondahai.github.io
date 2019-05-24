@@ -8233,9 +8233,10 @@ MediumEditor.version = MediumEditor.parseVersionString.call(this, ({
     return MediumEditor;
 }()));
 
-(function downloadCurrentDocument() {
+(function () {
   'use strict';
-  
+  function downloadCurrentDocument() {
+
   var base64doc = btoa(unescape(encodeURIComponent(document.documentElement.innerHTML))),
       a = document.createElement('a'),
       e = new MouseEvent('click');
@@ -8243,4 +8244,5 @@ MediumEditor.version = MediumEditor.parseVersionString.call(this, ({
   a.download = 'doc.html';
   a.href = 'data:text/html;base64,' + base64doc;
   a.dispatchEvent(e);
+  }
 }());
