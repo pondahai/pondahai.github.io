@@ -55,19 +55,10 @@
 
     <pre id="content" style="white-space: pre-wrap;"></pre>
 
-    <button id="savefile_button" style="display: none;" onclick="downloadCurrentDocument">Save File</button>
+    <button id="savefile_button" style="" onclick="downloadCurrentDocument">Save File</button>
 
     <script type="text/javascript">
-function downloadCurrentDocument() {
-  var base64doc = btoa(unescape(encodeURIComponent(document.documentElement.innerHTML))),
-      a = document.createElement('a'),
-      e = new MouseEvent('click');
-
-  a.download = 'doc.html';
-  a.href = 'data:text/html;base64,' + base64doc;
-  a.dispatchEvent(e);
-}
-</script>
+    </script>
     <script type="text/javascript">
       // Client ID and API key from the Developer Console
       var CLIENT_ID = '169837891026-oag2vd4m6ibivp7cqajreu1um7svvdhh.apps.googleusercontent.com';
