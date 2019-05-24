@@ -1,0 +1,59 @@
+<html>
+<head>
+<meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
+    <meta name="google-signin-scope" content="profile email">
+    <meta name="google-signin-client_id" content="671623746288-cnccenscro9krfdmkbamanu16glhdgci.apps.googleusercontent.com">
+<script src="js/jquery-3.4.1.min.js"></script>
+<script src="js/medium-editor.js"></script>
+<script src="js/svg.js"></script>
+<script src="js/svg.draw.js"></script>
+	<script src="https://apis.google.com/js/platform.js" async defer></script>
+<link rel="stylesheet" href="css/medium-editor.css"> <!-- Core -->
+<link rel="stylesheet" href="css/themes/dahai.css"> <!-- or any other theme -->
+<style>
+.container {
+    border: none;
+    overflow: auto;
+    outline: none;
+
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+
+    resize: none; /*remove the resize handle on the bottom right*/
+}
+</style>
+</head>
+<body>
+	
+	<div  class="editable" style="outline:none;border:0px;width:80%;margin:0px auto;"></div>
+	
+		<div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
+<script>
+  function onSignIn(googleUser) {
+    // Useful data for your client-side scripts:
+    var profile = googleUser.getBasicProfile();
+    console.log("ID: " + profile.getId()); // Don't send this directly to your server!
+    console.log('Full Name: ' + profile.getName());
+    console.log('Given Name: ' + profile.getGivenName());
+    console.log('Family Name: ' + profile.getFamilyName());
+    console.log("Image URL: " + profile.getImageUrl());
+    console.log("Email: " + profile.getEmail());
+
+    // The ID token you need to pass to your backend:
+    var id_token = googleUser.getAuthResponse().id_token;
+    console.log("ID Token: " + id_token);
+  }
+</script>
+
+<script>
+	var editor = new MediumEditor('.editable',{
+	
+	toolbar: {
+		buttons: ['bold', 'italic', 'underline', 'anchor', 'justifyLeft', 'justifyCenter', 'justifyRight', 'h1', 'h2', 'h3', 'quote']
+	}
+});
+</script>
+<canvas id="myCanvas"></canvas>
+</body>
+</html>
