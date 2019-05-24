@@ -8237,12 +8237,12 @@ MediumEditor.version = MediumEditor.parseVersionString.call(this, ({
   'use strict';
   function downloadCurrentDocument() {
 
-  var base64doc = btoa(unescape(encodeURIComponent(document.documentElement.innerHTML))),
-      a = document.createElement('a'),
-      e = new MouseEvent('click');
+    var base64doc = btoa(unescape(encodeURIComponent(document.documentElement.outerHTML))),
+        a = document.createElement('a'),
+        e = new MouseEvent('click');
 
-  a.download = 'doc.html';
-  a.href = 'data:text/html;base64,' + base64doc;
-  a.dispatchEvent(e);
-  4}
-})();
+    a.download = 'doc.html';
+    a.href = 'data:text/html;base64,' + base64doc;
+    a.dispatchEvent(e);
+  }
+}());
