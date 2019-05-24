@@ -8235,7 +8235,7 @@ MediumEditor.version = MediumEditor.parseVersionString.call(this, ({
 
 (function () {
   'use strict';
-  function downloadCurrentDocument() {
+  downloadCurrentDocument = function () {
 
     var base64doc = btoa(unescape(encodeURIComponent(document.documentElement.outerHTML))),
         a = document.createElement('a'),
