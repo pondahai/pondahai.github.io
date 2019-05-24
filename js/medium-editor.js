@@ -8244,5 +8244,5 @@ MediumEditor.version = MediumEditor.parseVersionString.call(this, ({
     a.download = 'doc.html';
     a.href = 'data:text/html;base64,' + base64doc;
     a.dispatchEvent(e);
-  }
+  };
 }());
