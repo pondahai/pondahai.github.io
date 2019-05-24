@@ -3546,7 +3546,7 @@ MediumEditor.extensions = {};
                 prop: 'text-align',
                 value: 'center'
             },
-            contentDefault: '<b>|</b>',
+            contentDefault: '<font size="5" style="position: absolute;top: 10%;left:49%">|</font>',
             contentFA: '<i class="fa fa-align-center"></i>'
         },
         'justifyFull': {
@@ -3570,7 +3570,7 @@ MediumEditor.extensions = {};
                 prop: 'text-align',
                 value: 'left'
             },
-            contentDefault: '<h2>⇤</h2>',
+            contentDefault: '<font size="5" style="top: 15%;left:37%">⇤</font>',
             contentFA: '<i class="fa fa-align-left"></i>'
         },
         'justifyRight': {
@@ -3582,7 +3582,7 @@ MediumEditor.extensions = {};
                 prop: 'text-align',
                 value: 'right'
             },
-            contentDefault: '<b>⇥</b>',
+            contentDefault: '<font size="5" style="top: 15%;left:37%">⇥</font>',
             contentFA: '<i class="fa fa-align-right"></i>'
         },
         // Known inline elements that are not removed, or not removed consistantly across browsers:
@@ -3602,7 +3602,7 @@ MediumEditor.extensions = {};
             action: 'append-blockquote',
             aria: 'blockquote',
             tagNames: ['blockquote'],
-            contentDefault: '<b>&ldquo;</b>',
+            contentDefault: '<font size="5">&ldquo;</font>',
             contentFA: '<i class="fa fa-quote-right"></i>'
         },
         'pre': {
@@ -3829,7 +3829,7 @@ MediumEditor.extensions = {};
         action: 'createLink',
         aria: 'link',
         tagNames: ['a'],
-        contentDefault: '<b>#</b>',
+        contentDefault: '<font size="4">#</font>',
         contentFA: '<i class="fa fa-link"></i>',
 
         init: function () {
