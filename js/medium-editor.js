@@ -3570,7 +3570,7 @@ MediumEditor.extensions = {};
                 prop: 'text-align',
                 value: 'left'
             },
-            contentDefault: '<b>⇤</b>',
+            contentDefault: '<h2>⇤</h2>',
             contentFA: '<i class="fa fa-align-left"></i>'
         },
         'justifyRight': {
