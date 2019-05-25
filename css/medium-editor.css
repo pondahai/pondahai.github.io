@@ -228,20 +228,3 @@
 
 .medium-editor-hidden {
   display: none; }
-
-a:focus {
-  stroke: orange;
-  stroke-width: 1;
-  stroke-opacity: 100;
-}
-
-.boxborder-svg:hover {
-  box-shadow: 0 0 0 3px black;
-  outline: dashed 3px gold;
-  cursor: pointer;
-}
-
-rect:hover {
-  box-shadow: 3 3 3 10px black;
-  outline: dashed 3px gold;  
-}
