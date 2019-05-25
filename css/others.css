@@ -14,3 +14,8 @@ rect:hover {
   box-shadow: 3 3 3 10px black;
   outline: dashed 3px gold;  
 }
+
+text:hover {
+  box-shadow: 3 3 3 10px black;
+  outline: dashed 3px gold;  
+}
