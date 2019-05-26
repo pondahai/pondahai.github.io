@@ -1,14 +1,18 @@
-a:focus {
-  stroke: orange;
-  stroke-width: 1;
-  stroke-opacity: 100;
-}
-
 .boxborder-svg:hover {
   box-shadow: 0 0 0 3px black;
   outline: dashed 3px gold;
   cursor: pointer;
 }
+
+#iAmHere {
+  outline:none;
+  border:0px;
+  width:80%;
+  margin:0px auto;
+}
+
+
+
 
 rect:hover {
   box-shadow: 3 3 3 10px black;
@@ -18,4 +22,24 @@ rect:hover {
 text:hover {
   box-shadow: 3 3 3 10px black;
   outline: dashed 3px gold;  
+}
+
+pre {
+    font-family: 'Menlo', monospace;
+    font-size: 15px;
+    background-color: #f0f0f0;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    color: #666;
+}
+
+blockquote {
+    display: block;
+    padding-left: 20px;
+    border-left: 6px solid #df0d32;
+    margin-left: -15px;
+    padding-left: 15px;
+    font-style: italic;
+    color: #555;
 }

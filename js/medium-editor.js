@@ -2906,17 +2906,21 @@ MediumEditor.extensions = {};
                     //             // remove listener
                     //         });
                     var parentNode = svgLastMousedownTarget.parentNode;
-                    
+                    var drawing = null;
+                    var rect = null;
+                    var text = null;
+
                     if (svgLastMousedownTarget.localName == "text") {
                         if(svgLastMousedownTarget.localName == "text" && parentNode && svgLastMousedownTarget  && svgLastMousedownTarget.id.match("SvgjsText")){
                           if (svgLastMousedownTarget) {
                             //parentNode.removeChild(svgLastMousedownTarget);
+                            svgFocus.firstElementChild.setAttribute('id', '');
                           }
                         }
                     }else{
 
-                    var drawing = new SVG('svg-active').size(svgFocus.firstElementChild.clientWidth, svgFocus.firstElementChild.clientHeight);
-                    var rect = drawing.rect().attr('stroke-width',5).attr('fill','none').attr('stroke','orange').attr('stroke-opacity','0.5');
+                    drawing = new SVG('svg-active').size(svgFocus.firstElementChild.clientWidth, svgFocus.firstElementChild.clientHeight);
+                    rect = drawing.rect().attr('stroke-width',5).attr('fill','none').attr('stroke','orange').attr('stroke-opacity','0.5');
 
                     drawing.on('mousedown', function(e){
                       if(rect){
@@ -2925,6 +2929,7 @@ MediumEditor.extensions = {};
                           parentNode.removeChild(svgLastMousedownTarget);
                           parentNode.removeChild(rect.node);
                           rect = null;
+                          svgFocus.firstElementChild.setAttribute('id', '');
                         }else{
                           
                             rect.draw(e);
@@ -2943,13 +2948,13 @@ MediumEditor.extensions = {};
                     
                       rect.on('drawstop', function(){
                           // remove listener
-                         if(rect.node.width.baseVal.value == 0 || rect.node.height.baseVal.value == 0){
+                         if(rect.attr('width') <= 1 || rect.attr('height') <= 1){
                            parentNode.removeChild(rect.node);
 
                            if (svgLastMousedownTarget.localName != "text") {
                               // dahai: to add text
-                              var drawing = new SVG('svg-active').size(svgFocus.firstElementChild.clientWidth, svgFocus.firstElementChild.clientHeight);
-                              var text = drawing.plain('here').attr('fill','red').attr('x',rect.attr('x')).attr('y',rect.attr('y'));
+                              drawing = new SVG('svg-active').size(svgFocus.firstElementChild.clientWidth, svgFocus.firstElementChild.clientHeight);
+                              text = drawing.plain('here').attr('fill','red').attr('x',rect.attr('x')).attr('y',rect.attr('y'));
                            }
                             
                          }
@@ -3619,7 +3624,7 @@ MediumEditor.extensions = {};
             action: 'append-blockquote',
             aria: 'blockquote',
             tagNames: ['blockquote'],
-            contentDefault: '<font size="5">&ldquo;</font>',
+            contentDefault: '<b>&ldquo;</b>',
             contentFA: '<i class="fa fa-quote-right"></i>'
         },
         'pre': {
@@ -4265,10 +4270,10 @@ MediumEditor.extensions = {};
 
             if (this.previewValueSelector) {
               // dahai: for svg <a> has no href
-              if(anchorEl.attributes.href) {
+              //if(anchorEl.attributes.href) {
                 this.anchorPreview.querySelector(this.previewValueSelector).textContent = anchorEl.attributes.href.value;
                 this.anchorPreview.querySelector(this.previewValueSelector).href = anchorEl.attributes.href.value;
-              }
+              //}
             }
 
             this.anchorPreview.classList.add('medium-toolbar-arrow-over');
@@ -4369,8 +4374,8 @@ MediumEditor.extensions = {};
                 // We may actually be displaying the anchor form, which should be controlled by delay
                 this.base.delay(function () {
                     if (activeAnchor) {
-                      // dahai: for scg <a> has no href
-                      if (activeAnchor.attributes.href) {
+                      // dahai: for svg <a> has no href, <- cause autolink fail so I 
+                      //if (activeAnchor.attributes.href) {
                         var opts = {
                             value: activeAnchor.attributes.href.value,
                             target: activeAnchor.getAttribute('target'),
@@ -4378,7 +4383,7 @@ MediumEditor.extensions = {};
                         };
                         anchorExtension.showForm(opts);
                         activeAnchor = null;
-                      }
+                      //}
                     }
                 }.bind(this));
             }
@@ -4861,8 +4866,8 @@ MediumEditor.extensions = {};
                       var imgWidth = img.width;
                       var svg_rect = "<rect x=\"0\" y=\"0\" width=\""+imgWidth+"\" height=\""+imgHeight+"\" fill-opacity=\"0\" stroke-opacity=\"0\"></rect>"
                       //pastedHTML = "<div draggable=\"true\" style=\"width:"+imgWidth+";height:"+imgHeight+";\"><svg  " + "width=\"" + imgWidth + "\" " + "height=\"" + imgHeight + "\" " + "xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">" + "<image " + "height=\"" + imgHeight + "\" " + "width=\"" + imgWidth + "\" " + "xlink:href=\"" + imgSrc + "\"" + "/>" +svg_rect+ "</svg></div>";
-                      var svg_svg =  "<svg data-medium-editor-element=\"true\" data-disable-toolbar=\"true\" class=\"boxborder-svg\"" + "width=\"" + imgWidth + "\" " + "height=\"" + imgHeight + "\" " + "xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">" + "<image " + "height=\"" + imgHeight + "\" " + "width=\"" + imgWidth + "\" " + "xlink:href=\"" + imgSrc + "\"" + "/>" +svg_rect+ "</svg>";
-                      var pastedHTML = "<div   " + "style=\"text-align: center;\">"+svg_svg+"<p><br></p></div>";
+                      var svg_svg =  "<svg  class=\"boxborder-svg\"" + "width=\"" + imgWidth + "\" " + "height=\"" + imgHeight + "\" " + "xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">" + "<image " + "height=\"" + imgHeight + "\" " + "width=\"" + imgWidth + "\" " + "xlink:href=\"" + imgSrc + "\"" + "/>" +svg_rect+ "</svg>";
+                      var pastedHTML = "<div  data-medium-editor-element=\"true\" data-disable-toolbar=\"true\" " + "style=\"text-align: center;\">"+svg_svg+"<h6><br></h6></div>";
                       MediumEditor.util.insertHTMLCommand(thisDocument, pastedHTML);
                       
                   };
@@ -4973,8 +4978,8 @@ MediumEditor.extensions = {};
                       var imgWidth = img.width;
                       var svg_rect = "<rect x=\"0\" y=\"0\" width=\""+imgWidth+"\" height=\""+imgHeight+"\" fill-opacity=\"0\" stroke-opacity=\"0\"></rect>"
                       //pastedHTML = "<div draggable=\"true\" style=\"width:"+imgWidth+";height:"+imgHeight+";\"><svg  " + "width=\"" + imgWidth + "\" " + "height=\"" + imgHeight + "\" " + "xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">" + "<image " + "height=\"" + imgHeight + "\" " + "width=\"" + imgWidth + "\" " + "xlink:href=\"" + imgSrc + "\"" + "/>" +svg_rect+ "</svg></div>";
-                      var svg_svg =  "<svg data-medium-editor-element=\"true\" data-disable-toolbar=\"true\" class=\"boxborder-svg\"" + "width=\"" + imgWidth + "\" " + "height=\"" + imgHeight + "\" " + "xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">" + "<image " + "height=\"" + imgHeight + "\" " + "width=\"" + imgWidth + "\" " + "xlink:href=\"" + imgSrc + "\"" + "/>" +svg_rect+ "</svg>";
-                      var pastedHTML = "<div   " + "style=\"text-align: center;\">"+svg_svg+"<p ><br></p></div>";
+                      var svg_svg =  "<svg  class=\"boxborder-svg\"" + "width=\"" + imgWidth + "\" " + "height=\"" + imgHeight + "\" " + "xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">" + "<image " + "height=\"" + imgHeight + "\" " + "width=\"" + imgWidth + "\" " + "xlink:href=\"" + imgSrc + "\"" + "/>" +svg_rect+ "</svg>";
+                      var pastedHTML = "<div  data-medium-editor-element=\"true\" data-disable-toolbar=\"true\" " + "style=\"text-align: center;\">"+svg_svg+"<h6><br></h6></div>";
                       MediumEditor.util.insertHTMLCommand(thisDocument, pastedHTML);
                       
         	        };
@@ -5701,8 +5706,8 @@ MediumEditor.extensions = {};
                       var imgWidth = img.width;
                       var svg_rect = "<rect x=\"0\" y=\"0\" width=\""+imgWidth+"\" height=\""+imgHeight+"\" fill-opacity=\"0\" stroke-opacity=\"0\"></rect>"
                       //pastedHTML = "<div draggable=\"true\" style=\"width:"+imgWidth+";height:"+imgHeight+";\"><svg  " + "width=\"" + imgWidth + "\" " + "height=\"" + imgHeight + "\" " + "xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">" + "<image " + "height=\"" + imgHeight + "\" " + "width=\"" + imgWidth + "\" " + "xlink:href=\"" + imgSrc + "\"" + "/>" +svg_rect+ "</svg></div>";
-                      var svg_svg =  "<svg data-medium-editor-element=\"true\" data-disable-toolbar=\"true\" class=\"boxborder-svg\" style=\"text-align: center;\"" + "width=\"" + imgWidth + "\" " + "height=\"" + imgHeight + "\" " + "xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">" + "<image " + "height=\"" + imgHeight + "\" " + "width=\"" + imgWidth + "\" " + "xlink:href=\"" + imgSrc + "\"" + "/>" +svg_rect+ "</svg>";
-                      var pastedHTML = "<div   " + "style=\"text-align: center;\">"+svg_svg+"<p ><br></p></div>";
+                      var svg_svg =  "<svg  class=\"boxborder-svg\" style=\"text-align: center;\"" + "width=\"" + imgWidth + "\" " + "height=\"" + imgHeight + "\" " + "xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">" + "<image " + "height=\"" + imgHeight + "\" " + "width=\"" + imgWidth + "\" " + "xlink:href=\"" + imgSrc + "\"" + "/>" +svg_rect+ "</svg>";
+                      var pastedHTML = "<div  data-medium-editor-element=\"true\" data-disable-toolbar=\"true\" " + "style=\"text-align: center;\">"+svg_svg+"<h6><br></h6></div>";
                       pastedPlain = "";
                       elem.doPaste(pastedHTML, pastedPlain, editable);
                       //elem.doPaste("<p><br></p>", pastedPlain, editable);
@@ -6099,6 +6104,7 @@ MediumEditor.extensions = {};
 
         updatePlaceholder: function (el, dontShow) {
             // If the element has content, hide the placeholder
+            // dahai: add svg
             if (el.querySelector('img, blockquote, ul, ol, table, svg') || (el.textContent.replace(/^\s+|\s+$/g, '') !== '')) {
                 return this.hidePlaceholder(el);
             }
@@ -7070,14 +7076,31 @@ MediumEditor.extensions = {};
             MediumEditor.selection.moveCursor(this.options.ownerDocument, node.nextSibling);
             node.parentElement.removeChild(node);
         } else if (MediumEditor.util.isKey(event, MediumEditor.util.keyCode.ENTER)) {
-          // dahai: for svg enter
+          // dahai: for svg enter press
           if (node.parentElement.firstChild) {
                 if (node.parentElement.firstChild.nodeName == "svg") {
                   //node.style.width = null;
                   //node.style.height = null;
-                  p = this.options.ownerDocument.createElement('p');
-                  p.innerHTML = '<br>';
-                  node.parentElement.parentElement.insertBefore(p, node.parentElement.nextSibling);
+                  if (!node.parentElement.nextSibling) {
+                    p = this.options.ownerDocument.createElement('p');
+                    p.innerHTML = '<br>';
+                    node.parentElement.parentElement.insertBefore(p, node.parentElement.nextSibling);
+                  }
+                  // dahai: change cursor position
+                  var range = document.createRange();
+                  var sel = window.getSelection();
+                  range.setStart(node.parentElement.nextSibling, 0);
+                  range.collapse(true);
+                  sel.removeAllRanges();
+                  sel.addRange(range);
+                }
+                // dahai: for svg inside text
+                if (node.parentElement.firstChild.nodeName == "image") {
+                  if (!node.parentElement.nextSibling) {
+                    p = this.options.ownerDocument.createElement('p');
+                    p.innerHTML = '<br>';
+                    node.parentElement.parentElement.insertBefore(p, node.parentElement.nextSibling);
+                  }
                   var range = document.createRange();
                   var sel = window.getSelection();
                   range.setStart(node.parentElement.nextSibling, 0);

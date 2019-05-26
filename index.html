@@ -14,7 +14,7 @@
 
 </head>
 <body>
-	   <div id="iAmHere" class="editable" style="outline:none;border:0px;width:80%;margin:0px auto;"></div>
+	   <div id="iAmHere" class="editable" ></div>
 
     <p>Drive API Quickstart</p>
 
@@ -34,10 +34,87 @@
 
 <script>
 	var editor = new MediumEditor('.editable',{
-	
-	toolbar: {
-		buttons: ['bold', 'italic', 'underline', 'anchor', 'justifyLeft', 'justifyCenter', 'justifyRight', 'h1', 'h2', 'h3', 'quote']
-	}
+  	autoLink: true,
+  	toolbar: {
+  		buttons: [
+      'bold', 
+      'italic', 
+      'underline', 
+      'anchor', 
+      'quote', 
+       {
+              name: 'justifyLeft',
+              action: 'justifyLeft',
+              aria: 'left justify',
+              tagNames: [],
+              style: {
+                  prop: 'text-align',
+                  value: 'left'
+              },
+              contentDefault: '<font size="5" style="position: absolute;top: 13%;left:42%">⇤</font>',
+              contentFA: '<i class="fa fa-align-left"></i>'
+          },
+       {
+              name: 'justifyCenter',
+              action: 'justifyCenter',
+              aria: 'center justify',
+              tagNames: [],
+              style: {
+                  prop: 'text-align',
+                  value: 'center'
+              },
+              contentDefault: '<font size="5" style="position: absolute;top: 10%;left:49%">|</font>',
+              contentFA: '<i class="fa fa-align-center"></i>'
+          },
+       {
+              name: 'justifyRight',
+              action: 'justifyRight',
+              aria: 'right justify',
+              tagNames: [],
+              style: {
+                  prop: 'text-align',
+                  value: 'right'
+              },
+              contentDefault: '<font size="5" style="position: absolute;top: 13%;left:53%">⇥</font>',
+              contentFA: '<i class="fa fa-align-right"></i>'
+          },
+          {
+              name: 'h1',
+              action: 'append-h1',
+              aria: 'header type one',
+              tagNames: ['h1'],
+              contentDefault: '<font size="6" style="position: absolute;top: 0%;left:65%">字</font>',
+              contentFA: '<i class="fa fa-header"><sup>1</sup>'
+          },
+          {
+              name: 'h2',
+              action: 'append-h2',
+              aria: 'header type two',
+              tagNames: ['h2'],
+              contentDefault: '<font size="5">字</font>',
+              contentFA: '<i class="fa fa-header"><sup>2</sup>'
+          },
+          {
+              name: 'h6',
+              action: 'append-h6',
+              aria: 'header type six',
+              tagNames: ['h6'],
+              contentDefault: '<font size="1" style="position: absolute;top: 33%;left:83%">字</font>',
+              contentFA: '<i class="fa fa-header"><sup>6</sup>'
+          },
+      'pre'
+      ]
+  	},
+    anchor: {
+        /* These are the default options for anchor form,
+           if nothing is passed this is what it used */
+        customClassOption: null,
+        customClassOptionText: 'Button',
+        linkValidation: false,
+        placeholderText: 'Paste or type a link',
+        targetCheckbox: true,
+        targetCheckboxText: 'Open in new window'
+    }
 });
 </script>
 <script src="js/others.js"></script>

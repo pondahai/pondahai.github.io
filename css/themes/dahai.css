@@ -33,7 +33,7 @@
     padding-right: 24px; }
   .medium-editor-toolbar li .medium-editor-button-active {
     background-color: #FFAA37;
-    color: #a2d7c7; }
+    color: #124578; }
 
 .medium-editor-toolbar-form {
   background: #FFAA37;
@@ -43,7 +43,7 @@
   .medium-editor-toolbar-form .medium-editor-toolbar-input {
     background: #FFAA37;
     box-sizing: border-box;
-    color: #ccc;
+    color: #124578;
     height: 40px;
     padding-left: 16px;
     width: 220px; }
@@ -74,7 +74,7 @@
   padding: 5px 12px; }
 
 .medium-editor-anchor-preview a {
-  color: #ccc;
+  color: #124578;
   text-decoration: none; }
 
 .medium-editor-toolbar-actions li, .medium-editor-toolbar-actions button {
