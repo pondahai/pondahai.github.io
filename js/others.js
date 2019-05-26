@@ -126,7 +126,7 @@
 		xhr.setRequestHeader('Authorization', 'Bearer ' + accessToken);
 		xhr.responseType = 'json';
 		xhr.onload = () => {
-		    console.log(xhr.response.id); // Retrieve uploaded file ID.
+		    console.log(xhr.response); // Retrieve uploaded file ID.
 		};
 		xhr.send(form);
 	}
@@ -141,7 +141,7 @@
 
       // Authorization scopes required by the API; multiple scopes can be
       // included, separated by spaces.
-      var SCOPES = 'https://www.googleapis.com/auth/drive.file';
+      var SCOPES = 'https://www.googleapis.com/auth/drive';
 
       var authorizeButton = document.getElementById('authorize_button');
       var signoutButton = document.getElementById('signout_button');
