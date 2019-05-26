@@ -1,4 +1,4 @@
-<html>
+<html >
 <head>
 <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
     <meta name="google-signin-scope" content="profile email">
@@ -13,19 +13,30 @@
 <link rel="stylesheet" href="css/others.css"> <!-- or any other theme -->
 
 </head>
-<body>
+<body >
 	   <div id="iAmHere" class="editable" ></div>
 
-    <p>Drive API Quickstart</p>
+<div style="background-color:#220000;padding:10px;height:100%;background-repeat:repeat-x">
+   
 
     <!--Add buttons to initiate auth sequence and sign out-->
-    <button id="authorize_button" style="display: none;">Authorize</button>
-    <button id="signout_button" style="display: none;">Sign Out</button>
+    <button id="authorize_button" class="example_b" style="display: none;">Google Account Authorize</button>
+    <button id="signout_button" class="example_b" style="display: none;">Sign Out</button>
 
-    <pre id="content" style="white-space: pre-wrap;"></pre>
+    
 
-    <button id="savefile_button" style="" onclick="downloadCurrentDocument();">&#x21D2; &#128190;</button>
-    <button id="loadfile_button" style="" onclick="uploadToCurrentDocument();">&#128190; &#x21D2;</button>
+    <button id="savefile_button" class="example_b" onclick="downloadCurrentDocument();">&#x21D2; &#128190;</button>
+    <button id="loadfile_button" class="example_b" onclick="uploadToCurrentDocument();">&#128190; &#x21D2;</button>
+    <span style="float:right;" ><font color="white" size="1">pondahai 2019</font></span>
+<div align="center" >
+    <pre id="content" style="white-space: pre-wrap;width:95%;"></pre>
+  </div>
+</div>
+
+<!--
+<div class="button_cont" align="center"><a class="example_b" href="add-website-here" target="_blank" rel="nofollow noopener" onclick="downloadCurrentDocument();">&#x21D2; &#128190;</a></div>
+<div class="button_cont" align="center"><a class="example_b" href="add-website-here" target="_blank" rel="nofollow noopener" onclick="uploadToCurrentDocument();">&#128190; &#x21D2;</a></div>
+-->
 
 <script async defer src="https://apis.google.com/js/api.js"
   onload="this.onload=function(){};handleClientLoad()"

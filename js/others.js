@@ -144,10 +144,10 @@
       function updateSigninStatus(isSignedIn) {
         if (isSignedIn) {
           authorizeButton.style.display = 'none';
-          signoutButton.style.display = 'block';
+          signoutButton.style.display = '';
           listFiles();
         } else {
-          authorizeButton.style.display = 'block';
+          authorizeButton.style.display = '';
           signoutButton.style.display = 'none';
         }
       }
