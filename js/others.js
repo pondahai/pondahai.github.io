@@ -1,11 +1,6 @@
   'use strict';
-  function downloadCurrentDocument () {
 
-  	var container = document.getElementById('iAmHere');
-    var base64doc = btoa(unescape(encodeURIComponent(container.innerHTML))),
-        a = document.createElement('a'),
-        e = new MouseEvent('click');
-
+  function getFirstLineFotFileName () {
 	var firstLine = $("#iAmHere")
 	                       .contents()
 	                       .filter(function() { 
@@ -27,6 +22,18 @@
 	}else{
 		filename = firstfirstLine + ".html";
 	}
+
+	return filename;
+  }
+
+  function downloadCurrentDocument () {
+
+  	var container = document.getElementById('iAmHere');
+    var base64doc = btoa(unescape(encodeURIComponent(container.innerHTML))),
+        a = document.createElement('a'),
+        e = new MouseEvent('click');
+    var filename = getFirstLineFotFileName();
+
 
     a.download = filename;
     a.href = 'data:text/html;base64,' + base64doc;
@@ -93,6 +100,34 @@
 	input.click();
   }
 
+  function uploadToCloud () {
+  	var container = document.getElementById('iAmHere');
+    var base64doc = btoa(unescape(encodeURIComponent(container.innerHTML))),
+        a = document.createElement('a'),
+        e = new MouseEvent('click');
+    var filename = getFirstLineFotFileName() + ".html";
+
+  	var fileContent = container.innerHTML; // As a sample, upload a text file.
+	var file = new Blob([fileContent], {type: 'text/plain'});
+	var metadata = {
+	    'name': filename, // Filename at Google Drive
+	};
+
+	var accessToken = gapi.auth.getToken().access_token; // Here gapi is used for retrieving the access token.
+	var form = new FormData();
+	form.append('metadata', new Blob([JSON.stringify(metadata)], {type: 'application/json'}));
+	form.append('file', file);
+
+	var xhr = new XMLHttpRequest();
+	xhr.open('post', 'https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&fields=id');
+	xhr.setRequestHeader('Authorization', 'Bearer ' + accessToken);
+	xhr.responseType = 'json';
+	xhr.onload = () => {
+	    console.log(xhr.response.id); // Retrieve uploaded file ID.
+	};
+	xhr.send(form);
+  }
+
       // Client ID and API key from the Developer Console
       var CLIENT_ID = '169837891026-oag2vd4m6ibivp7cqajreu1um7svvdhh.apps.googleusercontent.com';
       var API_KEY = 'AIzaSyCmieef4onzl_adyu8gwpCh8Lhsk7oX5Cw';
@@ -106,6 +141,8 @@
 
       var authorizeButton = document.getElementById('authorize_button');
       var signoutButton = document.getElementById('signout_button');
+      var loadcloudfileButton = document.getElementById('loadcloudfile_button');
+      var savecloudfileButton = document.getElementById('savecloudfile_button');
 
       /**
        *  On load, called to load the auth2 library and API client library.
@@ -145,10 +182,14 @@
         if (isSignedIn) {
           authorizeButton.style.display = 'none';
           signoutButton.style.display = '';
+          loadcloudfileButton.style.display = '';
+          savecloudfileButton.style.display = '';
           listFiles();
         } else {
           authorizeButton.style.display = '';
           signoutButton.style.display = 'none';
+          loadcloudfileButton.style.display = 'none';
+          savecloudfileButton.style.display = 'none';
         }
       }
 
@@ -177,13 +218,17 @@
         var textContent = document.createTextNode(message + '\n');
         pre.appendChild(textContent);
       }
-
+      function clearPre() {
+      	var pre = document.getElementById('content');
+      	pre.innerHTML = "";
+      }
       /**
        * Print files.
        */
       function listFiles() {
+      	clearPre();
         gapi.client.drive.files.list({
-          'pageSize': 10,
+          'pageSize': 999,
           'fields': "nextPageToken, files(id, name)"
         }).then(function(response) {
           appendPre('Files:');
