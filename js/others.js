@@ -102,30 +102,30 @@
 
   function uploadToCloud () {
   	var container = document.getElementById('iAmHere');
-    var base64doc = btoa(unescape(encodeURIComponent(container.innerHTML))),
-        a = document.createElement('a'),
-        e = new MouseEvent('click');
-    var filename = getFirstLineFotFileName() + ".html";
+  	if (container.innerHTML) {
+	    //var base64doc = btoa(unescape(encodeURIComponent(container.innerHTML)));
+	    var filename = getFirstLineFotFileName();
 
-  	var fileContent = container.innerHTML; // As a sample, upload a text file.
-	var file = new Blob([fileContent], {type: 'text/plain'});
-	var metadata = {
-	    'name': filename, // Filename at Google Drive
-	};
+	  	var fileContent = container.innerHTML; // As a sample, upload a text file.
+		var file = new Blob([fileContent], {type: 'text/html'});
+		var metadata = {
+		    'name': filename, // Filename at Google Drive
+		};
 
-	var accessToken = gapi.auth.getToken().access_token; // Here gapi is used for retrieving the access token.
-	var form = new FormData();
-	form.append('metadata', new Blob([JSON.stringify(metadata)], {type: 'application/json'}));
-	form.append('file', file);
+		var accessToken = gapi.auth.getToken().access_token; // Here gapi is used for retrieving the access token.
+		var form = new FormData();
+		form.append('metadata', new Blob([JSON.stringify(metadata)], {type: 'application/json'}));
+		form.append('file', file);
 
-	var xhr = new XMLHttpRequest();
-	xhr.open('post', 'https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&fields=id');
-	xhr.setRequestHeader('Authorization', 'Bearer ' + accessToken);
-	xhr.responseType = 'json';
-	xhr.onload = () => {
-	    console.log(xhr.response.id); // Retrieve uploaded file ID.
-	};
-	xhr.send(form);
+		var xhr = new XMLHttpRequest();
+		xhr.open('post', 'https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&fields=id');
+		xhr.setRequestHeader('Authorization', 'Bearer ' + accessToken);
+		xhr.responseType = 'json';
+		xhr.onload = () => {
+		    console.log(xhr.response.id); // Retrieve uploaded file ID.
+		};
+		xhr.send(form);
+	}
   }
 
       // Client ID and API key from the Developer Console
@@ -229,7 +229,7 @@
       	clearPre();
         gapi.client.drive.files.list({
           'pageSize': 999,
-          'fields': "nextPageToken, files(id, name)"
+          'fields': "*"
         }).then(function(response) {
           appendPre('Files:');
           var files = response.result.files;
