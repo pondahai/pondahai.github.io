@@ -2919,47 +2919,55 @@ MediumEditor.extensions = {};
                         }
                     }else{
 
-                    drawing = new SVG('svg-active').size(svgFocus.firstElementChild.clientWidth, svgFocus.firstElementChild.clientHeight);
-                    rect = drawing.rect().attr('stroke-width',5).attr('fill','none').attr('stroke','orange').attr('stroke-opacity','0.5');
+                      drawing = new SVG('svg-active').size(svgFocus.firstElementChild.clientWidth, svgFocus.firstElementChild.clientHeight);
+                      rect = drawing.rect().attr('stroke-width',5).attr('fill','none').attr('stroke','orange').attr('stroke-opacity','0.5');
 
-                    drawing.on('mousedown', function(e){
-                      if(rect){
-                        if(svgLastMousedownTarget.localName == "rect" && parentNode && svgLastMousedownTarget  && svgLastMousedownTarget.id.match("SvgjsRect")){
-                          
-                          parentNode.removeChild(svgLastMousedownTarget);
-                          parentNode.removeChild(rect.node);
-                          rect = null;
-                          svgFocus.firstElementChild.setAttribute('id', '');
-                        }else{
-                          
-                            rect.draw(e);
-                          
-                        }
-                        }
-                    }, false);
-
-                    drawing.on('mouseup', function(e){
+                      drawing.on('mousedown', function(e){
                         if(rect){
-                          rect.draw('stop', e);
-                          //if(svgLastMousedownTarget.localName == "rect" && parentNode && svgLastMousedownTarget && svgLastMousedownTarget.id.match("SvgjsRect")){
-                          //}
-                       }
-                    }, false);
-                    
-                      rect.on('drawstop', function(){
-                          // remove listener
-                         if(rect.attr('width') <= 1 || rect.attr('height') <= 1){
-                           parentNode.removeChild(rect.node);
+                            if(svgLastMousedownTarget.localName == "rect" && parentNode && svgLastMousedownTarget  && svgLastMousedownTarget.id.match("SvgjsRect")){
+                              
+                              parentNode.removeChild(svgLastMousedownTarget);
+                              parentNode.removeChild(rect.node);
+                              rect = null;
+                              svgFocus.firstElementChild.setAttribute('id', '');
+                            }else{
+                              
+                                rect.draw(e);
+                              
+                            }
+                          }
+                      }, false);
 
-                           if (svgLastMousedownTarget.localName != "text") {
-                              // dahai: to add text
-                              drawing = new SVG('svg-active').size(svgFocus.firstElementChild.clientWidth, svgFocus.firstElementChild.clientHeight);
-                              text = drawing.plain('here').attr('fill','red').attr('x',rect.attr('x')).attr('y',rect.attr('y'));
-                           }
-                            
+                      drawing.on('mouseup', function(e){
+                          if(rect){
+                            rect.draw('stop', e);
+                            //if(svgLastMousedownTarget.localName == "rect" && parentNode && svgLastMousedownTarget && svgLastMousedownTarget.id.match("SvgjsRect")){
+                            //}
                          }
-                        svgFocus.firstElementChild.setAttribute('id', '');
-                      });
+                      }, false);
+                    
+                        rect.on('drawstop', function(){
+                          // remove listener
+                          if(rect.attr('width') <= 1 || rect.attr('height') <= 1){
+                            parentNode.removeChild(rect.node);
+
+                             if (svgLastMousedownTarget.localName != "text") {
+                                // dahai: to add svg text
+                                drawing = new SVG('svg-active').size(svgFocus.firstElementChild.clientWidth, svgFocus.firstElementChild.clientHeight);
+                                text = drawing.plain('here').attr('fill','red').attr('x',rect.attr('x')).attr('y',rect.attr('y'));
+                                
+                                // drawing.on('touchcancel', function(e){
+                                //   console.log(text);
+                                // });
+
+                                // text.on('rebuild', function() {
+                                //   console.log(text);
+                                // });                                
+                             }
+                              
+                           }
+                          svgFocus.firstElementChild.setAttribute('id', '');
+                        });
                     
                     }
                     
@@ -6580,7 +6588,7 @@ MediumEditor.extensions = {};
                 return this.hideToolbar();
             }
 
-            // // dahai: If we inside the text tag -> hide toolbar
+            // // dahai: If we inside the svg text tag -> do something
             // if () {
 
             //     return this.hideToolbar();
@@ -7108,6 +7116,34 @@ MediumEditor.extensions = {};
                   sel.removeAllRanges();
                   sel.addRange(range);
                 }
+          }
+        } else if (MediumEditor.util.isKey(event, MediumEditor.util.keyCode.BACKSPACE) || MediumEditor.util.isKey(event, MediumEditor.util.keyCode.DELETE)) {
+          // dahai: for svg text delete or backspace 
+          if (node.parentElement && node.parentElement.nodeName == "svg") {
+            var parentElement = node.parentElement;
+            var i = parentElement.children.length;
+            while (--i) {
+            
+              var children = parentElement.children[i];
+              if (parentElement.children[i].nodeName && parentElement.children[i].nodeName == "text") {
+                //parentElement.children[i].remove();
+                if (/^\s*$/.test(parentElement.children[i].textContent)) {
+                  parentElement.removeChild(parentElement.children[i]);
+                }
+                // console.log(i);
+                // console.log(/^\s*$/.test(node.parentElement.children[i].textContent));
+                // console.log(node.parentElement.children[i].textContent);
+              }
+            }
+            // if (node.parentElement.firstChild.nodeName && node.parentElement.firstChild.nodeName == "#text") {
+            //   var text = node.parentElement.firstChild.textContent;
+            //   if (/^\s*$/.test(text)) {
+            //     node.parentElement.firstChild.remove();
+            //   }
+            //   //console.log(node.parentElement.firstChild.textContent.match(/^ *$/));
+            //   //console.log(node.parentElement.firstChild.textContent.length);
+            // }
+
           }
         }
     }
