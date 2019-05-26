@@ -101,7 +101,7 @@
   }
 
   function downloadFromCloud () {
-  	
+
   }
   function uploadToCloud () {
   	var container = document.getElementById('iAmHere');
@@ -141,7 +141,7 @@
 
       // Authorization scopes required by the API; multiple scopes can be
       // included, separated by spaces.
-      var SCOPES = 'https://www.googleapis.com/auth/drive.metadata.readonly';
+      var SCOPES = 'https://www.googleapis.com/auth/drive.file';
 
       var authorizeButton = document.getElementById('authorize_button');
       var signoutButton = document.getElementById('signout_button');
@@ -241,7 +241,7 @@
           if (files && files.length > 0) {
             for (var i = 0; i < files.length; i++) {
               var file = files[i];
-              appendPre(file.name + ' (' + file.id + ')');
+              appendPre(file.name + ' ' + file.createdTime + ' (' + file.id + ')');
             }
           } else {
             appendPre('No files found.');
