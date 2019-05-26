@@ -100,6 +100,9 @@
 	input.click();
   }
 
+  function downloadFromCloud () {
+  	
+  }
   function uploadToCloud () {
   	var container = document.getElementById('iAmHere');
   	if (container.innerHTML) {
@@ -110,6 +113,7 @@
 		var file = new Blob([fileContent], {type: 'text/html'});
 		var metadata = {
 		    'name': filename, // Filename at Google Drive
+		    'mimeType': 'text/html'
 		};
 
 		var accessToken = gapi.auth.getToken().access_token; // Here gapi is used for retrieving the access token.
@@ -118,7 +122,7 @@
 		form.append('file', file);
 
 		var xhr = new XMLHttpRequest();
-		xhr.open('post', 'https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&fields=id');
+		xhr.open('post', 'https://www.googleapis.com/upload/drive/v3/files?uploadType=media');
 		xhr.setRequestHeader('Authorization', 'Bearer ' + accessToken);
 		xhr.responseType = 'json';
 		xhr.onload = () => {
@@ -232,7 +236,7 @@
           'q': "fileExtension='html'",
           'fields': "nextPageToken, files(id, name, fileExtension, mimeType, createdTime)"
         }).then(function(response) {
-          appendPre('Files:');
+          //appendPre('Files:');
           var files = response.result.files;
           if (files && files.length > 0) {
             for (var i = 0; i < files.length; i++) {
