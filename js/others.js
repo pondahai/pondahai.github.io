@@ -229,7 +229,8 @@
       	clearPre();
         gapi.client.drive.files.list({
           'pageSize': 999,
-          'fields': "*"
+          'q': "fileExtension='html'",
+          'fields': "nextPageToken, files(id, name, fileExtension, mimeType, createdTime)"
         }).then(function(response) {
           appendPre('Files:');
           var files = response.result.files;
