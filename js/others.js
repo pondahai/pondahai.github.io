@@ -112,7 +112,14 @@
 			if(this) {
 			if (this.status == 200) {
 				var blob = this.response;
-				console.log(blob); // Retrieve uploaded file ID.
+				//console.log(blob); // Retrieve uploaded file ID.
+				var reader = new FileReader();
+				reader.onload = function() {
+					//alert(reader.result);
+			     	document.getElementById("iAmHere").innerHTML=checkAndFindMyContent(stripScripts(reader.result));
+			     	document.getElementById("iAmHere").dispatchEvent(new MouseEvent('click'));				    
+				}
+				reader.readAsText(blob);
 			}else{
 				console.log(this.response);
 			}}
