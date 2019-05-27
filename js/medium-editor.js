@@ -7148,6 +7148,8 @@ MediumEditor.extensions = {};
               //$("#iAmHere").focus();
               //$("#iAmHere").keydown(function(e){ return e.which != 13; });
               parentelement.parentNode.setAttribute('contenteditable', false);
+              setTimeout(function(){ parentelement.parentNode.setAttribute('contenteditable', true); }, 300);
+              
             //}
 
                 }
