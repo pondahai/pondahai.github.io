@@ -26,7 +26,7 @@
 	return filename;
   }
 
-  function downloadCurrentDocument () {
+  function downloadFileToCurrentDocument () {
 
   	var container = document.getElementById('iAmHere');
     var base64doc = btoa(unescape(encodeURIComponent(container.innerHTML))),
@@ -77,7 +77,7 @@
     return div.innerHTML;
   }
 
-  function uploadToCurrentDocument () {
+  function uploadFileToCurrentDocument () {
 	var input = document.createElement('input');
 	input.type = 'file';
 
@@ -100,8 +100,19 @@
 	input.click();
   }
 
-  function downloadFromCloud () {
-
+  function downloadFromCloud (id) {
+		var accessToken = gapi.auth.getToken().access_token; // Here gapi is used for retrieving the access token.
+		var xhr = new XMLHttpRequest();
+		xhr.open('post', 'https://www.googleapis.com/upload/drive/v3/files/' + id + '?alt=media');
+		xhr.setRequestHeader('Authorization', 'Bearer ' + accessToken);
+		xhr.responseType = 'blob';
+		xhr.onload = () => {
+			if (this.status == 200) {
+				var blob = this.response
+				console.log(blob); // Retrieve uploaded file ID.
+			}		    
+		};
+		xhr.send(form);
   }
   function uploadToCloud () {
   	var container = document.getElementById('iAmHere');
@@ -127,6 +138,7 @@
 		xhr.responseType = 'json';
 		xhr.onload = () => {
 		    console.log(xhr.response); // Retrieve uploaded file ID.
+		    listFiles();
 		};
 		xhr.send(form);
 	}
@@ -145,7 +157,7 @@
 
       var authorizeButton = document.getElementById('authorize_button');
       var signoutButton = document.getElementById('signout_button');
-      var loadcloudfileButton = document.getElementById('loadcloudfile_button');
+      //var loadcloudfileButton = document.getElementById('loadcloudfile_button');
       var savecloudfileButton = document.getElementById('savecloudfile_button');
 
       /**
@@ -186,13 +198,13 @@
         if (isSignedIn) {
           authorizeButton.style.display = 'none';
           signoutButton.style.display = '';
-          loadcloudfileButton.style.display = '';
+          //loadcloudfileButton.style.display = '';
           savecloudfileButton.style.display = '';
           listFiles();
         } else {
           authorizeButton.style.display = '';
           signoutButton.style.display = 'none';
-          loadcloudfileButton.style.display = 'none';
+          //loadcloudfileButton.style.display = 'none';
           savecloudfileButton.style.display = 'none';
         }
       }
@@ -222,6 +234,11 @@
         var textContent = document.createTextNode(message + '\n');
         pre.appendChild(textContent);
       }
+      function appendPre2(name,ctime,id) {
+        var pre = document.getElementById('content');
+        var textContent = document.createTextNode('<button id="listfile_button" class="example_b" onclick="downloadFromCloud(' + id + ');">' + name + " " + ctime + '</button>');
+        pre.appendChild(textContent);
+      }
       function clearPre() {
       	var pre = document.getElementById('content');
       	pre.innerHTML = "";
@@ -241,7 +258,8 @@
           if (files && files.length > 0) {
             for (var i = 0; i < files.length; i++) {
               var file = files[i];
-              appendPre(file.name + ' ' + file.createdTime + ' (' + file.id + ')');
+              //appendPre(file.name + ' ' + file.createdTime + ' ' );
+              appendPre2(file.name, file.createdTime, file.id);
             }
           } else {
             appendPre('No files found.');
