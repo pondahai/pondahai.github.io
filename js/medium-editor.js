@@ -7101,25 +7101,39 @@ MediumEditor.extensions = {};
                   range.collapse(true);
                   sel.removeAllRanges();
                   sel.addRange(range);
+            event.preventDefault();
                 }
-                // dahai: for svg inside text
+                // dahai: for svg text that inside
                 if (node.parentElement.firstChild.nodeName == "image") {
                   if (!node.parentElement.nextSibling) {
                     p = this.options.ownerDocument.createElement('p');
                     p.innerHTML = '<br>';
                     node.parentElement.parentElement.insertBefore(p, node.parentElement.nextSibling);
                   }
+                  // dahai: change cursor position
                   var range = document.createRange();
                   var sel = window.getSelection();
                   range.setStart(node.parentElement.nextSibling, 0);
                   range.collapse(true);
                   sel.removeAllRanges();
                   sel.addRange(range);
+            event.preventDefault();
                 }
           }
         } else if (MediumEditor.util.isKey(event, MediumEditor.util.keyCode.BACKSPACE) || MediumEditor.util.isKey(event, MediumEditor.util.keyCode.DELETE)) {
           // dahai: for svg text delete or backspace 
           if (node.parentElement && node.parentElement.nodeName == "svg") {
+            var range = document.createRange();
+            var sel = window.getSelection();
+            // dahai: do delete
+            if (sel.anchorNode == sel.extentNode) {
+              sel.deleteFromDocument();
+            }else{
+              if (sel.anchorNode.nodeName == "#text") {
+                sel.anchorNode.nodeValue = "";
+              }
+            }
+
             var parentElement = node.parentElement;
             var i = parentElement.children.length;
             while (--i) {
@@ -7135,6 +7149,13 @@ MediumEditor.extensions = {};
                 // console.log(node.parentElement.children[i].textContent);
               }
             }
+            // dahai: change cursor position
+            var range = document.createRange();
+            var sel = window.getSelection();
+            range.setStart(parentElement.nextSibling, 0);
+            range.collapse(true);
+            sel.removeAllRanges();
+            sel.addRange(range);
             // if (node.parentElement.firstChild.nodeName && node.parentElement.firstChild.nodeName == "#text") {
             //   var text = node.parentElement.firstChild.textContent;
             //   if (/^\s*$/.test(text)) {
@@ -7143,7 +7164,7 @@ MediumEditor.extensions = {};
             //   //console.log(node.parentElement.firstChild.textContent.match(/^ *$/));
             //   //console.log(node.parentElement.firstChild.textContent.length);
             // }
-
+            event.preventDefault();
           }
         }
     }
