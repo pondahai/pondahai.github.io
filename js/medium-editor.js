@@ -7129,14 +7129,15 @@ MediumEditor.extensions = {};
             if (sel.anchorNode == sel.extentNode) {
               var range = document.createRange();
               if (MediumEditor.util.isKey(event, MediumEditor.util.keyCode.BACKSPACE)) {
-                if ((sel.anchorOffset - 1) >= 0 ) {
+                if ((sel.anchorOffset - 1) >= 0 && ( sel.anchorOffset == sel.extentOffset)) {
                   range.setStart(sel.anchorNode, sel.anchorOffset - 1);
                   range.setEnd(sel.anchorNode, sel.anchorOffset);
                   sel.removeAllRanges();
                   sel.addRange(range);
-                }              }
+                }              
+              }
               if (MediumEditor.util.isKey(event, MediumEditor.util.keyCode.DELETE)) {
-                if ((sel.anchorOffset + 1) <= sel.anchorNode.length ) {
+                if ((sel.anchorOffset + 1) <= sel.anchorNode.length && ( sel.anchorOffset == sel.extentOffset)) {
                   range.setStart(sel.anchorNode, sel.anchorOffset);
                   range.setEnd(sel.anchorNode, sel.anchorOffset + 1);
                   sel.removeAllRanges();
