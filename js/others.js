@@ -103,16 +103,17 @@
   function downloadFromCloud (id) {
 		var accessToken = gapi.auth.getToken().access_token; // Here gapi is used for retrieving the access token.
 		var xhr = new XMLHttpRequest();
-		xhr.open('post', 'https://www.googleapis.com/upload/drive/v3/files/' + id + '?alt=media');
+		xhr.open('get', 'https://www.googleapis.com/upload/drive/v3/files/' + id + '?alt=media');
 		xhr.setRequestHeader('Authorization', 'Bearer ' + accessToken);
 		xhr.responseType = 'blob';
 		xhr.onload = () => {
+			if(this) {
 			if (this.status == 200) {
 				var blob = this.response;
 				console.log(blob); // Retrieve uploaded file ID.
 			}else{
 				console.log(this.response);
-			}
+			}}
 		};
 		xhr.send();
   }
