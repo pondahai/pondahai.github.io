@@ -509,6 +509,12 @@ MediumEditor.extensions = {};
                 keyCode = event.charCode !== null ? event.charCode : event.keyCode;
             }
 
+            // dahai: for chinese input ENTER
+            if (keyCode == 229 && event.code == "Enter") {
+              keyCode = 13;
+            }
+            //console.log(keyCode);// dahai: debug
+            //console.log(event,window.getSelection()); // dahai: debug
             return keyCode;
         },
 
@@ -2888,6 +2894,7 @@ MediumEditor.extensions = {};
                     //toFocus = this.lastMousedownTarget.nearestViewportElement.parentElement;
                     // dahai: start svg editor
                     svgFocus.firstElementChild.setAttribute('id', 'svg-active');
+                    svgFocus.setAttribute('contenteditable', true);
                     //new SVG('svg-active').size(svgFocus.firstElementChild.clientWidth, svgFocus.firstElementChild.clientHeight).rect().draw().attr('stroke-width',5).attr('fill','none').attr('stroke','orange').attr('stroke-opacity','0.5');
                     
                     // var poly1 = new SVG('svg-active').size(svgFocus.firstElementChild.clientWidth, svgFocus.firstElementChild.clientHeight)
@@ -3123,7 +3130,13 @@ MediumEditor.extensions = {};
         },
 
         handleInput: function (event) {
+          //console.log(event); // dahai: debug
+          // dahai: for chinese input problem
+          if (event.data !== null) {
             this.updateInput(event.currentTarget, event);
+          }else{
+            event.preventDefault();
+          }
         },
 
         handleClick: function (event) {
@@ -3135,6 +3148,7 @@ MediumEditor.extensions = {};
         },
 
         handleKeypress: function (event) {
+         // console.log(event); // dahai: debug
             this.triggerCustomEvent('editableKeypress', event, event.currentTarget);
 
             // If we're doing manual detection of the editableInput event we need
@@ -3176,7 +3190,7 @@ MediumEditor.extensions = {};
         },
 
         handleKeydown: function (event) {
-
+          //console.log(event, window.getSelection()); // dahai: debug
             this.triggerCustomEvent('editableKeydown', event, event.currentTarget);
 
             if (MediumEditor.util.isKey(event, MediumEditor.util.keyCode.SPACE)) {
@@ -3184,6 +3198,7 @@ MediumEditor.extensions = {};
             }
 
             if (MediumEditor.util.isKey(event, MediumEditor.util.keyCode.ENTER) || (event.ctrlKey && MediumEditor.util.isKey(event, MediumEditor.util.keyCode.M))) {
+                //console.log(event); // dahai: debug
                 return this.triggerCustomEvent('editableKeydownEnter', event, event.currentTarget);
             }
 
@@ -3194,7 +3209,8 @@ MediumEditor.extensions = {};
             if (MediumEditor.util.isKey(event, [MediumEditor.util.keyCode.DELETE, MediumEditor.util.keyCode.BACKSPACE])) {
                 return this.triggerCustomEvent('editableKeydownDelete', event, event.currentTarget);
             }
-        }
+
+        }        
     };
 
     MediumEditor.Events = Events;
@@ -4574,6 +4590,7 @@ MediumEditor.extensions = {};
         },
 
         onKeypress: function (keyPressEvent) {
+          //console.log(event); // dahai: debug
             if (this.disableEventHandling) {
                 return;
             }
@@ -7104,20 +7121,35 @@ MediumEditor.extensions = {};
             event.preventDefault();
                 }
                 // dahai: for svg text that inside
-                if (node.parentElement.firstChild.nodeName == "image") {
-                  if (!node.parentElement.nextSibling) {
+                var parentelement = node.parentElement;
+                if (parentelement.firstChild.nodeName == "image") {
+                  if (!parentelement.nextSibling) {
                     p = this.options.ownerDocument.createElement('p');
                     p.innerHTML = '<br>';
-                    node.parentElement.parentElement.insertBefore(p, node.parentElement.nextSibling);
+                    parentelement.parentElement.insertBefore(p, parentelement.nextSibling);
                   }
                   // dahai: change cursor position
-                  var range = document.createRange();
-                  var sel = window.getSelection();
-                  range.setStart(node.parentElement.nextSibling, 0);
-                  range.collapse(true);
-                  sel.removeAllRanges();
-                  sel.addRange(range);
+                  var nextsibling = parentelement.nextSibling;
+                  if (parentelement.nextSibling.scrollHeight == 0) {
+                    //nextsibling = nextsibling.nextSibling;
+
+                  }
+                  // var range = document.createRange();
+                  // var sel = window.getSelection();
+                  // range.setStart(nextsibling, 0);
+                  // range.collapse(true);
+                  // sel.removeAllRanges();
+                  // sel.addRange(range);
             event.preventDefault();
+            //if (event.which == 229 && event.key == "Enter") {
+              //console.log('here'); // dahai: debug
+              //event.preventDefault();
+              //event.stopPropagation();
+              //$("#iAmHere").focus();
+              //$("#iAmHere").keydown(function(e){ return e.which != 13; });
+              parentelement.parentNode.setAttribute('contenteditable', false);
+            //}
+
                 }
           }
         } else if (MediumEditor.util.isKey(event, MediumEditor.util.keyCode.BACKSPACE) || MediumEditor.util.isKey(event, MediumEditor.util.keyCode.DELETE)) {
