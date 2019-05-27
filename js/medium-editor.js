@@ -7101,7 +7101,7 @@ MediumEditor.extensions = {};
             MediumEditor.selection.moveCursor(this.options.ownerDocument, node.nextSibling);
             node.parentElement.removeChild(node);
         } else if (MediumEditor.util.isKey(event, MediumEditor.util.keyCode.ENTER)) {
-          // dahai: for svg enter press
+          // dahai: for svg enter press(caption text)
           if (node.parentElement.firstChild) {
                 if (node.parentElement.firstChild.nodeName == "svg") {
                   //node.style.width = null;
@@ -7147,6 +7147,7 @@ MediumEditor.extensions = {};
               //event.stopPropagation();
               //$("#iAmHere").focus();
               //$("#iAmHere").keydown(function(e){ return e.which != 13; });
+              // dahai: for chinese input enter key problem
               parentelement.parentNode.setAttribute('contenteditable', false);
               setTimeout(function(){ parentelement.parentNode.setAttribute('contenteditable', true); }, 300);
               
