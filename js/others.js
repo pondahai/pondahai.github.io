@@ -92,6 +92,7 @@
 	    	var content = readerEvent.target.result; // this is the content!
 	     	document.getElementById("iAmHere").innerHTML=checkAndFindMyContent(stripScripts(content));
 	     	document.getElementById("iAmHere").dispatchEvent(new MouseEvent('click'));
+	     	$('html, body').animate({ scrollTop: 0 }, 'fast');
 	   	}
 
   	    //document.getElementById("container").innerHTML='<object type="text/html" data='+file.name+' ></object>';
@@ -117,7 +118,8 @@
 				reader.onload = function() {
 					//alert(reader.result);
 			     	document.getElementById("iAmHere").innerHTML=checkAndFindMyContent(stripScripts(reader.result));
-			     	document.getElementById("iAmHere").dispatchEvent(new MouseEvent('click'));				    
+			     	document.getElementById("iAmHere").dispatchEvent(new MouseEvent('click'));
+			     	$('html, body').animate({ scrollTop: 0 }, 'fast');			    
 				}
 				reader.readAsText(blob);
 			}else{
@@ -266,6 +268,7 @@
          btn.innerHTML = name + " " + ctime; 
          btn.id = id;
          btn.setAttribute ('onclick', 'downloadFromCloud("'+id+'")');
+         btn.classList.add("fileslistbutton");
         // btn.onclick = function () {downloadFromCloud(id);};
         //btn.addEventListener("click", downloadFromCloud());
         div.appendChild(btn);
