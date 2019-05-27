@@ -110,9 +110,11 @@
 			if (this.status == 200) {
 				var blob = this.response
 				console.log(blob); // Retrieve uploaded file ID.
-			}		    
+			}else{
+				console.log(this.response);
+			}
 		};
-		xhr.send(form);
+		xhr.send();
   }
   function uploadToCloud () {
   	var container = document.getElementById('iAmHere');
@@ -186,7 +188,7 @@
           authorizeButton.onclick = handleAuthClick;
           signoutButton.onclick = handleSignoutClick;
         }, function(error) {
-          appendPre(JSON.stringify(error, null, 2));
+          appendDiv(JSON.stringify(error, null, 2));
         });
       }
 
@@ -236,8 +238,18 @@
       }
       function appendPre2(name,ctime,id) {
         var pre = document.getElementById('content');
-        var textContent = document.createTextNode('<button id="listfile_button" class="example_b" onclick="downloadFromCloud(' + id + ');">' + name + " " + ctime + '</button>');
+        var textContent = document.createTextNode('<button id="listfile_button" class="example_b" onclick="downloadFromCloud("' + id + '");">' + name + " " + ctime + '</button>');
         pre.appendChild(textContent);
+      }
+      function appendDiv(message) {
+        var div = document.getElementById('fileslist');
+        var textContent = document.createTextNode(message + '\n');
+        div.appendChild(textContent);
+      }
+      function appendDiv2(name,ctime,id) {
+        var div = document.getElementById('fileslist');
+        var textContent = document.createTextNode('<button id="listfile_button" class="example_b" onclick="downloadFromCloud("'+ id +'");">' + name + " " + ctime + '</button>');
+        div.appendChild(textContent);
       }
       function clearPre() {
       	var pre = document.getElementById('content');
@@ -259,10 +271,10 @@
             for (var i = 0; i < files.length; i++) {
               var file = files[i];
               //appendPre(file.name + ' ' + file.createdTime + ' ' );
-              appendPre2(file.name, file.createdTime, file.id);
+              appendDiv2(file.name, file.createdTime, file.id);
             }
           } else {
-            appendPre('No files found.');
+            appendDiv('No files found.');
           }
         });
       }
