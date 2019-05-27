@@ -188,8 +188,10 @@
           authorizeButton.onclick = handleAuthClick;
           signoutButton.onclick = handleSignoutClick;
         }, function(error) {
-          appendDiv(JSON.stringify(error, null, 2));
+          appendFilesList(JSON.stringify(error, null, 2));
         });
+        appendFilesList('hello');
+        appendFilesList2('name','datetime','ooxx1122');
       }
 
       /**
@@ -241,15 +243,19 @@
         var textContent = document.createTextNode('<button id="listfile_button" class="example_b" onclick="downloadFromCloud("' + id + '");">' + name + " " + ctime + '</button>');
         pre.appendChild(textContent);
       }
-      function appendDiv(message) {
+      function appendFilesList(message) {
         var div = document.getElementById('fileslist');
         var textContent = document.createTextNode(message + '\n');
         div.appendChild(textContent);
       }
-      function appendDiv2(name,ctime,id) {
+      function appendFilesList2(name,ctime,id) {
         var div = document.getElementById('fileslist');
-        var textContent = document.createTextNode('<button id="listfile_button" class="example_b" onclick="downloadFromCloud("'+ id +'");">' + name + " " + ctime + '</button>');
-        div.appendChild(textContent);
+        //var textContent = document.createTextNode('<button id="listfile_button" class="" onclick="downloadFromCloud("'+ id +'");">' + name + " " + ctime + '</button>');
+        var btn = document.createElement("BUTTON"); 
+        btn.innerHTML = name + " " + ctime; 
+        btn.onclick = function () {downloadFromCloud("'+ id +'");};
+        //btn.addEventListener("click", downloadFromCloud("'+ id +'"));
+        div.appendChild(btn);
       }
       function clearPre() {
       	var pre = document.getElementById('content');
@@ -275,10 +281,10 @@
             for (var i = 0; i < files.length; i++) {
               var file = files[i];
               //appendPre(file.name + ' ' + file.createdTime + ' ' );
-              appendDiv2(file.name, file.createdTime, file.id);
+              appendFilesList2(file.name, file.createdTime, file.id);
             }
           } else {
-            appendDiv('No files found.');
+            appendFilesList('No files found.');
           }
         });
       }
