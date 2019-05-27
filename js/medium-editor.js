@@ -7127,6 +7127,22 @@ MediumEditor.extensions = {};
             var sel = window.getSelection();
             // dahai: do delete
             if (sel.anchorNode == sel.extentNode) {
+              var range = document.createRange();
+              if (MediumEditor.util.isKey(event, MediumEditor.util.keyCode.BACKSPACE)) {
+                if ((sel.anchorOffset - 1) >= 0 ) {
+                  range.setStart(sel.anchorNode, sel.anchorOffset - 1);
+                  range.setEnd(sel.anchorNode, sel.anchorOffset);
+                  sel.removeAllRanges();
+                  sel.addRange(range);
+                }              }
+              if (MediumEditor.util.isKey(event, MediumEditor.util.keyCode.DELETE)) {
+                if ((sel.anchorOffset + 1) <= sel.anchorNode.length ) {
+                  range.setStart(sel.anchorNode, sel.anchorOffset);
+                  range.setEnd(sel.anchorNode, sel.anchorOffset + 1);
+                  sel.removeAllRanges();
+                  sel.addRange(range);                  
+                }
+              }
               sel.deleteFromDocument();
             }else{
               if (sel.anchorNode.nodeName == "#text") {
