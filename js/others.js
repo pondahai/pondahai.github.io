@@ -101,6 +101,8 @@
   }
 
   function downloadFromCloud (id) {
+  	//console.log(id);
+  	if (gapi) {
 		var accessToken = gapi.auth.getToken().access_token; // Here gapi is used for retrieving the access token.
 		var xhr = new XMLHttpRequest();
 		xhr.open('get', 'https://www.googleapis.com/upload/drive/v3/files/' + id + '?alt=media');
@@ -116,6 +118,7 @@
 			}}
 		};
 		xhr.send();
+	}
   }
   function uploadToCloud () {
   	var container = document.getElementById('iAmHere');
@@ -191,8 +194,8 @@
         }, function(error) {
           appendFilesList(JSON.stringify(error, null, 2));
         });
-        appendFilesList('hello');
-        appendFilesList2('name','datetime','ooxx1122');
+        //appendFilesList('hello');
+        //appendFilesList2('name','datetime','ooxx1122');
       }
 
       /**
@@ -252,10 +255,12 @@
       function appendFilesList2(name,ctime,id) {
         var div = document.getElementById('fileslist');
         //var textContent = document.createTextNode('<button id="listfile_button" class="" onclick="downloadFromCloud("'+ id +'");">' + name + " " + ctime + '</button>');
-        var btn = document.createElement("BUTTON"); 
-        btn.innerHTML = name + " " + ctime; 
-        btn.onclick = function () {downloadFromCloud("'+ id +'");};
-        //btn.addEventListener("click", downloadFromCloud("'+ id +'"));
+         var btn = document.createElement("BUTTON"); 
+         btn.innerHTML = name + " " + ctime; 
+         btn.id = id;
+         btn.setAttribute ('onclick', 'downloadFromCloud("'+id+'")');
+        // btn.onclick = function () {downloadFromCloud(id);};
+        //btn.addEventListener("click", downloadFromCloud());
         div.appendChild(btn);
       }
       function clearPre() {
