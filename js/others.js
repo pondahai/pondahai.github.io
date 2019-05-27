@@ -255,11 +255,15 @@
       	var pre = document.getElementById('content');
       	pre.innerHTML = "";
       }
+      function clearFilesList() {
+      	var div = document.getElementById('fileslist');
+      	div.innerHTML = "";
+      }
       /**
        * Print files.
        */
       function listFiles() {
-      	clearPre();
+      	clearFilesList();
         gapi.client.drive.files.list({
           'pageSize': 999,
           'q': "fileExtension='html'",
