@@ -7149,13 +7149,7 @@ MediumEditor.extensions = {};
                 // console.log(node.parentElement.children[i].textContent);
               }
             }
-            // dahai: change cursor position
-            var range = document.createRange();
-            var sel = window.getSelection();
-            range.setStart(parentElement.nextSibling, 0);
-            range.collapse(true);
-            sel.removeAllRanges();
-            sel.addRange(range);
+
             // if (node.parentElement.firstChild.nodeName && node.parentElement.firstChild.nodeName == "#text") {
             //   var text = node.parentElement.firstChild.textContent;
             //   if (/^\s*$/.test(text)) {
