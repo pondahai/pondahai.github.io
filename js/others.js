@@ -223,6 +223,7 @@
           signoutButton.style.display = 'none';
           //loadcloudfileButton.style.display = 'none';
           savecloudfileButton.style.display = 'none';
+          clearFilesList();
         }
       }
 
