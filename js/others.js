@@ -108,7 +108,7 @@
 		xhr.open('get', 'https://www.googleapis.com/drive/v3/files/' + id + '?alt=media');
 		xhr.setRequestHeader('Authorization', 'Bearer ' + accessToken);
 		xhr.responseType = 'blob';
-		xhr.onload = () => {
+		xhr.onload = function(e) {
 			if(this) {
 			if (this.status == 200) {
 				var blob = this.response;
