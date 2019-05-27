@@ -108,7 +108,7 @@
 		xhr.responseType = 'blob';
 		xhr.onload = () => {
 			if (this.status == 200) {
-				var blob = this.response
+				var blob = this.response;
 				console.log(blob); // Retrieve uploaded file ID.
 			}else{
 				console.log(this.response);
