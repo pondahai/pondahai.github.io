@@ -290,7 +290,7 @@
         gapi.client.drive.files.list({
           'pageSize': 999,
           'q': "fileExtension='html'",
-          'fields': "nextPageToken, files(id, name, fileExtension, mimeType, createdTime)"
+          'fields': "nextPageToken, files(id, name, fileExtension, mimeType, createdTime, trashed)"
         }).then(function(response) {
           //appendPre('Files:');
           var files = response.result.files;
@@ -298,7 +298,9 @@
             for (var i = 0; i < files.length; i++) {
               var file = files[i];
               //appendPre(file.name + ' ' + file.createdTime + ' ' );
-              appendFilesList2(file.name, file.createdTime, file.id);
+              	if (trashed == "False") {
+              		appendFilesList2(file.name, file.createdTime, file.id);
+      			}
             }
           } else {
             appendFilesList('No files found.');
