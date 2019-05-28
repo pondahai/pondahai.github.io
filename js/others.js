@@ -207,7 +207,7 @@
 		fbShareButton.setAttribute('class', 'fb-share-button');
 		fbShareButton.setAttribute('data-href', url);
 		fbShareButton.setAttribute('data-layout', 'button_count');
-		document.body.insertBefore(fbShareButton,document.getElementById('fbsharebuttonposition'));
+		document.getElementById('fbsharebuttonposition').parentNode.insertBefore(fbShareButton,document.getElementById('fbsharebuttonposition'));
 	 };
 
   	uploadToCloud (afterUploadThenShare);
