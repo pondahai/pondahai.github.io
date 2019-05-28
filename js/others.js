@@ -121,9 +121,21 @@
 			     	document.getElementById("iAmHere").innerHTML=checkAndFindMyContent(stripScripts(reader.result));
 			     	document.getElementById("iAmHere").dispatchEvent(new MouseEvent('click'));
 			     	$('html, body').animate({ scrollTop: 0 }, 'fast');
-			     	// dahai: difference name difference file
+			     	// when download finish check the filename value in the input element
 			     	var file_id = null;
 			     	var file_name = null;
+			     	var filenameFromFirstLine = getFirstLineFotFileName();
+		     		if (!document.getElementById('current_file_name')) {
+			     		input = document.createElement("input");
+		     		}else{
+						input = document.getElementById('current_file_name');
+		     		}
+					input.setAttribute("type", "hidden");
+					input.setAttribute("name", "current_file_name");
+					input.setAttribute("id", "current_file_name");
+					input.setAttribute("value", filenameFromFirstLine);
+
+			     	// dahai: difference name difference file
 			     	if (document.getElementById('current_file_id')) {
 			     		file_id = document.getElementById('current_file_id');
 			     	}
@@ -168,9 +180,16 @@
 	}
   }
   function uploadToCloudAndShare () {
-  	var afterUploadThenShare = function () {
-  		
-  	};
+  	var afterUploadThenShare = function (id) {
+		var accessToken = gapi.auth.getToken().access_token; // Here gapi is used for retrieving the access token.
+	    init = function() {
+	        s = new gapi.drive.share.ShareClient();
+	        s.setOAuthToken(accessToken);
+	        s.setItemIds([id]);
+	    }
+	        gapi.load('drive-share', init);
+	 };
+
   	uploadToCloud (afterUploadThenShare);
   }
 
@@ -211,7 +230,7 @@
 		xhr.onload = () => {
 		    console.log(xhr.response); // Retrieve uploaded file ID.
 		    listFiles();
-		    afterUploadThenShareFunction();
+		    afterUploadThenShareFunction(xhr.response.id);
 		};
 		xhr.send(form);
 	}
