@@ -138,6 +138,8 @@
 			     	}else{
 			     		if (!document.getElementById('current_file_id')) {
 							input = document.createElement("input");
+			     		}else{
+			     			input = document.getElementById('current_file_id');
 			     		}
 						input.setAttribute("type", "hidden");
 						input.setAttribute("name", "current_file_id");
@@ -145,7 +147,9 @@
 						input.setAttribute("value", id);
 						document.body.insertBefore(input,document.getElementById('iAmHere'));
 			     		if (!document.getElementById('current_file_name')) {
-				     	input = document.createElement("input");
+				     		input = document.createElement("input");
+			     		}else{
+							input = document.getElementById('current_file_name');
 			     		}
 						input.setAttribute("type", "hidden");
 						input.setAttribute("name", "current_file_name");
