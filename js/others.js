@@ -398,6 +398,6 @@
     //console.log(aryPara['fileid']);
     // for share file download from url qurey string
     var fileid = aryPara['fileid'];
-    setTimeout('downloadFromCloud(aryPara["'+fileid+'"],"");',3000);
+    setTimeout('downloadFromCloud("'+fileid+'","");',3000);
   }
 
