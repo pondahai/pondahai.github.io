@@ -397,6 +397,6 @@
     }
     //console.log(aryPara['fileid']);
     // for share file download from url qurey string
-    downloadFromCloud(aryPara['fileid'],'');
+    setTimeout('downloadFromCloud(aryPara["'+fileid+'"],"");',3000);
   }
 
