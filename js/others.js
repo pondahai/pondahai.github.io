@@ -1,5 +1,40 @@
   'use strict';
 
+  function getFirstParagraph() {
+  	var contentFiltered = $("#iAmHere")
+	                       .contents()
+	                       .filter(function() { 
+	                           return !!$.trim( this.innerHTML || this.data ); 
+	                       });
+	var paragraphNode = null;
+	for (var i=0; i<contentFiltered.length; i++){
+		if (contentFiltered[i].nodeName == "P") {
+			paragraphNode = contentFiltered[i];
+			break;
+		}
+	}
+
+	return (paragraphNode.innerHTML)?paragraphNode.innerHTML:null;
+  }
+
+  function getFirstLine () {
+	var firstLine = $("#iAmHere")
+	                       .contents()
+	                       .filter(function() { 
+	                           return !!$.trim( this.innerHTML || this.data ); 
+	                       })
+	                       .first();
+
+	var firstLineText = "";
+	var firstfirstLine = "";
+	if (firstLine[0].innerText) {
+		firstLineText = firstLine[0].innerText;
+	}
+	if (firstLineText.split('\n')[0]){
+		firstfirstLine = firstLineText.split('\n')[0];
+	}
+	return firstfirstLine;
+  }
 
   function getFirstLineFotFileName () {
 	var firstLine = $("#iAmHere")
@@ -200,13 +235,22 @@
 	    var url = 'https://pondahai.github.io/?fileid=' + id;
 	    console.log(url);
 
-		var meta = document.createElement('meta');
+		var meta;
+		meta = document.createElement('meta');
 		meta.setAttribute('property', 'og:url');
 		meta.content = url;
 		document.getElementsByTagName('head')[0].appendChild(meta);
 		meta = document.createElement('meta');
+		meta.setAttribute('property', 'og:type');
+		meta.content = "website";
+		document.getElementsByTagName('head')[0].appendChild(meta);
+		meta = document.createElement('meta');
 		meta.setAttribute('property', 'og:title');
-		meta.content = name;
+		meta.content = getFirstLine();
+		document.getElementsByTagName('head')[0].appendChild(meta);
+		meta = document.createElement('meta');
+		meta.setAttribute('property', 'og:description');
+		meta.content = getFirstParagraph();
 		document.getElementsByTagName('head')[0].appendChild(meta);
 
 		// remove button if it is exist
