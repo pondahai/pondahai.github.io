@@ -298,7 +298,7 @@
             for (var i = 0; i < files.length; i++) {
               var file = files[i];
               //appendPre(file.name + ' ' + file.createdTime + ' ' );
-              	if (file.trashed == "false") {
+              	if (!file.trashed) {
               		appendFilesList2(file.name, file.createdTime, file.id);
       			}
             }
