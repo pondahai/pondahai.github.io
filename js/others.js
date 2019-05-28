@@ -121,20 +121,23 @@
 			     	document.getElementById("iAmHere").innerHTML=checkAndFindMyContent(stripScripts(reader.result));
 			     	document.getElementById("iAmHere").dispatchEvent(new MouseEvent('click'));
 			     	$('html, body').animate({ scrollTop: 0 }, 'fast');
-			     	// when download finish check the filename value in the input element
 			     	var file_id = null;
 			     	var file_name = null;
-			     	var filenameFromFirstLine = getFirstLineFotFileName();
-		     		if (!document.getElementById('current_file_name')) {
-			     		input = document.createElement("input");
-		     		}else{
-						input = document.getElementById('current_file_name');
-		     		}
-					input.setAttribute("type", "hidden");
-					input.setAttribute("name", "current_file_name");
-					input.setAttribute("id", "current_file_name");
-					input.setAttribute("value", filenameFromFirstLine);
-					document.body.insertBefore(input,document.getElementById('iAmHere'));
+			     	// when download finish check the filename value in the input element
+			     	if (!name) {
+				     	var filenameFromFirstLine = getFirstLineFotFileName();
+			     		if (!document.getElementById('current_file_name')) {
+				     		input = document.createElement("input");
+			     		}else{
+							input = document.getElementById('current_file_name');
+			     		}
+						input.setAttribute("type", "hidden");
+						input.setAttribute("name", "current_file_name");
+						input.setAttribute("id", "current_file_name");
+						input.setAttribute("value", filenameFromFirstLine);
+						document.body.insertBefore(input,document.getElementById('iAmHere'));
+						name = filenameFromFirstLine;
+					}
 			     	// dahai: difference name difference file
 			     	if (document.getElementById('current_file_id')) {
 			     		file_id = document.getElementById('current_file_id');
