@@ -119,7 +119,12 @@
 					//alert(reader.result);
 			     	document.getElementById("iAmHere").innerHTML=checkAndFindMyContent(stripScripts(reader.result));
 			     	document.getElementById("iAmHere").dispatchEvent(new MouseEvent('click'));
-			     	$('html, body').animate({ scrollTop: 0 }, 'fast');			    
+			     	$('html, body').animate({ scrollTop: 0 }, 'fast');
+			     	var input = document.createElement("input");
+					input.setAttribute("type", "hidden");
+					input.setAttribute("name", "current_file_id");
+					input.setAttribute("id", "current_file_id");
+					input.setAttribute("value", id);		    
 				}
 				reader.readAsText(blob);
 			}else{
@@ -148,7 +153,12 @@
 		form.append('file', file);
 
 		var xhr = new XMLHttpRequest();
-		xhr.open('patch', 'https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&fields=id');
+		var current_file_id = document.getElementById('current_file_id').value;
+		if (current_file_id) {
+			xhr.open('patch', 'https://www.googleapis.com/upload/drive/v3/files/' + current_file_id);
+		}else{
+			xhr.open('post', 'https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&fields=id');
+		}		
 		xhr.setRequestHeader('Authorization', 'Bearer ' + accessToken);
 		xhr.responseType = 'json';
 		xhr.onload = () => {
