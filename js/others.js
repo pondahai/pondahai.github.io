@@ -183,7 +183,7 @@
 		var xhr = new XMLHttpRequest();
 		var current_file_id = document.getElementById('current_file_id').value;
 		var current_file_name = document.getElementById('current_file_name').value;
-		if (current_file_id && current_file_name && (filename == current_file_name) {
+		if (current_file_id && current_file_name && (filename == current_file_name)) {
 			xhr.open('PATCH', 'https://www.googleapis.com/upload/drive/v3/files/' + current_file_id + '?uploadType=multipart');
 		}else{
 			xhr.open('POST', 'https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&fields=id');
