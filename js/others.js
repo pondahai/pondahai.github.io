@@ -204,7 +204,7 @@
 		document.getElementsByTagName('head')[0].appendChild(meta);
 
 		var fbShareButton = document.getElementById('FBshareButton');
-		fbShareButton.data-href = url;
+		fbShareButton.setAttribute(data-href, url);
 		fbShareButton.style.visibility = "visible";
 	 };
 
