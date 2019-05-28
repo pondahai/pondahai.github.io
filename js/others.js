@@ -134,7 +134,7 @@
 					input.setAttribute("name", "current_file_name");
 					input.setAttribute("id", "current_file_name");
 					input.setAttribute("value", filenameFromFirstLine);
-
+					document.body.insertBefore(input,document.getElementById('iAmHere'));
 			     	// dahai: difference name difference file
 			     	if (document.getElementById('current_file_id')) {
 			     		file_id = document.getElementById('current_file_id');
@@ -182,7 +182,7 @@
   function uploadToCloudAndShare () {
   	var afterUploadThenShare = function (id) {
 		var accessToken = gapi.auth.getToken().access_token; // Here gapi is used for retrieving the access token.
-	    init = function() {
+	    var init = function() {
 	        s = new gapi.drive.share.ShareClient();
 	        s.setOAuthToken(accessToken);
 	        s.setItemIds([id]);
