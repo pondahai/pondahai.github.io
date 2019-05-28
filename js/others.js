@@ -104,7 +104,7 @@
 
   function downloadFromCloud (id,name) {
   	// hide fb share button
-	var fbShareButton = document.getElementById('FBshareButton');
+	var fbShareButton = document.getElementById('idFBshareButton');
 	if (fbShareButton) {
 			fbShareButton.parentNode.removeChild(fbShareButton);
 	}
@@ -206,17 +206,18 @@
 		document.getElementsByTagName('head')[0].appendChild(meta);
 
 		// remove button if it is exist
-		var fbShareButton = document.getElementById('FBshareButton');
+		var fbShareButton = document.getElementById('idFBshareButton');
 		if (fbShareButton) {
 				fbShareButton.parentNode.removeChild(fbShareButton);
 		}
-		
+
 		// show fb share button
 		var url = "https://pondahai.github.io/?fileid=" + id;
 		var buttonimg = document.createElement('img');
 		buttonimg.src = "https://assets.cobaltnitra.com/teams/repository/export/685/994e08a161005809f00505692530e/685994e08a161005809f00505692530e.png";
 		buttonimg.setAttribute("style","width: 30px;");
 		var fbShareButton = document.createElement('a');
+		fbShareButton.setAttribute('id','idFBshareButton');
 		fbShareButton.setAttribute('href', 'javascript:fbshareCurrentPage("'+url+'","'+name+'")');
 		fbShareButton.setAttribute('target', '_blank');
 		fbShareButton.appendChild(buttonimg);
