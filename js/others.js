@@ -298,8 +298,11 @@
             for (var i = 0; i < files.length; i++) {
               var file = files[i];
               //appendPre(file.name + ' ' + file.createdTime + ' ' );
+              	var date = new Date(file.createdTime).toJSON();
+				var newDate=new Date(+new Date(date)+8*3600*1000).toISOString().replace(/T/g,' ').replace(/\.[\d]{3}Z/,'');
+
               	if (!file.trashed) {
-              		appendFilesList2(file.name, file.createdTime, file.id);
+              		appendFilesList2(file.name, newDate, file.id);
       			}
             }
           } else {
