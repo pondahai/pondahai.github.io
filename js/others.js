@@ -186,7 +186,7 @@
   	var afterUploadThenShare = function (id) {
 		var accessToken = gapi.auth.getToken().access_token; // Here gapi is used for retrieving the access token.
 	    var init = function() {
-	        s = new gapi.drive.share.ShareClient();
+	        var s = new gapi.drive.share.ShareClient();
 	        s.setOAuthToken(accessToken);
 	        s.setItemIds([id]);
 	    }
