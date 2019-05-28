@@ -104,8 +104,7 @@
 
   function downloadFromCloud (id,name) {
 		var fbShareButton = document.getElementById('FBshareButton');
-		fbShareButton.setAttribute(data-href, url);
-		fbShareButton.style.visibility = "hidden";
+		fbShareButton.parentNode.removeChild(fbShareButton);
   	//console.log(id);
   	if (gapi) {
 		var accessToken = gapi.auth.getToken().access_token; // Here gapi is used for retrieving the access token.
@@ -203,9 +202,12 @@
 		meta.content = url;
 		document.getElementsByTagName('head')[0].appendChild(meta);
 
-		var fbShareButton = document.getElementById('FBshareButton');
-		fbShareButton.setAttribute(data-href, url);
-		fbShareButton.style.visibility = "visible";
+		var fbShareButton = document.createElement('div');
+		fbShareButton.setAttribute('id', 'FBshareButton');
+		fbShareButton.setAttribute('class', 'fb-share-button');
+		fbShareButton.setAttribute('data-href', url);
+		fbShareButton.setAttribute('data-layout', 'button_count');
+		document.body.insertBefore(fbShareButton,document.getElementById('fbsharebuttonposition'));
 	 };
 
   	uploadToCloud (afterUploadThenShare);
