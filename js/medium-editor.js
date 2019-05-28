@@ -7157,6 +7157,13 @@ MediumEditor.extensions = {};
           }
         } else if (MediumEditor.util.isKey(event, MediumEditor.util.keyCode.BACKSPACE) || MediumEditor.util.isKey(event, MediumEditor.util.keyCode.DELETE)) {
           // dahai: for svg text delete or backspace 
+          if (node.nextSibling && node.nextSibling.nodeName == "DIV" && node.nextSibling.children && node.nextSibling.children[0] && node.nextSibling.children[0].nodeName == "svg") {
+            // delete or backspace node but div.svg is next
+            //console.log("yes");
+            node.parentElement.removeChild(node);
+            event.preventDefault();
+            event.stopPropagation();
+          }
           if (node.parentElement && node.parentElement.nodeName == "svg") {
             var range = document.createRange();
             var sel = window.getSelection();
