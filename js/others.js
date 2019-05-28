@@ -129,6 +129,7 @@
 	     	document.getElementById("iAmHere").innerHTML=checkAndFindMyContent(stripScripts(content));
 	     	document.getElementById("iAmHere").dispatchEvent(new MouseEvent('click'));
 	     	$('html, body').animate({ scrollTop: 0 }, 'fast');
+	     	document.title = getFirstLine();
 	   	}
 
   	    //document.getElementById("container").innerHTML='<object type="text/html" data='+file.name+' ></object>';
@@ -161,6 +162,8 @@
 			     	document.getElementById("iAmHere").innerHTML=checkAndFindMyContent(stripScripts(reader.result));
 			     	document.getElementById("iAmHere").dispatchEvent(new MouseEvent('click'));
 			     	$('html, body').animate({ scrollTop: 0 }, 'fast');
+			     	document.title = getFirstLine();
+
 			     	var file_id = null;
 			     	var file_name = null;
 			     	// when download finish check the filename value in the input element
