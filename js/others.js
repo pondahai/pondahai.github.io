@@ -181,8 +181,14 @@
 		form.append('file', file);
 
 		var xhr = new XMLHttpRequest();
-		var current_file_id = document.getElementById('current_file_id').value;
-		var current_file_name = document.getElementById('current_file_name').value;
+		var current_file_id = null;
+		var current_file_name = null;
+		if (document.getElementById('current_file_id')) {
+			current_file_id = document.getElementById('current_file_id').value;
+		}
+		if (document.getElementById('current_file_name')) {
+			current_file_name = document.getElementById('current_file_name').value;
+		}
 		if (current_file_id && current_file_name && (filename == current_file_name)) {
 			xhr.open('PATCH', 'https://www.googleapis.com/upload/drive/v3/files/' + current_file_id + '?uploadType=multipart');
 		}else{
@@ -286,16 +292,16 @@
        *
        * @param {string} message Text to be placed in pre element.
        */
-      function appendPre(message) {
-        var pre = document.getElementById('content');
-        var textContent = document.createTextNode(message + '\n');
-        pre.appendChild(textContent);
-      }
-      function appendPre2(name,ctime,id) {
-        var pre = document.getElementById('content');
-        var textContent = document.createTextNode('<button id="listfile_button" class="example_b" onclick="downloadFromCloud("' + id + '",' + name + ');">' + name + " " + ctime + '</button>');
-        pre.appendChild(textContent);
-      }
+      // function appendPre(message) {
+      //   var pre = document.getElementById('content');
+      //   var textContent = document.createTextNode(message + '\n');
+      //   pre.appendChild(textContent);
+      // }
+      // function appendPre2(name,ctime,id) {
+      //   var pre = document.getElementById('content');
+      //   var textContent = document.createTextNode('<button id="listfile_button" class="example_b" onclick="downloadFromCloud("' + id + '",' + name + ');">' + name + " " + ctime + '</button>');
+      //   pre.appendChild(textContent);
+      // }
       function appendFilesList(message) {
         var div = document.getElementById('fileslist');
         var textContent = document.createTextNode(message + '\n');
@@ -307,7 +313,7 @@
          var btn = document.createElement("BUTTON"); 
          btn.innerHTML = name + " " + ctime; 
          btn.id = id;
-         btn.setAttribute ('onclick', 'downloadFromCloud("'+id+'",'+name+')');
+         btn.setAttribute ('onclick', 'downloadFromCloud("'+id+'","'+name+'")');
          btn.classList.add("fileslistbutton");
         // btn.onclick = function () {downloadFromCloud(id);};
         //btn.addEventListener("click", downloadFromCloud());
