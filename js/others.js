@@ -101,12 +101,12 @@
 	input.click();
   }
 
-  function downloadFromCloud (id) {
+  function downloadFromCloud (id,name) {
   	//console.log(id);
   	if (gapi) {
 		var accessToken = gapi.auth.getToken().access_token; // Here gapi is used for retrieving the access token.
 		var xhr = new XMLHttpRequest();
-		xhr.open('get', 'https://www.googleapis.com/drive/v3/files/' + id + '?alt=media');
+		xhr.open('GET', 'https://www.googleapis.com/drive/v3/files/' + id + '?alt=media');
 		xhr.setRequestHeader('Authorization', 'Bearer ' + accessToken);
 		xhr.responseType = 'blob';
 		xhr.onload = function(e) {
@@ -120,11 +120,39 @@
 			     	document.getElementById("iAmHere").innerHTML=checkAndFindMyContent(stripScripts(reader.result));
 			     	document.getElementById("iAmHere").dispatchEvent(new MouseEvent('click'));
 			     	$('html, body').animate({ scrollTop: 0 }, 'fast');
-			     	var input = document.createElement("input");
-					input.setAttribute("type", "hidden");
-					input.setAttribute("name", "current_file_id");
-					input.setAttribute("id", "current_file_id");
-					input.setAttribute("value", id);		    
+			     	// dahai: difference name difference file
+			     	var file_id = null;
+			     	var file_name = null;
+			     	if (document.getElementById('current_file_id')) {
+			     		file_id = document.getElementById('current_file_id');
+			     	}
+			     	if (document.getElementById('current_file_name')) {
+			     		file_name = document.getElementById('current_file_name');
+			     	}
+			     	var input;
+			     	if ((file_id&&file_name)&&(file_id.value === id)&&(file_name.value === name)) {
+			     		input = document.getElementById('current_file_id');
+			     		input.setAttribute("value", id);
+			     		input = document.getElementById('current_file_name');
+			     		input.setAttribute("value", name);
+			     	}else{
+			     		if (!document.getElementById('current_file_id')) {
+							input = document.createElement("input");
+			     		}
+						input.setAttribute("type", "hidden");
+						input.setAttribute("name", "current_file_id");
+						input.setAttribute("id", "current_file_id");
+						input.setAttribute("value", id);
+						document.body.insertBefore(input,document.getElementById('iAmHere'));
+			     		if (!document.getElementById('current_file_name')) {
+				     	input = document.createElement("input");
+			     		}
+						input.setAttribute("type", "hidden");
+						input.setAttribute("name", "current_file_name");
+						input.setAttribute("id", "current_file_name");
+						input.setAttribute("value", name);
+						document.body.insertBefore(input,document.getElementById('iAmHere'));
+					}
 				}
 				reader.readAsText(blob);
 			}else{
@@ -154,10 +182,11 @@
 
 		var xhr = new XMLHttpRequest();
 		var current_file_id = document.getElementById('current_file_id').value;
-		if (current_file_id) {
-			xhr.open('patch', 'https://www.googleapis.com/upload/drive/v3/files/' + current_file_id);
+		var current_file_name = document.getElementById('current_file_name').value;
+		if (current_file_id && current_file_name && (filename == current_file_name) {
+			xhr.open('PATCH', 'https://www.googleapis.com/upload/drive/v3/files/' + current_file_id + '?uploadType=multipart');
 		}else{
-			xhr.open('post', 'https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&fields=id');
+			xhr.open('POST', 'https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&fields=id');
 		}		
 		xhr.setRequestHeader('Authorization', 'Bearer ' + accessToken);
 		xhr.responseType = 'json';
@@ -264,7 +293,7 @@
       }
       function appendPre2(name,ctime,id) {
         var pre = document.getElementById('content');
-        var textContent = document.createTextNode('<button id="listfile_button" class="example_b" onclick="downloadFromCloud("' + id + '");">' + name + " " + ctime + '</button>');
+        var textContent = document.createTextNode('<button id="listfile_button" class="example_b" onclick="downloadFromCloud("' + id + '",' + name + ');">' + name + " " + ctime + '</button>');
         pre.appendChild(textContent);
       }
       function appendFilesList(message) {
@@ -278,7 +307,7 @@
          var btn = document.createElement("BUTTON"); 
          btn.innerHTML = name + " " + ctime; 
          btn.id = id;
-         btn.setAttribute ('onclick', 'downloadFromCloud("'+id+'")');
+         btn.setAttribute ('onclick', 'downloadFromCloud("'+id+'",'+name+')');
          btn.classList.add("fileslistbutton");
         // btn.onclick = function () {downloadFromCloud(id);};
         //btn.addEventListener("click", downloadFromCloud());
