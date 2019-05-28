@@ -103,8 +103,11 @@
   }
 
   function downloadFromCloud (id,name) {
-		var fbShareButton = document.getElementById('FBshareButton');
-		fbShareButton.parentNode.removeChild(fbShareButton);
+  	// hide fb share button
+	var fbShareButton = document.getElementById('FBshareButton');
+	if (fbShareButton) {
+			fbShareButton.parentNode.removeChild(fbShareButton);
+	}
   	//console.log(id);
   	if (gapi) {
 		var accessToken = gapi.auth.getToken().access_token; // Here gapi is used for retrieving the access token.
@@ -185,7 +188,7 @@
 	}
   }
   function uploadToCloudAndShare () {
-  	var afterUploadThenShare = function (id) {
+  	var afterUploadThenShare = function (id, name) {
 		var accessToken = gapi.auth.getToken().access_token; // Here gapi is used for retrieving the access token.
 	    var init = function() {
 	        var s = new gapi.drive.share.ShareClient();
@@ -198,16 +201,22 @@
 	    console.log(url);
 
 		var meta = document.createElement('meta');
-		meta.property = "og:url";
+		meta.setAttribute('property', 'og:url');
 		meta.content = url;
 		document.getElementsByTagName('head')[0].appendChild(meta);
 
-		var fbShareButton = document.createElement('div');
-		fbShareButton.setAttribute('id', 'FBshareButton');
-		fbShareButton.setAttribute('class', 'fb-share-button');
-		fbShareButton.setAttribute('data-href', url);
-		fbShareButton.setAttribute('data-layout', 'button_count');
+		// show fb share button
+		var url = "https://pondahai.github.io/?fileid=" + id;
+		var buttonimg = document.createElement('img');
+		buttonimg.src = "https://assets.cobaltnitra.com/teams/repository/export/685/994e08a161005809f00505692530e/685994e08a161005809f00505692530e.png";
+		buttonimg.setAttribute("style","width: 30px;");
+		var fbShareButton = document.createElement('a');
+		fbShareButton.setAttribute('href', 'javascipt:fbshareCurrentPage('+url+','+name+')');
+		fbShareButton.setAttribute('target', '_blank');
+		fbShareButton.appendChild(buttonimg);
 		document.getElementById('fbsharebuttonposition').parentNode.insertBefore(fbShareButton,document.getElementById('fbsharebuttonposition'));
+
+//<a href="javascript:fbshareCurrentPage()" target="_blank" alt="Share on Facebook"><img src="https://assets.cobaltnitra.com/teams/repository/export/685/994e08a161005809f00505692530e/685994e08a161005809f00505692530e.png" style="width: 30px; alt=" alt="" /></a>		
 	 };
 
   	uploadToCloud (afterUploadThenShare);
@@ -250,7 +259,7 @@
 		xhr.onload = () => {
 		    console.log(xhr.response); // Retrieve uploaded file ID.
 		    listFiles();
-		    afterUploadThenShareFunction(xhr.response.id);
+		    afterUploadThenShareFunction(xhr.response.id, filename);
 		};
 		xhr.send(form);
 	}
@@ -444,10 +453,13 @@
     setTimeout('downloadFromCloud("'+fileid+'","");',3000);
   }
 
-(function(d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) return;
-    js = d.createElement(s); js.id = id;
-    js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0";
-    fjs.parentNode.insertBefore(js, fjs);
-  }(document, 'script', 'facebook-jssdk'));
+function fbshareCurrentPage(url, name)
+    {
+    	window.open(
+    		"https://www.facebook.com/sharer/sharer.php?u="+escape(url)+"&t="+name, '', 
+    		'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600'
+    		);
+    	return false; 
+    }
+
+
