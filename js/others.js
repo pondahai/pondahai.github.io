@@ -167,11 +167,14 @@
 		xhr.send();
 	}
   }
-  function uploadToCloudAndShareCurrentDocument () {
-
+  function uploadToCloudAndShare () {
+  	var afterUploadThenShare = function () {
+  		
+  	};
+  	uploadToCloud (afterUploadThenShare);
   }
 
-  function uploadToCloud () {
+  function uploadToCloud (afterUploadThenShareFunction) {
   	var container = document.getElementById('iAmHere');
   	if (container.innerHTML) {
 	    //var base64doc = btoa(unescape(encodeURIComponent(container.innerHTML)));
@@ -208,6 +211,7 @@
 		xhr.onload = () => {
 		    console.log(xhr.response); // Retrieve uploaded file ID.
 		    listFiles();
+		    afterUploadThenShareFunction();
 		};
 		xhr.send(form);
 	}
