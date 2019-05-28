@@ -103,6 +103,9 @@
   }
 
   function downloadFromCloud (id,name) {
+		var fbShareButton = document.getElementById('FBshareButton');
+		fbShareButton.data-href = url;
+		fbShareButton.style.visibility = "hidden";
   	//console.log(id);
   	if (gapi) {
 		var accessToken = gapi.auth.getToken().access_token; // Here gapi is used for retrieving the access token.
@@ -192,7 +195,17 @@
 	    }
 	    gapi.load('drive-share', init);
 
-	    console.log('https://pondahai.github.io/?fileid=' + id);
+	    var url = 'https://pondahai.github.io/?fileid=' + id;
+	    console.log(url);
+
+		var meta = document.createElement('meta');
+		meta.property = "og:url";
+		meta.content = url;
+		document.getElementsByTagName('head')[0].appendChild(meta);
+
+		var fbShareButton = document.getElementById('FBshareButton');
+		fbShareButton.data-href = url;
+		fbShareButton.style.visibility = "visible";
 	 };
 
   	uploadToCloud (afterUploadThenShare);
@@ -429,3 +442,10 @@
     setTimeout('downloadFromCloud("'+fileid+'","");',3000);
   }
 
+(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
