@@ -104,7 +104,7 @@
 
   function downloadFromCloud (id,name) {
 		var fbShareButton = document.getElementById('FBshareButton');
-		fbShareButton.data-href = url;
+		fbShareButton.setAttribute(data-href, url);
 		fbShareButton.style.visibility = "hidden";
   	//console.log(id);
   	if (gapi) {
