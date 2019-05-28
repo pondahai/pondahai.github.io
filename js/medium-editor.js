@@ -7157,17 +7157,46 @@ MediumEditor.extensions = {};
           }
         } else if (MediumEditor.util.isKey(event, MediumEditor.util.keyCode.BACKSPACE) || MediumEditor.util.isKey(event, MediumEditor.util.keyCode.DELETE)) {
           // dahai: for svg text delete or backspace 
+          var range = document.createRange();
+          var sel = window.getSelection();
           if (node.nextSibling && node.nextSibling.nodeName == "DIV" && node.nextSibling.children && node.nextSibling.children[0] && node.nextSibling.children[0].nodeName == "svg") {
             // delete or backspace node but div.svg is next
             //console.log("yes");
-            node.parentElement.removeChild(node);
+            // dahai: do delete one char or multi char
+            if (sel.anchorNode == sel.extentNode) {
+              var range = document.createRange();
+              if (MediumEditor.util.isKey(event, MediumEditor.util.keyCode.BACKSPACE)) {
+                if ((sel.anchorOffset - 1) >= 0 && ( sel.anchorOffset == sel.extentOffset)) {
+                  range.setStart(sel.anchorNode, sel.anchorOffset - 1);
+                  range.setEnd(sel.anchorNode, sel.anchorOffset);
+                  sel.removeAllRanges();
+                  sel.addRange(range);
+                }
+                if ((sel.anchorOffset == 0) && (sel.extentOffset == 0)) {
+                  node.parentElement.removeChild(node);
+                }
+              }
+              if (MediumEditor.util.isKey(event, MediumEditor.util.keyCode.DELETE)) {
+                if ((sel.anchorOffset + 1) <= sel.anchorNode.length && ( sel.anchorOffset == sel.extentOffset)) {
+                  range.setStart(sel.anchorNode, sel.anchorOffset);
+                  range.setEnd(sel.anchorNode, sel.anchorOffset + 1);
+                  sel.removeAllRanges();
+                  sel.addRange(range);                  
+                }
+                if ((sel.anchorOffset == 0) && (sel.extentOffset == 0)) {
+                  node.parentElement.removeChild(node);
+                }
+              }
+            }else{
+              // if (sel.anchorNode.nodeName == "#text") {
+              //   sel.anchorNode.nodeValue = "";
+              // }
+            }
+              sel.deleteFromDocument();
             event.preventDefault();
             event.stopPropagation();
-          }
-          if (node.parentElement && node.parentElement.nodeName == "svg") {
-            var range = document.createRange();
-            var sel = window.getSelection();
-            // dahai: do delete
+          }else if (node.parentElement && node.parentElement.nodeName == "svg") {
+            // dahai: do delete one char or multi char
             if (sel.anchorNode == sel.extentNode) {
               var range = document.createRange();
               if (MediumEditor.util.isKey(event, MediumEditor.util.keyCode.BACKSPACE)) {
@@ -7186,13 +7215,13 @@ MediumEditor.extensions = {};
                   sel.addRange(range);                  
                 }
               }
-              sel.deleteFromDocument();
             }else{
-              if (sel.anchorNode.nodeName == "#text") {
-                sel.anchorNode.nodeValue = "";
-              }
+              // if (sel.anchorNode.nodeName == "#text") {
+              //   sel.anchorNode.nodeValue = "";
+              // }
             }
-
+              sel.deleteFromDocument();
+            // remove blank text node in svg
             var parentElement = node.parentElement;
             var i = parentElement.children.length;
             while (--i) {
@@ -7218,7 +7247,89 @@ MediumEditor.extensions = {};
             //   //console.log(node.parentElement.firstChild.textContent.length);
             // }
             event.preventDefault();
+          }else{
+
+            if (sel.anchorNode == sel.extentNode) {
+              // normal delete
+              var range = document.createRange();
+              if (MediumEditor.util.isKey(event, MediumEditor.util.keyCode.BACKSPACE)) {
+                if ((sel.anchorOffset - 1) >= 0 && ( sel.anchorOffset == sel.extentOffset)) {
+                  range.setStart(sel.anchorNode, sel.anchorOffset - 1);
+                  range.setEnd(sel.anchorNode, sel.anchorOffset);
+                  sel.removeAllRanges();
+                  sel.addRange(range);
+                }
+                if ((sel.anchorOffset == 0) && (sel.extentOffset == 0)) {
+                  //node.parentElement.removeChild(node);
+                  range.setStart(sel.anchorNode, sel.anchorOffset - 1);
+                  range.setEnd(sel.anchorNode, sel.anchorOffset);
+                  sel.removeAllRanges();
+                  sel.addRange(range);
+                }
+                if (sel.anchorOffset == sel.extentOffset) {
+                  event.preventDefault();
+                  event.stopPropagation();
+                }
+              }
+              if (MediumEditor.util.isKey(event, MediumEditor.util.keyCode.DELETE)) {
+                if ((sel.anchorOffset + 1) <= sel.anchorNode.length && ( sel.anchorOffset == sel.extentOffset)) {
+                  range.setStart(sel.anchorNode, sel.anchorOffset);
+                  range.setEnd(sel.anchorNode, sel.anchorOffset + 1);
+                  sel.removeAllRanges();
+                  sel.addRange(range);                  
+                }
+                if ((sel.anchorOffset == 0) && (sel.extentOffset == 0)) {
+                  //node.parentElement.removeChild(node);
+                  range.setStart(sel.anchorNode, sel.anchorOffset);
+                  range.setEnd(sel.anchorNode, sel.anchorOffset + 1);
+                  sel.removeAllRanges();
+                  sel.addRange(range);                  
+                }
+                if (sel.anchorOffset == sel.extentOffset) {
+                  event.preventDefault();
+                  event.stopPropagation();
+                }
+              }            
+              // TODO clean format before delete
+              sel.deleteFromDocument();
+              //  shelling
+              var stepParentElement = node.parentElement;
+              var stepNode = node;
+              do {
+                  if (!stepNode.innerHTML) {
+                      stepParentElement.removeChild(stepNode);
+                      stepNode = stepParentElement;
+                      stepParentElement = stepParentElement.parentElement;
+                    }else{
+                      break;
+                    }
+              }while (stepNode.id != "iAmHere");
+            }else if ((sel.anchorNode.parentNode.nodeName == "svg") || (sel.extentNode.parentNode.nodeName == "svg")) {
+
+            }else{
+              // TODO clean format before delete
+              sel.deleteFromDocument();
+              //  shelling
+              var stepParentElement = node.parentElement;
+              var stepNode = node;
+              do {
+                  if (!stepNode.innerHTML) {
+                      stepParentElement.removeChild(stepNode);
+                      stepNode = stepParentElement;
+                      stepParentElement = stepParentElement.parentElement;
+                    }else{
+                      break;
+                    }
+              }while (stepNode.id != "iAmHere");
+
+              // if (sel.anchorNode.nodeName == "#text") {
+              //   sel.anchorNode.nodeValue = "";
+              // }
+            }
+            event.preventDefault();
+            event.stopPropagation();
           }
+
         }
     }
 
