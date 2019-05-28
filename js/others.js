@@ -204,6 +204,10 @@
 		meta.setAttribute('property', 'og:url');
 		meta.content = url;
 		document.getElementsByTagName('head')[0].appendChild(meta);
+		meta = document.createElement('meta');
+		meta.setAttribute('property', 'og:title');
+		meta.content = name;
+		document.getElementsByTagName('head')[0].appendChild(meta);
 
 		// remove button if it is exist
 		var fbShareButton = document.getElementById('idFBshareButton');
