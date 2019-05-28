@@ -1,5 +1,6 @@
   'use strict';
 
+
   function getFirstLineFotFileName () {
 	var firstLine = $("#iAmHere")
 	                       .contents()
@@ -26,7 +27,7 @@
 	return filename;
   }
 
-  function downloadFileToCurrentDocument () {
+  function downloadFileFromCurrentDocument () {
 
   	var container = document.getElementById('iAmHere');
     var base64doc = btoa(unescape(encodeURIComponent(container.innerHTML))),
@@ -166,6 +167,10 @@
 		xhr.send();
 	}
   }
+  function uploadToCloudAndShareCurrentDocument () {
+
+  }
+
   function uploadToCloud () {
   	var container = document.getElementById('iAmHere');
   	if (container.innerHTML) {
@@ -221,6 +226,7 @@
 
       var authorizeButton = document.getElementById('authorize_button');
       var signoutButton = document.getElementById('signout_button');
+      var shareFileButton = document.getElementById('sharefile_button');
       //var loadcloudfileButton = document.getElementById('loadcloudfile_button');
       var savecloudfileButton = document.getElementById('savecloudfile_button');
 
@@ -266,12 +272,14 @@
           signoutButton.style.display = '';
           //loadcloudfileButton.style.display = '';
           savecloudfileButton.style.display = '';
+          shareFileButton.style.display = '';
           listFiles();
         } else {
           authorizeButton.style.display = '';
           signoutButton.style.display = 'none';
           //loadcloudfileButton.style.display = 'none';
           savecloudfileButton.style.display = 'none';
+          shareFileButton.style.display = 'none';
           clearFilesList();
         }
       }
@@ -373,5 +381,22 @@
     // The ID token you need to pass to your backend:
     var id_token = googleUser.getAuthResponse().id_token;
     console.log("ID Token: " + id_token);
+  }
+
+  var strUrl = location.search;
+  var getPara, ParaVal;
+  var aryPara = [];
+
+  if (strUrl.indexOf("?") != -1) {
+    var getSearch = strUrl.split("?");
+    getPara = getSearch[1].split("&");
+    for (var i = 0; i < getPara.length; i++) {
+      ParaVal = getPara[i].split("=");
+      aryPara.push(ParaVal[0]);
+      aryPara[ParaVal[0]] = ParaVal[1];
+    }
+    //console.log(aryPara['fileid']);
+    // for share file download from url qurey string
+    downloadFromCloud(aryPara['fileid'],'');
   }
 
