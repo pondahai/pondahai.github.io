@@ -187,7 +187,9 @@
 	        s.setOAuthToken(accessToken);
 	        s.setItemIds([id]);
 	    }
-	        gapi.load('drive-share', init);
+	    gapi.load('drive-share', init);
+
+	    console.log('https://pondahai.github.io/?fileid=' + id);
 	 };
 
   	uploadToCloud (afterUploadThenShare);
