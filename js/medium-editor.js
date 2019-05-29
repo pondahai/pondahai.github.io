@@ -7103,7 +7103,7 @@ MediumEditor.extensions = {};
         } else if (MediumEditor.util.isKey(event, MediumEditor.util.keyCode.ENTER)) {
           // dahai: for svg enter press(caption text)
           if (node.parentElement.firstChild) {
-                if (node.parentElement.firstChild.nodeName == "svg") {
+                if (node.parentElement.id == "i-am-svg") {
                   //node.style.width = null;
                   //node.style.height = null;
                   if (!node.parentElement.nextSibling) {
@@ -7122,7 +7122,7 @@ MediumEditor.extensions = {};
                 }
                 // dahai: for svg text that inside
                 var parentelement = node.parentElement;
-                if (parentelement.firstChild.nodeName == "image") {
+                if (parentelement.parentElement.id == "i-am-svg") {
                   if (!parentelement.nextSibling) {
                     p = this.options.ownerDocument.createElement('p');
                     p.innerHTML = '<br>';
