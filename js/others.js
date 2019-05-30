@@ -139,6 +139,19 @@
   }
   function buildPageMeta (url) {
 		var meta;
+		if (document.querySelector("[property='og:url']")) {
+			document.querySelector("[property='og:url']").remove();
+		}
+		if (document.querySelector("[property='og:type']")) {
+			document.querySelector("[property='og:type']").remove();
+		}
+		if (document.querySelector("[property='og:title']")) {
+			document.querySelector("[property='og:title']").remove();
+		}
+		if (document.querySelector("[property='og:description']")) {
+			document.querySelector("[property='og:description']").remove();
+		}
+		
 		meta = document.createElement('meta');
 		meta.setAttribute('property', 'og:url');
 		meta.content = url;
