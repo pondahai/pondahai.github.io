@@ -317,7 +317,9 @@
 		xhr.onload = () => {
 		    console.log(xhr.response); // Retrieve uploaded file ID.
 		    listFiles();
-		    afterUploadThenShareFunction(xhr.response.id, filename);
+		    if (afterUploadThenShareFunction) {
+		    	afterUploadThenShareFunction(xhr.response.id, filename);
+			}
 		};
 		xhr.send(form);
 	}
