@@ -7184,11 +7184,11 @@ MediumEditor.extensions = {};
               }
               if ( (sel.anchorNode.nodeName.toLowerCase() === "h6") && isIAmSVG.test(sel.anchorNode.parentNode.id)) {
                 // caption is empty
-                if ( (sel.anchorOffset === sel.focusOffset) && (sel.anchorNode.length === sel.anchorOffset) ) {
+                //if ( (sel.anchorOffset === sel.focusOffset) && (sel.anchorNode.length === sel.anchorOffset) ) {
                     p = this.options.ownerDocument.createElement('p');
                     p.innerHTML = '<br>';
-                    sel.anchorNode.parentNode.parentElement.parentElement.insertBefore(p, sel.anchorNode.parentNode.parentElement.nextSibling);
-                }
+                    sel.anchorNode.parentNode.parentElement.insertBefore(p, sel.anchorNode.parentNode.nextSibling);
+                //}
               }
           }
           // after svg stop the event propagation
