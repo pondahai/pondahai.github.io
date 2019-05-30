@@ -4891,7 +4891,7 @@ MediumEditor.extensions = {};
         };
 
             // dahai: keep position for svg drop  
-            var svgInsertPosNode = window.getSelection().anchorNode;
+            var svgInsertPosNode = event.target;
 
             // Select the dropping target, and set the selection to the end of the target
             // https://github.com/yabwe/medium-editor/issues/980
@@ -4942,7 +4942,7 @@ MediumEditor.extensions = {};
               }
               //if(imgImgElement && !matchDataUri) {
               if(imgImgElement ) {  
-if (!travelSelMeetSVG()) {
+if ((event.target.id !== "iAmHere") && svgInsertPosNode && !travelSelMeetSVG()) {
                 // dahai: create svg
                 // dahai: img yes and datauri no, regenerate the html string and include the img src 
                 var thisDocument = this.document;
@@ -5835,16 +5835,6 @@ if (!travelSelMeetSVG()) {
                 return;
             }
 
-            var clipboardContent = getClipboardContent(event, this.window, this.document),
-                pastedHTML = clipboardContent['text/html'],
-                pastedPlain = clipboardContent['text/plain'],
-                pastedFiles = clipboardContent['Files'], // dahai; for image paste
-                editable = keyboardPasteEditable;
-            
-            // dahai: create svg from image paste
-            if (pastedFiles) {
-
-              this.removePasteBin();
 
         // dahai: i add svg detect
         // dahai: for svg situation
@@ -5896,7 +5886,20 @@ if (!travelSelMeetSVG()) {
           };
           return false;
         };
-if (!travelSelMeetSVG()) {
+
+            var clipboardContent = getClipboardContent(event, this.window, this.document),
+                pastedHTML = clipboardContent['text/html'],
+                pastedPlain = clipboardContent['text/plain'],
+                pastedFiles = clipboardContent['Files'], // dahai; for image paste
+                editable = keyboardPasteEditable;
+            
+            // dahai: create svg from image paste
+            if (pastedFiles) {
+
+              this.removePasteBin();
+
+var istravelSelMeetSVG = travelSelMeetSVG();
+if (!istravelSelMeetSVG) {
         	    var elem = this;
         	    var fr = new FileReader;
               
