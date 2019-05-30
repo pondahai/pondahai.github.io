@@ -137,6 +137,25 @@
 
 	input.click();
   }
+  function buildPageMeta () {
+		var meta;
+		meta = document.createElement('meta');
+		meta.setAttribute('property', 'og:url');
+		meta.content = url;
+		document.getElementsByTagName('head')[0].appendChild(meta);
+		meta = document.createElement('meta');
+		meta.setAttribute('property', 'og:type');
+		meta.content = "article";
+		document.getElementsByTagName('head')[0].appendChild(meta);
+		meta = document.createElement('meta');
+		meta.setAttribute('property', 'og:title');
+		meta.content = getFirstLine();
+		document.getElementsByTagName('head')[0].appendChild(meta);
+		meta = document.createElement('meta');
+		meta.setAttribute('property', 'og:description');
+		meta.content = getFirstParagraph();
+		document.getElementsByTagName('head')[0].appendChild(meta);
+  }
 
   function downloadFromCloud (id,name) {
   	// hide fb share button
@@ -164,6 +183,8 @@
 			     	$('html, body').animate({ scrollTop: 0 }, 'fast');
 			     	document.title = getFirstLine();
 
+			     	buildPageMeta();
+			     	
 			     	var file_id = null;
 			     	var file_name = null;
 			     	// when download finish check the filename value in the input element
@@ -238,23 +259,7 @@
 	    var url = 'https://pondahai.github.io/?fileid=' + id;
 	    console.log(url);
 
-		var meta;
-		meta = document.createElement('meta');
-		meta.setAttribute('property', 'og:url');
-		meta.content = url;
-		document.getElementsByTagName('head')[0].appendChild(meta);
-		meta = document.createElement('meta');
-		meta.setAttribute('property', 'og:type');
-		meta.content = "article";
-		document.getElementsByTagName('head')[0].appendChild(meta);
-		meta = document.createElement('meta');
-		meta.setAttribute('property', 'og:title');
-		meta.content = getFirstLine();
-		document.getElementsByTagName('head')[0].appendChild(meta);
-		meta = document.createElement('meta');
-		meta.setAttribute('property', 'og:description');
-		meta.content = getFirstParagraph();
-		document.getElementsByTagName('head')[0].appendChild(meta);
+	    buildPageMeta();
 
 		// remove button if it is exist
 		var fbShareButton = document.getElementById('idFBshareButton');
