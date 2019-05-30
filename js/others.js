@@ -527,8 +527,10 @@
     //console.log(aryPara['fileid']);
     // for share file download from url qurey string
     var fileid = aryPara['fileid'];
-    setTimeout('downloadFromCloud("'+fileid+'","");',3000);
-    document.getElementById("iAmHere").innerHTML="";
+    if (fileid) {
+	    setTimeout('downloadFromCloud("'+fileid+'","");',3000);
+	    document.getElementById("iAmHere").innerHTML="";
+	}
   }
 
 function fbshareCurrentPage(url, name)
