@@ -7119,7 +7119,8 @@ MediumEditor.extensions = {};
               // is svg caption?
               // console.log(sel);
               if ((sel.anchorOffset === 0) && (sel.focusOffset === 0) &&
-                isIAmSVG.test(sel.anchorNode.parentNode.parentNode.id)
+                isIAmSVG.test(sel.anchorNode.parentNode.parentNode.id) &&
+                sel.anchorNode.length === 0
                 ) {
                 sel.anchorNode.parentNode.innerHTML = "<br>";
               }
