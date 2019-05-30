@@ -173,7 +173,7 @@
 		xhr.responseType = 'blob';
 		xhr.onload = function(e) {
 			if(this) {
-				if (this.status == 200) {
+				if (this.status === 200) {
 					var blob = this.response;
 					//console.log(blob); // Retrieve uploaded file ID.
 					var reader = new FileReader();
@@ -332,10 +332,21 @@
 		xhr.setRequestHeader('Authorization', 'Bearer ' + accessToken);
 		xhr.responseType = 'json';
 		xhr.onload = () => {
-		    console.log(xhr.response); // Retrieve uploaded file ID.
+		    //console.log(xhr.response); // Retrieve uploaded file ID.
 		    listFiles();
-		    if (afterUploadThenShareFunction) {
-		    	afterUploadThenShareFunction(xhr.response.id, filename);
+		    if (xhr.status === 200) {
+			    if (afterUploadThenShareFunction) {
+			    	afterUploadThenShareFunction(xhr.response.id, filename);
+				}
+			}else{
+				if (xhr.response.type === "application/json") {
+					var blob = xhr.response;
+					var reader = new FileReader();
+					reader.onload = function() {
+						console.log(reader.result);
+					};
+					reader.readAsText(blob);
+				}				
 			}
 		};
 		xhr.send(form);
