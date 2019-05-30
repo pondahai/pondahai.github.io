@@ -263,7 +263,7 @@
 		}
 
 		// show fb share button
-		var url = "https://pondahai.github.io/?fileid=" + id;
+		var url = encodeURIComponent("https://pondahai.github.io/?fileid=" + id);
 		var buttonimg = document.createElement('img');
 		buttonimg.src = "https://assets.cobaltnitra.com/teams/repository/export/685/994e08a161005809f00505692530e/685994e08a161005809f00505692530e.png";
 		buttonimg.setAttribute("style","width: 30px;");
