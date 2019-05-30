@@ -4881,6 +4881,59 @@ MediumEditor.extensions = {};
                 matchDataUri = imgImgElement.src.match(regex);
               }
               if(imgImgElement && !matchDataUri) {
+
+        // dahai: i add svg detect
+        // dahai: for svg situation
+        var shellingTravel = function(node) {
+          var stepParentElement = node.parentElement;
+          var stepNode = node;
+          var isIAmHere = /iAmHere/i;
+          if (!isIAmHere.test(stepNode.id)) {
+            while (!isIAmHere.test(stepParentElement.id)) {
+                    stepNode = stepParentElement;
+                    stepParentElement = stepParentElement.parentElement;
+            }
+          }
+          return stepNode;
+        };
+        // dahai: for svg situation
+        var travelSelMeetSVG = function () {
+          var sel = window.getSelection();
+          var isIAmSVG = /i-am-svg/i;
+          // detect select direct
+          var position = sel.anchorNode.compareDocumentPosition(sel.focusNode);
+          var backward = false;
+          // position == 0 if nodes are the same
+          if (!position && sel.anchorOffset > sel.focusOffset || 
+            position === Node.DOCUMENT_POSITION_PRECEDING)
+            backward = true; 
+
+          var stepNode;
+          var targetNode;
+          if (backward) {
+            stepNode = shellingTravel(sel.focusNode);
+            targetNode = shellingTravel(sel.anchorNode);
+          }else{
+            stepNode = shellingTravel(sel.anchorNode);
+            targetNode = shellingTravel(sel.focusNode);
+          }
+          // var stepNode = (typeof sel.anchorNode.id === "undefined")?sel.anchorNode.parentNode:sel.anchorNode;
+          // var targetNode = (typeof sel.focusNode.id === "undefined")?sel.focusNode.parentNode:sel.focusNode;
+
+          while (true) {
+            if (isIAmSVG.test(stepNode.id)) {
+              return true;
+            }
+            if (stepNode != targetNode) {
+              stepNode = shellingTravel(stepNode.nextSibling);
+            }else{
+              break;
+            }
+          };
+          return false;
+        };
+if (!travelSelMeetSVG()) {
+                // dahai: create svg
                 // dahai: img yes and datauri no, regenerate the html string and include the img src 
                 var thisDocument = this.document;
                   var img = new Image;
@@ -4898,6 +4951,8 @@ MediumEditor.extensions = {};
                       
                   };
                   img.src = imgImgElement.src;
+}
+
 
                 // dahai: I try to download the img and convert it to datauri encoding
                 // var request = new XMLHttpRequest();
@@ -4985,6 +5040,58 @@ MediumEditor.extensions = {};
             if (typeof FileReader !== 'function') {
                 return;
             }
+
+        // dahai: i add svg detect
+        // dahai: for svg situation
+        var shellingTravel = function(node) {
+          var stepParentElement = node.parentElement;
+          var stepNode = node;
+          var isIAmHere = /iAmHere/i;
+          if (!isIAmHere.test(stepNode.id)) {
+            while (!isIAmHere.test(stepParentElement.id)) {
+                    stepNode = stepParentElement;
+                    stepParentElement = stepParentElement.parentElement;
+            }
+          }
+          return stepNode;
+        };
+        // dahai: for svg situation
+        var travelSelMeetSVG = function () {
+          var sel = window.getSelection();
+          var isIAmSVG = /i-am-svg/i;
+          // detect select direct
+          var position = sel.anchorNode.compareDocumentPosition(sel.focusNode);
+          var backward = false;
+          // position == 0 if nodes are the same
+          if (!position && sel.anchorOffset > sel.focusOffset || 
+            position === Node.DOCUMENT_POSITION_PRECEDING)
+            backward = true; 
+
+          var stepNode;
+          var targetNode;
+          if (backward) {
+            stepNode = shellingTravel(sel.focusNode);
+            targetNode = shellingTravel(sel.anchorNode);
+          }else{
+            stepNode = shellingTravel(sel.anchorNode);
+            targetNode = shellingTravel(sel.focusNode);
+          }
+          // var stepNode = (typeof sel.anchorNode.id === "undefined")?sel.anchorNode.parentNode:sel.anchorNode;
+          // var targetNode = (typeof sel.focusNode.id === "undefined")?sel.focusNode.parentNode:sel.focusNode;
+
+          while (true) {
+            if (isIAmSVG.test(stepNode.id)) {
+              return true;
+            }
+            if (stepNode != targetNode) {
+              stepNode = shellingTravel(stepNode.nextSibling);
+            }else{
+              break;
+            }
+          };
+          return false;
+        };
+if (!travelSelMeetSVG()) {
             var fileReader = new FileReader();
             fileReader.readAsDataURL(file);
 
@@ -5011,6 +5118,8 @@ MediumEditor.extensions = {};
         	        };
         	        img.src = e.target.result;
             }.bind(this));
+}
+
         }
     });
 
@@ -5718,6 +5827,58 @@ MediumEditor.extensions = {};
             
             // dahai: create svg from image paste
             if (pastedFiles) {
+
+        // dahai: i add svg detect
+        // dahai: for svg situation
+        var shellingTravel = function(node) {
+          var stepParentElement = node.parentElement;
+          var stepNode = node;
+          var isIAmHere = /iAmHere/i;
+          if (!isIAmHere.test(stepNode.id)) {
+            while (!isIAmHere.test(stepParentElement.id)) {
+                    stepNode = stepParentElement;
+                    stepParentElement = stepParentElement.parentElement;
+            }
+          }
+          return stepNode;
+        };
+        // dahai: for svg situation
+        var travelSelMeetSVG = function () {
+          var sel = window.getSelection();
+          var isIAmSVG = /i-am-svg/i;
+          // detect select direct
+          var position = sel.anchorNode.compareDocumentPosition(sel.focusNode);
+          var backward = false;
+          // position == 0 if nodes are the same
+          if (!position && sel.anchorOffset > sel.focusOffset || 
+            position === Node.DOCUMENT_POSITION_PRECEDING)
+            backward = true; 
+
+          var stepNode;
+          var targetNode;
+          if (backward) {
+            stepNode = shellingTravel(sel.focusNode);
+            targetNode = shellingTravel(sel.anchorNode);
+          }else{
+            stepNode = shellingTravel(sel.anchorNode);
+            targetNode = shellingTravel(sel.focusNode);
+          }
+          // var stepNode = (typeof sel.anchorNode.id === "undefined")?sel.anchorNode.parentNode:sel.anchorNode;
+          // var targetNode = (typeof sel.focusNode.id === "undefined")?sel.focusNode.parentNode:sel.focusNode;
+
+          while (true) {
+            if (isIAmSVG.test(stepNode.id)) {
+              return true;
+            }
+            if (stepNode != targetNode) {
+              stepNode = shellingTravel(stepNode.nextSibling);
+            }else{
+              break;
+            }
+          };
+          return false;
+        };
+if (!travelSelMeetSVG()) {
         	    var elem = this;
         	    var fr = new FileReader;
               
@@ -5743,6 +5904,8 @@ MediumEditor.extensions = {};
         	    };
     
         	    fr.readAsDataURL(pastedFiles);
+}
+
               return;
             }
             // If we have valid html already, or we're not in cleanPastedHTML mode
@@ -6608,7 +6771,8 @@ MediumEditor.extensions = {};
 
             // // dahai: If we are inside the svg text tag -> do something, hide toolbar for svg
             // dahai: i add test in selectionContainsContent()
-            // dahai: i add svg detect
+            
+        // dahai: i add svg detect
         // dahai: for svg situation
         var shellingTravel = function(node) {
           var stepParentElement = node.parentElement;
@@ -7040,12 +7204,13 @@ MediumEditor.extensions = {};
             isEmpty = /^(\s+|<br\/?>)?$/i,
             isHeader = /h\d/i;
 
-        // dahai: prepare for svg check, svg detect
+        // dahai: prepare for svg check, 
         var sel = window.getSelection();
         var anchorNodePPParentNode = sel.anchorNode.parentNode.parentNode.parentNode;
         var focusNodePPParentNode = sel.focusNode.parentNode.parentNode.parentNode;
         var isIAmSVG = /i-am-svg/i;
         var isIAmHere = /iAmHere/i;
+        // dahai: i add svg detect
         // dahai: for svg situation
         var shellingTravel = function(node) {
           var stepParentElement = node.parentElement;
@@ -7140,7 +7305,7 @@ MediumEditor.extensions = {};
         }
 
         // dahai: intercept for svg element 
-        console.log(travelSelMeetSVG()); // dahai: svg detect
+        console.log(travelSelMeetSVG()); // dahai: 
         if (travelSelMeetSVG()){
           if (MediumEditor.util.isKey(event, MediumEditor.util.keyCode.BACKSPACE)) {
             if ( (sel.anchorNode === sel.focusNode) &&
@@ -7332,7 +7497,8 @@ MediumEditor.extensions = {};
     }
 
     function handleKeyup(event) {
-        // dahai: for svg situation, svg detect
+        // dahai: i add svg detect
+        // dahai: for svg situation
         var shellingTravel = function(node) {
           var stepParentElement = node.parentElement;
           var stepNode = node;
