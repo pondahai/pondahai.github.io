@@ -165,10 +165,11 @@
 	}
   	//console.log(id);
   	if (gapi) {
-		//var accessToken = gapi.auth.getToken().access_token; // Here gapi is used for retrieving the access token.
+  		// dahai: accss_token is necessary for file download, but i dont believe, There must be a solution in the world.
+		var accessToken = gapi.auth.getToken().access_token; // Here gapi is used for retrieving the access token.
 		var xhr = new XMLHttpRequest();
 		xhr.open('GET', 'https://www.googleapis.com/drive/v3/files/' + id + '?alt=media');
-		//xhr.setRequestHeader('Authorization', 'Bearer ' + accessToken);
+		xhr.setRequestHeader('Authorization', 'Bearer ' + accessToken);
 		xhr.responseType = 'blob';
 		xhr.onload = function(e) {
 			if(this) {
@@ -527,6 +528,7 @@
     // for share file download from url qurey string
     var fileid = aryPara['fileid'];
     setTimeout('downloadFromCloud("'+fileid+'","");',3000);
+    document.getElementById("iAmHere").innerHTML="";
   }
 
 function fbshareCurrentPage(url, name)
