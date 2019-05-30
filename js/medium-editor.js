@@ -4838,49 +4838,6 @@ MediumEditor.extensions = {};
             event.preventDefault();
             event.stopPropagation();
 
-            // Select the dropping target, and set the selection to the end of the target
-            // https://github.com/yabwe/medium-editor/issues/980
-            this.base.selectElement(event.target);
-            var selection = this.base.exportSelection();
-            selection.start = selection.end;
-            this.base.importSelection(selection);
-            // IE9 does not support the File API, so prevent file from opening in the window
-            // but also don't try to actually get the file
-            if (event.dataTransfer.files) {
-                Array.prototype.slice.call(event.dataTransfer.files).forEach(function (file) {
-                    if (this.isAllowedFile(file)) {
-                        if (file.type.match('image')) {
-                        	// dahai: for set cursor at drop position
-                        	var node = event.target;
-       	                  	var range = document.createRange();
-		                  	var sel = window.getSelection();
-        		          	range.setStart(node, 0);
-                		  	range.collapse(true);
-               			  	sel.removeAllRanges();
-                  			sel.addRange(range);
-
-                            this.insertImageFile(file);
-                        }
-                    }
-                }, this);
-            }
-            // dahai: process if files == 0 and items != 0, maybe img drop or svg drop
-            if (event.dataTransfer.files.length == 0){
-              // dahai: if data drag from img file, the src inside img tag is auto convert to datauri, but if img is drag from another web, it is using web url in the img tag
-            	var htmlString = event.dataTransfer.getData("text/html");
-              var plainString = event.dataTransfer.getData("text/plain");
-            	// var template = document.createElement('template');
-              var element = document.createElement('img');
-              element.innerHTML = htmlString;
-              var imgImgElement = element.querySelector('img');
-              // dahai: regex the string include "data:"" and "base64", it is mean the string is encoding in datauri
-              var regex = /^\s*data:([a-z]+\/[a-z]+(;[a-z\-]+\=[a-z\-]+)?)?(;base64)?,[a-z0-9\!\$\&\'\,\(\)\*\+\,\;\=\-\.\_\~\:\@\/\?\%\s]*\s*$/i;
-              var matchDataUri;
-              if (imgImgElement) {
-                // 
-                matchDataUri = imgImgElement.src.match(regex);
-              }
-              if(imgImgElement && !matchDataUri) {
 
         // dahai: i add svg detect
         // dahai: for svg situation
@@ -4889,7 +4846,7 @@ MediumEditor.extensions = {};
           var stepNode = node;
           var isIAmHere = /iAmHere/i;
           if (!isIAmHere.test(stepNode.id)) {
-            while (!isIAmHere.test(stepParentElement.id)) {
+            while (!isIAmHere.test(stepParentElement.id) && (stepParentElement.nodeName.toLowerCase() != "html")) {
                     stepNode = stepParentElement;
                     stepParentElement = stepParentElement.parentElement;
             }
@@ -4932,6 +4889,59 @@ MediumEditor.extensions = {};
           };
           return false;
         };
+
+            // dahai: keep position for svg drop  
+            var svgInsertPosNode = window.getSelection().anchorNode;
+
+            // Select the dropping target, and set the selection to the end of the target
+            // https://github.com/yabwe/medium-editor/issues/980
+            this.base.selectElement(event.target);
+            var selection = this.base.exportSelection();
+            // dahai: if target is inside svg, then selection will be null
+            if (!selection) {
+              clearClassNames(event.target);
+              return;
+            }
+            selection.start = selection.end;
+            this.base.importSelection(selection);
+            // IE9 does not support the File API, so prevent file from opening in the window
+            // but also don't try to actually get the file
+            if (event.dataTransfer.files) {
+                Array.prototype.slice.call(event.dataTransfer.files).forEach(function (file) {
+                    if (this.isAllowedFile(file)) {
+                        if (file.type.match('image')) {
+                        	// dahai: for set cursor at drop position
+                        	var node = event.target;
+       	                  	var range = document.createRange();
+		                  	var sel = window.getSelection();
+        		          	range.setStart(node, 0);
+                		  	range.collapse(true);
+               			  	sel.removeAllRanges();
+                  			sel.addRange(range);
+
+                            this.insertImageFile(file);
+                        }
+                    }
+                }, this);
+            }
+            // dahai: process if files == 0 and items != 0, maybe img drop or svg drop
+            if (event.dataTransfer.files.length == 0){
+              // dahai: if data drag from img file, the src inside img tag is auto convert to datauri, but if img is drag from another web, it is using web url in the img tag
+            	var htmlString = event.dataTransfer.getData("text/html");
+              var plainString = event.dataTransfer.getData("text/plain");
+            	// var template = document.createElement('template');
+              var element = document.createElement('img');
+              element.innerHTML = htmlString;
+              var imgImgElement = element.querySelector('img');
+              // dahai: regex the string include "data:"" and "base64", it is mean the string is encoding in datauri
+              var regex = /^\s*data:([a-z]+\/[a-z]+(;[a-z\-]+\=[a-z\-]+)?)?(;base64)?,[a-z0-9\!\$\&\'\,\(\)\*\+\,\;\=\-\.\_\~\:\@\/\?\%\s]*\s*$/i;
+              var matchDataUri;
+              if (imgImgElement) {
+                // 
+                matchDataUri = imgImgElement.src.match(regex);
+              }
+              //if(imgImgElement && !matchDataUri) {
+              if(imgImgElement ) {  
 if (!travelSelMeetSVG()) {
                 // dahai: create svg
                 // dahai: img yes and datauri no, regenerate the html string and include the img src 
@@ -4947,6 +4957,12 @@ if (!travelSelMeetSVG()) {
                       //pastedHTML = "<div draggable=\"true\" style=\"width:"+imgWidth+";height:"+imgHeight+";\"><svg  " + "width=\"" + imgWidth + "\" " + "height=\"" + imgHeight + "\" " + "xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">" + "<image " + "height=\"" + imgHeight + "\" " + "width=\"" + imgWidth + "\" " + "xlink:href=\"" + imgSrc + "\"" + "/>" +svg_rect+ "</svg></div>";
                       var svg_svg =  "<svg  class=\"boxborder-svg\"" + "width=\"" + imgWidth + "\" " + "height=\"" + imgHeight + "\" " + "xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">" + "<image " + "height=\"" + imgHeight + "\" " + "width=\"" + imgWidth + "\" " + "xlink:href=\"" + imgSrc + "\"" + "/>" +svg_rect+ "</svg>";
                       var pastedHTML = "<div id=\"i-am-svg\" i-am-svg=\"true\"  data-medium-editor-element=\"true\" data-disable-toolbar=\"true\" " + "style=\"text-align: center;\">"+svg_svg+"<h6><br></h6></div>";
+                      var range = document.createRange();
+                      var sel = window.getSelection();
+                  range.setStart(svgInsertPosNode, 0);
+                  range.collapse(true);
+                  sel.removeAllRanges();
+                  sel.addRange(range);
                       MediumEditor.util.insertHTMLCommand(thisDocument, pastedHTML);
                       
                   };
@@ -5048,7 +5064,7 @@ if (!travelSelMeetSVG()) {
           var stepNode = node;
           var isIAmHere = /iAmHere/i;
           if (!isIAmHere.test(stepNode.id)) {
-            while (!isIAmHere.test(stepParentElement.id)) {
+            while (!isIAmHere.test(stepParentElement.id) && (stepParentElement.nodeName.toLowerCase() != "html")) {
                     stepNode = stepParentElement;
                     stepParentElement = stepParentElement.parentElement;
             }
@@ -5828,6 +5844,8 @@ if (!travelSelMeetSVG()) {
             // dahai: create svg from image paste
             if (pastedFiles) {
 
+              this.removePasteBin();
+
         // dahai: i add svg detect
         // dahai: for svg situation
         var shellingTravel = function(node) {
@@ -5835,7 +5853,7 @@ if (!travelSelMeetSVG()) {
           var stepNode = node;
           var isIAmHere = /iAmHere/i;
           if (!isIAmHere.test(stepNode.id)) {
-            while (!isIAmHere.test(stepParentElement.id)) {
+            while (!isIAmHere.test(stepParentElement.id) && (stepParentElement.nodeName.toLowerCase() != "html")) {
                     stepNode = stepParentElement;
                     stepParentElement = stepParentElement.parentElement;
             }
@@ -5882,7 +5900,7 @@ if (!travelSelMeetSVG()) {
         	    var elem = this;
         	    var fr = new FileReader;
               
-              this.removePasteBin();
+              
         	    fr.onloadend = function() {
         	        var img = new Image;
         	        img.onload = function() {
@@ -6779,7 +6797,7 @@ if (!travelSelMeetSVG()) {
           var stepNode = node;
           var isIAmHere = /iAmHere/i;
           if (!isIAmHere.test(stepNode.id)) {
-            while (!isIAmHere.test(stepParentElement.id)) {
+            while (!isIAmHere.test(stepParentElement.id) && (stepParentElement.nodeName.toLowerCase() != "html")) {
                     stepNode = stepParentElement;
                     stepParentElement = stepParentElement.parentElement;
             }
@@ -7217,7 +7235,7 @@ if (!travelSelMeetSVG()) {
           var stepNode = node;
           var isIAmHere = /iAmHere/i;
           if (!isIAmHere.test(stepNode.id)) {
-            while (!isIAmHere.test(stepParentElement.id)) {
+            while (!isIAmHere.test(stepParentElement.id) && (stepParentElement.nodeName.toLowerCase() != "html")) {
                     stepNode = stepParentElement;
                     stepParentElement = stepParentElement.parentElement;
             }
@@ -7504,7 +7522,7 @@ if (!travelSelMeetSVG()) {
           var stepNode = node;
           var isIAmHere = /iAmHere/i;
           if (!isIAmHere.test(stepNode.id)) {
-            while (!isIAmHere.test(stepParentElement.id)) {
+            while (!isIAmHere.test(stepParentElement.id) && (stepParentElement.nodeName.toLowerCase() != "html")) {
                     stepNode = stepParentElement;
                     stepParentElement = stepParentElement.parentElement;
             }

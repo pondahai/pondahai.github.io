@@ -529,7 +529,7 @@
     var fileid = aryPara['fileid'];
     if (fileid) {
 	    setTimeout('downloadFromCloud("'+fileid+'","");',3000);
-	    document.getElementById("iAmHere").innerHTML="";
+	    document.getElementById("iAmHere").innerHTML="<p><br></p>";
 	}
   }
 
