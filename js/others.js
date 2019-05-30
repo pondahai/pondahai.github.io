@@ -172,77 +172,86 @@
 		xhr.responseType = 'blob';
 		xhr.onload = function(e) {
 			if(this) {
-			if (this.status == 200) {
-				var blob = this.response;
-				//console.log(blob); // Retrieve uploaded file ID.
-				var reader = new FileReader();
-				reader.onload = function() {
-					//alert(reader.result);
-			     	document.getElementById("iAmHere").innerHTML=checkAndFindMyContent(stripScripts(reader.result));
-			     	document.getElementById("iAmHere").dispatchEvent(new MouseEvent('click'));
-			     	$('html, body').animate({ scrollTop: 0 }, 'fast');
-			     	document.title = getFirstLine();
+				if (this.status == 200) {
+					var blob = this.response;
+					//console.log(blob); // Retrieve uploaded file ID.
+					var reader = new FileReader();
+					reader.onload = function() {
+						//alert(reader.result);
+				     	document.getElementById("iAmHere").innerHTML=checkAndFindMyContent(stripScripts(reader.result));
+				     	document.getElementById("iAmHere").dispatchEvent(new MouseEvent('click'));
+				     	$('html, body').animate({ scrollTop: 0 }, 'fast');
+				     	document.title = getFirstLine();
 
-			     	var url = 'https://pondahai.github.io/?fileid=' + id;
-			     	buildPageMeta(url);
+				     	var url = 'https://pondahai.github.io/?fileid=' + id;
+				     	buildPageMeta(url);
 
-			     	var file_id = null;
-			     	var file_name = null;
-			     	// when download finish check the filename value in the input element
-			     	if (!name) {
-				     	var filenameFromFirstLine = getFirstLineFotFileName();
-			     		if (!document.getElementById('current_file_name')) {
-				     		input = document.createElement("input");
-			     		}else{
-							input = document.getElementById('current_file_name');
-			     		}
-						input.setAttribute("type", "hidden");
-						input.setAttribute("name", "current_file_name");
-						input.setAttribute("id", "current_file_name");
-						input.setAttribute("value", filenameFromFirstLine);
-						document.body.insertBefore(input,document.getElementById('iAmHere'));
-						name = filenameFromFirstLine;
-					}
-			     	// dahai: difference name difference file
-			     	if (document.getElementById('current_file_id')) {
-			     		file_id = document.getElementById('current_file_id');
-			     	}
-			     	if (document.getElementById('current_file_name')) {
-			     		file_name = document.getElementById('current_file_name');
-			     	}
-			     	var input;
-			     	if ((file_id&&file_name)&&(file_id.value === id)&&(file_name.value === name)) {
-			     		input = document.getElementById('current_file_id');
-			     		input.setAttribute("value", id);
-			     		input = document.getElementById('current_file_name');
-			     		input.setAttribute("value", name);
-			     	}else{
-			     		if (!document.getElementById('current_file_id')) {
-							input = document.createElement("input");
-			     		}else{
-			     			input = document.getElementById('current_file_id');
-			     		}
-						input.setAttribute("type", "hidden");
-						input.setAttribute("name", "current_file_id");
-						input.setAttribute("id", "current_file_id");
-						input.setAttribute("value", id);
-						document.body.insertBefore(input,document.getElementById('iAmHere'));
-			     		if (!document.getElementById('current_file_name')) {
-				     		input = document.createElement("input");
-			     		}else{
-							input = document.getElementById('current_file_name');
-			     		}
-						input.setAttribute("type", "hidden");
-						input.setAttribute("name", "current_file_name");
-						input.setAttribute("id", "current_file_name");
-						input.setAttribute("value", name);
-						document.body.insertBefore(input,document.getElementById('iAmHere'));
+				     	var file_id = null;
+				     	var file_name = null;
+				     	// when download finish check the filename value in the input element
+				     	if (!name) {
+					     	var filenameFromFirstLine = getFirstLineFotFileName();
+				     		if (!document.getElementById('current_file_name')) {
+					     		input = document.createElement("input");
+				     		}else{
+								input = document.getElementById('current_file_name');
+				     		}
+							input.setAttribute("type", "hidden");
+							input.setAttribute("name", "current_file_name");
+							input.setAttribute("id", "current_file_name");
+							input.setAttribute("value", filenameFromFirstLine);
+							document.body.insertBefore(input,document.getElementById('iAmHere'));
+							name = filenameFromFirstLine;
+						}
+				     	// dahai: difference name difference file
+				     	if (document.getElementById('current_file_id')) {
+				     		file_id = document.getElementById('current_file_id');
+				     	}
+				     	if (document.getElementById('current_file_name')) {
+				     		file_name = document.getElementById('current_file_name');
+				     	}
+				     	var input;
+				     	if ((file_id&&file_name)&&(file_id.value === id)&&(file_name.value === name)) {
+				     		input = document.getElementById('current_file_id');
+				     		input.setAttribute("value", id);
+				     		input = document.getElementById('current_file_name');
+				     		input.setAttribute("value", name);
+				     	}else{
+				     		if (!document.getElementById('current_file_id')) {
+								input = document.createElement("input");
+				     		}else{
+				     			input = document.getElementById('current_file_id');
+				     		}
+							input.setAttribute("type", "hidden");
+							input.setAttribute("name", "current_file_id");
+							input.setAttribute("id", "current_file_id");
+							input.setAttribute("value", id);
+							document.body.insertBefore(input,document.getElementById('iAmHere'));
+				     		if (!document.getElementById('current_file_name')) {
+					     		input = document.createElement("input");
+				     		}else{
+								input = document.getElementById('current_file_name');
+				     		}
+							input.setAttribute("type", "hidden");
+							input.setAttribute("name", "current_file_name");
+							input.setAttribute("id", "current_file_name");
+							input.setAttribute("value", name);
+							document.body.insertBefore(input,document.getElementById('iAmHere'));
+						}
+					};
+					reader.readAsText(blob);
+				}else{
+					//console.log(this.response);
+					if (this.response.type === "application/json") {
+						var blob = this.response;
+						var reader = new FileReader();
+						reader.onload = function() {
+							console.log(reader.result);
+						};
+						reader.readAsText(blob);
 					}
 				}
-				reader.readAsText(blob);
-			}else{
-				console.log(this.response);
-			}}
+			}
 		};
 		xhr.send();
 	}
