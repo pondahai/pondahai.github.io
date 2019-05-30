@@ -7174,7 +7174,7 @@ MediumEditor.extensions = {};
           } else if (MediumEditor.util.isKey(event, MediumEditor.util.keyCode.ENTER)) {
               // is svg caption?
               // console.log(sel);
-              if ( (sel.anchorNaode.nodeName === "#text") && isIAmSVG.test(sel.anchorNode.parentNode.parentNode.id)) {
+              if ( (sel.anchorNode.nodeName === "#text") && isIAmSVG.test(sel.anchorNode.parentNode.parentNode.id)) {
                 // caption has #text
                 if ( (sel.anchorOffset === sel.focusOffset) && (sel.anchorNode.length === sel.anchorOffset) ) {
                     p = this.options.ownerDocument.createElement('p');
@@ -7182,7 +7182,7 @@ MediumEditor.extensions = {};
                     sel.anchorNode.parentNode.parentElement.parentElement.insertBefore(p, sel.anchorNode.parentNode.parentElement.nextSibling);
                 }
               }
-              if ( (sel.anchorNaode.nodeName === "h6") && isIAmSVG.test(sel.anchorNode.parentNode.id)) {
+              if ( (sel.anchorNode.nodeName === "h6") && isIAmSVG.test(sel.anchorNode.parentNode.id)) {
                 // caption is empty
                 if ( (sel.anchorOffset === sel.focusOffset) && (sel.anchorNode.length === sel.anchorOffset) ) {
                     p = this.options.ownerDocument.createElement('p');
