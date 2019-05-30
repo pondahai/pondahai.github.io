@@ -330,7 +330,7 @@
 			xhr.open('POST', 'https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&fields=id');
 		}		
 		xhr.setRequestHeader('Authorization', 'Bearer ' + accessToken);
-		xhr.responseType = 'blob';
+		xhr.responseType = 'json';
 		xhr.onload = () => {
 		    //console.log(xhr.response); // Retrieve uploaded file ID.
 		    listFiles();
@@ -339,14 +339,7 @@
 			    	afterUploadThenShareFunction(xhr.response.id, filename);
 				}
 			}else{
-				if (xhr.response.type === "application/json") {
-					var blob = xhr.response;
-					var reader = new FileReader();
-					reader.onload = function() {
-						console.log(reader.result);
-					};
-					reader.readAsText(blob);
-				}				
+				console.log(xhr.result);
 			}
 		};
 		xhr.send(form);
