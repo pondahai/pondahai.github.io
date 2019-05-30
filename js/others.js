@@ -137,7 +137,7 @@
 
 	input.click();
   }
-  function buildPageMeta () {
+  function buildPageMeta (url) {
 		var meta;
 		meta = document.createElement('meta');
 		meta.setAttribute('property', 'og:url');
@@ -183,8 +183,9 @@
 			     	$('html, body').animate({ scrollTop: 0 }, 'fast');
 			     	document.title = getFirstLine();
 
-			     	buildPageMeta();
-			     	
+			     	var url = 'https://pondahai.github.io/?fileid=' + id;
+			     	buildPageMeta(url);
+
 			     	var file_id = null;
 			     	var file_name = null;
 			     	// when download finish check the filename value in the input element
@@ -259,7 +260,7 @@
 	    var url = 'https://pondahai.github.io/?fileid=' + id;
 	    console.log(url);
 
-	    buildPageMeta();
+	    buildPageMeta(url);
 
 		// remove button if it is exist
 		var fbShareButton = document.getElementById('idFBshareButton');
