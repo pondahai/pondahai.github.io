@@ -7101,7 +7101,7 @@ MediumEditor.extensions = {};
         }
 
         // dahai: intercept for svg element 
-        console.log(travelSelMeetSVG());
+        console.log(travelSelMeetSVG()); // dahai: svg detect
         if (travelSelMeetSVG()){
           if (MediumEditor.util.isKey(event, MediumEditor.util.keyCode.BACKSPACE)) {
             if ( (sel.anchorNode === sel.focusNode) &&
@@ -7139,7 +7139,7 @@ MediumEditor.extensions = {};
           }
           // after svg stop the event propagation
           event.preventDefault();
-          event.stopPropagation();
+          //event.stopPropagation();
           return;          
         }
 
@@ -7269,8 +7269,11 @@ MediumEditor.extensions = {};
             // when cursor is in the first element, it's empty and user presses backspace,
             // do delete action instead to get rid of the first element and move caret to 2nd
             event.preventDefault();
-            MediumEditor.selection.moveCursor(this.options.ownerDocument, node.nextSibling);
-            node.parentElement.removeChild(node);
+            // dahai: prevent node.nextElementSibling is svg
+            if (!isIAmSVG.test(node.nextElementSibling.id)) {
+              MediumEditor.selection.moveCursor(this.options.ownerDocument, node.nextSibling);
+              node.parentElement.removeChild(node);
+          }
         } 
     }
 
