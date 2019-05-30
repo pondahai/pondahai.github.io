@@ -2886,7 +2886,7 @@ MediumEditor.extensions = {};
             if (hadFocus &&
                 eventObj.type === 'mousedown' &&
                 this.lastMousedownTarget){
-                  if (this.lastMousedownTarget.parentNode && this.lastMousedownTarget.parentElement.nodeName == "svg"){
+                  if (this.lastMousedownTarget.parentNode && this.lastMousedownTarget.parentElement.nodeName.tolowercase() == "svg"){
                     //console.log(this.lastMousedownTarget.parentNode);
                     var svgFocus = this.lastMousedownTarget.nearestViewportElement.parentElement;
                     var svgLastMousedownTarget = this.lastMousedownTarget;
@@ -2980,7 +2980,7 @@ MediumEditor.extensions = {};
                     }
                     
                   }
-                  if (this.lastMousedownTarget.nodeName == "IMG"){
+                  if (this.lastMousedownTarget.nodeName.tolowercase() == "img"){
                     console.log(this.lastMousedownTarget.outerHTML);
                     var imgFocus = this.lastMousedownTarget;
                     imgFocus.setAttribute('img-selected', true);
@@ -7174,7 +7174,7 @@ MediumEditor.extensions = {};
           } else if (MediumEditor.util.isKey(event, MediumEditor.util.keyCode.ENTER)) {
               // is svg caption?
               // console.log(sel);
-              if ( (sel.anchorNode.nodeName === "#text") && isIAmSVG.test(sel.anchorNode.parentNode.parentNode.id)) {
+              if ( (sel.anchorNode.nodeName.tolowercase() === "#text") && isIAmSVG.test(sel.anchorNode.parentNode.parentNode.id)) {
                 // caption has #text
                 if ( (sel.anchorOffset === sel.focusOffset) && (sel.anchorNode.length === sel.anchorOffset) ) {
                     p = this.options.ownerDocument.createElement('p');
@@ -7182,7 +7182,7 @@ MediumEditor.extensions = {};
                     sel.anchorNode.parentNode.parentElement.parentElement.insertBefore(p, sel.anchorNode.parentNode.parentElement.nextSibling);
                 }
               }
-              if ( (sel.anchorNode.nodeName === "h6") && isIAmSVG.test(sel.anchorNode.parentNode.id)) {
+              if ( (sel.anchorNode.nodeName.tolowercase() === "h6") && isIAmSVG.test(sel.anchorNode.parentNode.id)) {
                 // caption is empty
                 if ( (sel.anchorOffset === sel.focusOffset) && (sel.anchorNode.length === sel.anchorOffset) ) {
                     p = this.options.ownerDocument.createElement('p');
