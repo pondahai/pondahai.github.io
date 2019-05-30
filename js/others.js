@@ -245,7 +245,7 @@
 		document.getElementsByTagName('head')[0].appendChild(meta);
 		meta = document.createElement('meta');
 		meta.setAttribute('property', 'og:type');
-		meta.content = "website";
+		meta.content = "article";
 		document.getElementsByTagName('head')[0].appendChild(meta);
 		meta = document.createElement('meta');
 		meta.setAttribute('property', 'og:title');
