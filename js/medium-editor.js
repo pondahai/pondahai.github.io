@@ -2261,11 +2261,12 @@ MediumEditor.extensions = {};
                     (selectionNode.nodeType === 1 && selectionNode.querySelector('img'))) {
                     return true;
                 }
-                // dahai: i add for svg test
-                if (selectionNode.nodeType === 1 && selectionNode.nextElementSibling){
-                  if(selectionNode.nextElementSibling.nodeName.toLowerCase() === 'svg' ) {
-                    return true;
-                }}
+                // // dahai: i add for svg test
+                // dahai: i move back to checkState()
+                // if (selectionNode.nodeType === 1 && selectionNode.nextElementSibling){
+                //   if(selectionNode.nextElementSibling.nodeName.toLowerCase() === 'svg' ) {
+                //     return true;
+                // }}
             }
 
             return false;
@@ -6605,11 +6606,60 @@ MediumEditor.extensions = {};
                 return this.hideToolbar();
             }
 
-            // // dahai: If we inside the svg text tag -> do something
-            // if () {
+            // // dahai: If we are inside the svg text tag -> do something, hide toolbar for svg
+            // dahai: i add test in selectionContainsContent()
+            // dahai: i add svg detect
+        // dahai: for svg situation
+        var shellingTravel = function(node) {
+          var stepParentElement = node.parentElement;
+          var stepNode = node;
+          var isIAmHere = /iAmHere/i;
+          while (!isIAmHere.test(stepParentElement.id)) {
+                  stepNode = stepParentElement;
+                  stepParentElement = stepParentElement.parentElement;
+          }
+          return stepNode;
+        };
+        // dahai: for svg situation
+        var travelSelMeetSVG = function () {
+          var sel = window.getSelection();
+          var isIAmSVG = /i-am-svg/i;
+          // detect select direct
+          var position = sel.anchorNode.compareDocumentPosition(sel.focusNode);
+          var backward = false;
+          // position == 0 if nodes are the same
+          if (!position && sel.anchorOffset > sel.focusOffset || 
+            position === Node.DOCUMENT_POSITION_PRECEDING)
+            backward = true; 
 
-            //     return this.hideToolbar();
-            // }
+          var stepNode;
+          var targetNode;
+          if (backward) {
+            stepNode = shellingTravel(sel.focusNode);
+            targetNode = shellingTravel(sel.anchorNode);
+          }else{
+            stepNode = shellingTravel(sel.anchorNode);
+            targetNode = shellingTravel(sel.focusNode);
+          }
+          // var stepNode = (typeof sel.anchorNode.id === "undefined")?sel.anchorNode.parentNode:sel.anchorNode;
+          // var targetNode = (typeof sel.focusNode.id === "undefined")?sel.focusNode.parentNode:sel.focusNode;
+
+          while (true) {
+            if (isIAmSVG.test(stepNode.id)) {
+              return true;
+            }
+            if (stepNode != targetNode) {
+              stepNode = shellingTravel(stepNode.nextSibling);
+            }else{
+              break;
+            }
+          };
+          return false;
+        };
+            if (travelSelMeetSVG()) {
+
+                return this.hideToolbar();
+            }
 
             this.showAndUpdateToolbar();
         },
@@ -6987,6 +7037,61 @@ MediumEditor.extensions = {};
             
             isEmpty = /^(\s+|<br\/?>)?$/i,
             isHeader = /h\d/i;
+
+        // dahai: prepare for svg check, svg detect
+        var sel = window.getSelection();
+        var anchorNodePPParentNode = sel.anchorNode.parentNode.parentNode.parentNode;
+        var focusNodePPParentNode = sel.focusNode.parentNode.parentNode.parentNode;
+        var isIAmSVG = /i-am-svg/i;
+        var isIAmHere = /iAmHere/i;
+        // dahai: for svg situation
+        var shellingTravel = function(node) {
+          var stepParentElement = node.parentElement;
+          var stepNode = node;
+          var isIAmHere = /iAmHere/i;
+          while (!isIAmHere.test(stepParentElement.id)) {
+                  stepNode = stepParentElement;
+                  stepParentElement = stepParentElement.parentElement;
+          }
+          return stepNode;
+        };
+        // dahai: for svg situation
+        var travelSelMeetSVG = function () {
+          var sel = window.getSelection();
+          var isIAmSVG = /i-am-svg/i;
+          // detect select direct
+          var position = sel.anchorNode.compareDocumentPosition(sel.focusNode);
+          var backward = false;
+          // position == 0 if nodes are the same
+          if (!position && sel.anchorOffset > sel.focusOffset || 
+            position === Node.DOCUMENT_POSITION_PRECEDING)
+            backward = true; 
+
+          var stepNode;
+          var targetNode;
+          if (backward) {
+            stepNode = shellingTravel(sel.focusNode);
+            targetNode = shellingTravel(sel.anchorNode);
+          }else{
+            stepNode = shellingTravel(sel.anchorNode);
+            targetNode = shellingTravel(sel.focusNode);
+          }
+          // var stepNode = (typeof sel.anchorNode.id === "undefined")?sel.anchorNode.parentNode:sel.anchorNode;
+          // var targetNode = (typeof sel.focusNode.id === "undefined")?sel.focusNode.parentNode:sel.focusNode;
+
+          while (true) {
+            if (isIAmSVG.test(stepNode.id)) {
+              return true;
+            }
+            if (stepNode != targetNode) {
+              stepNode = shellingTravel(stepNode.nextSibling);
+            }else{
+              break;
+            }
+          };
+          return false;
+        };
+
         // dahai: for only svg in text area
         if (node && node.nodeName){
           var tagName = node.nodeName.toLowerCase();
@@ -6994,6 +7099,36 @@ MediumEditor.extensions = {};
           // 
           var tagName = "";
         }
+
+        // dahai: intercept for svg element 
+        console.log(travelSelMeetSVG());
+        if (travelSelMeetSVG()){
+          if (MediumEditor.util.isKey(event, MediumEditor.util.keyCode.BACKSPACE)) {
+            if ( (sel.anchorNode === sel.focusNode) &&
+              (sel.anchorOffset === sel.focusOffset) &&
+              ((sel.anchorOffset > 0) && (sel.focusOffset > 0))
+              ) 
+              {
+                  var range = document.createRange();
+                  range.setStart(sel.anchorNode, sel.anchorOffset-1);
+                  range.setEnd(sel.focusNode, sel.focusOffset);
+                  sel.removeAllRanges();
+                  sel.addRange(range);                  
+                  sel.deleteFromDocument();                
+              }
+              // is svg caption?
+              // console.log(sel);
+              if ((sel.anchorOffset === 0) && (sel.focusOffset === 0) &&
+                isIAmSVG.test(sel.anchorNode.parentNode.parentNode.id)
+                ) {
+                sel.anchorNode.parentNode.innerHTML = "<br>";
+              }
+          }
+              event.preventDefault();
+              event.stopPropagation();
+          return;          
+        }
+
         if (MediumEditor.util.isKey(event, [MediumEditor.util.keyCode.BACKSPACE, MediumEditor.util.keyCode.ENTER]) &&
                 // has a preceeding sibling
                 node.previousElementSibling &&
@@ -7010,10 +7145,32 @@ MediumEditor.extensions = {};
             } else if (!this.options.disableDoubleReturn && MediumEditor.util.isKey(event, MediumEditor.util.keyCode.ENTER)) {
                 // hitting return in the begining of a header will create empty header elements before the current one
                 // instead, make "<p><br></p>" element, which are what happens if you hit return in an empty paragraph
-                p = this.options.ownerDocument.createElement('p');
-                p.innerHTML = '<br>';
-                node.previousElementSibling.parentNode.insertBefore(p, node);
-                event.preventDefault();
+                
+                // dahai: prevent keydown enter inside svg caption
+                if (node.parentElement.id == "i-am-svg") {
+                  if (!node.parentElement.nextSibling) {
+                    p = this.options.ownerDocument.createElement('p');
+                    p.innerHTML = '<br>';
+                    node.parentElement.parentElement.insertBefore(p, node.parentElement.nextSibling);
+                  }
+                  // dahai: change cursor position
+                  var range = document.createRange();
+                  var sel = window.getSelection();
+                  range.setStart(node.parentElement.nextSibling, 0);
+                  range.collapse(true);
+                  sel.removeAllRanges();
+                  sel.addRange(range);
+                  event.preventDefault();
+                }else{
+                  p = this.options.ownerDocument.createElement('p');
+                  p.innerHTML = '<br>';
+                  node.previousElementSibling.parentNode.insertBefore(p, node);
+                  event.preventDefault();
+                }
+            } else if (MediumEditor.util.isKey(event, MediumEditor.util.keyCode.BACKSPACE) && node.parentElement && node.parentElement.id == "i-am-svg") {
+              // dahai: prevent keydown backspace in svg caption
+              event.preventDefault();
+              event.stopPropagation();
             }
         } else if (MediumEditor.util.isKey(event, MediumEditor.util.keyCode.DELETE) &&
                     // between two sibling elements
@@ -7100,245 +7257,68 @@ MediumEditor.extensions = {};
             event.preventDefault();
             MediumEditor.selection.moveCursor(this.options.ownerDocument, node.nextSibling);
             node.parentElement.removeChild(node);
-        } else if (MediumEditor.util.isKey(event, MediumEditor.util.keyCode.ENTER)) {
-          // dahai: for svg enter press(caption text)
-          if (node.parentElement.firstChild) {
-                if (node.parentElement.id == "i-am-svg") {
-                  //node.style.width = null;
-                  //node.style.height = null;
-                  if (!node.parentElement.nextSibling) {
-                    p = this.options.ownerDocument.createElement('p');
-                    p.innerHTML = '<br>';
-                    node.parentElement.parentElement.insertBefore(p, node.parentElement.nextSibling);
-                  }
-                  // dahai: change cursor position
-                  var range = document.createRange();
-                  var sel = window.getSelection();
-                  range.setStart(node.parentElement.nextSibling, 0);
-                  range.collapse(true);
-                  sel.removeAllRanges();
-                  sel.addRange(range);
-            event.preventDefault();
-                }
-                // dahai: for svg text that inside
-                var parentelement = node.parentElement;
-                if (parentelement.parentElement.id == "i-am-svg") {
-                  if (!parentelement.nextSibling) {
-                    p = this.options.ownerDocument.createElement('p');
-                    p.innerHTML = '<br>';
-                    parentelement.parentElement.insertBefore(p, parentelement.nextSibling);
-                  }
-                  // dahai: change cursor position
-                  var nextsibling = parentelement.nextSibling;
-                  if (parentelement.nextSibling.scrollHeight == 0) {
-                    //nextsibling = nextsibling.nextSibling;
-
-                  }
-                  // var range = document.createRange();
-                  // var sel = window.getSelection();
-                  // range.setStart(nextsibling, 0);
-                  // range.collapse(true);
-                  // sel.removeAllRanges();
-                  // sel.addRange(range);
-            event.preventDefault();
-            //if (event.which == 229 && event.key == "Enter") {
-              //console.log('here'); // dahai: debug
-              //event.preventDefault();
-              //event.stopPropagation();
-              //$("#iAmHere").focus();
-              //$("#iAmHere").keydown(function(e){ return e.which != 13; });
-              // dahai: for chinese input enter key problem
-              parentelement.parentNode.setAttribute('contenteditable', false);
-              setTimeout(function(){ parentelement.parentNode.setAttribute('contenteditable', true); }, 300);
-              
-            //}
-
-                }
-          }
-        } else if (MediumEditor.util.isKey(event, MediumEditor.util.keyCode.BACKSPACE) || MediumEditor.util.isKey(event, MediumEditor.util.keyCode.DELETE)) {
-          // dahai: for svg text delete or backspace 
-          var range = document.createRange();
-          var sel = window.getSelection();
-          if (node.nextSibling && node.nextSibling.nodeName == "DIV" && node.nextSibling.children && node.nextSibling.children[0] && node.nextSibling.children[0].nodeName == "svg") {
-            // delete or backspace node but div.svg is next
-            //console.log("yes");
-            // dahai: do delete one char or multi char
-            if (sel.anchorNode == sel.extentNode) {
-              var range = document.createRange();
-              if (MediumEditor.util.isKey(event, MediumEditor.util.keyCode.BACKSPACE)) {
-                if ((sel.anchorOffset - 1) >= 0 && ( sel.anchorOffset == sel.extentOffset)) {
-                  range.setStart(sel.anchorNode, sel.anchorOffset - 1);
-                  range.setEnd(sel.anchorNode, sel.anchorOffset);
-                  sel.removeAllRanges();
-                  sel.addRange(range);
-                }
-                if ((sel.anchorOffset == 0) && (sel.extentOffset == 0)) {
-                  node.parentElement.removeChild(node);
-                }
-              }
-              if (MediumEditor.util.isKey(event, MediumEditor.util.keyCode.DELETE)) {
-                if ((sel.anchorOffset + 1) <= sel.anchorNode.length && ( sel.anchorOffset == sel.extentOffset)) {
-                  range.setStart(sel.anchorNode, sel.anchorOffset);
-                  range.setEnd(sel.anchorNode, sel.anchorOffset + 1);
-                  sel.removeAllRanges();
-                  sel.addRange(range);                  
-                }
-                if ((sel.anchorOffset == 0) && (sel.extentOffset == 0)) {
-                  node.parentElement.removeChild(node);
-                }
-              }
-            }else{
-              // if (sel.anchorNode.nodeName == "#text") {
-              //   sel.anchorNode.nodeValue = "";
-              // }
-            }
-              sel.deleteFromDocument();
-            event.preventDefault();
-            event.stopPropagation();
-          }else if (node.parentElement && node.parentElement.nodeName == "svg") {
-            // dahai: do delete one char or multi char
-            if (sel.anchorNode == sel.extentNode) {
-              var range = document.createRange();
-              if (MediumEditor.util.isKey(event, MediumEditor.util.keyCode.BACKSPACE)) {
-                if ((sel.anchorOffset - 1) >= 0 && ( sel.anchorOffset == sel.extentOffset)) {
-                  range.setStart(sel.anchorNode, sel.anchorOffset - 1);
-                  range.setEnd(sel.anchorNode, sel.anchorOffset);
-                  sel.removeAllRanges();
-                  sel.addRange(range);
-                }              
-              }
-              if (MediumEditor.util.isKey(event, MediumEditor.util.keyCode.DELETE)) {
-                if ((sel.anchorOffset + 1) <= sel.anchorNode.length && ( sel.anchorOffset == sel.extentOffset)) {
-                  range.setStart(sel.anchorNode, sel.anchorOffset);
-                  range.setEnd(sel.anchorNode, sel.anchorOffset + 1);
-                  sel.removeAllRanges();
-                  sel.addRange(range);                  
-                }
-              }
-            }else{
-              // if (sel.anchorNode.nodeName == "#text") {
-              //   sel.anchorNode.nodeValue = "";
-              // }
-            }
-              sel.deleteFromDocument();
-            // remove blank text node in svg
-            var parentElement = node.parentElement;
-            var i = parentElement.children.length;
-            while (--i) {
-            
-              var children = parentElement.children[i];
-              if (parentElement.children[i].nodeName && parentElement.children[i].nodeName == "text") {
-                //parentElement.children[i].remove();
-                if (/^\s*$/.test(parentElement.children[i].textContent)) {
-                  parentElement.removeChild(parentElement.children[i]);
-                }
-                // console.log(i);
-                // console.log(/^\s*$/.test(node.parentElement.children[i].textContent));
-                // console.log(node.parentElement.children[i].textContent);
-              }
-            }
-
-            // if (node.parentElement.firstChild.nodeName && node.parentElement.firstChild.nodeName == "#text") {
-            //   var text = node.parentElement.firstChild.textContent;
-            //   if (/^\s*$/.test(text)) {
-            //     node.parentElement.firstChild.remove();
-            //   }
-            //   //console.log(node.parentElement.firstChild.textContent.match(/^ *$/));
-            //   //console.log(node.parentElement.firstChild.textContent.length);
-            // }
-            event.preventDefault();
-          }else{
-
-            if (sel.anchorNode == sel.extentNode) {
-              // normal delete
-              var range = document.createRange();
-              if (MediumEditor.util.isKey(event, MediumEditor.util.keyCode.BACKSPACE)) {
-                if ((sel.anchorOffset - 1) >= 0 && ( sel.anchorOffset == sel.extentOffset)) {
-                  range.setStart(sel.anchorNode, sel.anchorOffset - 1);
-                  range.setEnd(sel.anchorNode, sel.anchorOffset);
-                  sel.removeAllRanges();
-                  sel.addRange(range);
-                }
-                if ((sel.anchorOffset == 0) && (sel.extentOffset == 0)) {
-                  //node.parentElement.removeChild(node);
-                  range.setStart(sel.anchorNode, sel.anchorOffset - 1);
-                  range.setEnd(sel.anchorNode, sel.anchorOffset);
-                  sel.removeAllRanges();
-                  sel.addRange(range);
-                }
-                if (sel.anchorOffset == sel.extentOffset) {
-                  event.preventDefault();
-                  event.stopPropagation();
-                }
-              }
-              if (MediumEditor.util.isKey(event, MediumEditor.util.keyCode.DELETE)) {
-                if ((sel.anchorOffset + 1) <= sel.anchorNode.length && ( sel.anchorOffset == sel.extentOffset)) {
-                  range.setStart(sel.anchorNode, sel.anchorOffset);
-                  range.setEnd(sel.anchorNode, sel.anchorOffset + 1);
-                  sel.removeAllRanges();
-                  sel.addRange(range);                  
-                }
-                if ((sel.anchorOffset == 0) && (sel.extentOffset == 0)) {
-                  //node.parentElement.removeChild(node);
-                  range.setStart(sel.anchorNode, sel.anchorOffset);
-                  range.setEnd(sel.anchorNode, sel.anchorOffset + 1);
-                  sel.removeAllRanges();
-                  sel.addRange(range);                  
-                }
-                if (sel.anchorOffset == sel.extentOffset) {
-                  event.preventDefault();
-                  event.stopPropagation();
-                }
-              }            
-              // TODO clean format before delete
-              sel.deleteFromDocument();
-              //  shelling
-              var stepParentElement = node.parentElement;
-              var stepNode = node;
-              do {
-                  if (!stepNode.innerHTML) {
-                      stepParentElement.removeChild(stepNode);
-                      stepNode = stepParentElement;
-                      stepParentElement = stepParentElement.parentElement;
-                    }else{
-                      break;
-                    }
-              }while (stepNode.id != "iAmHere");
-            }else if ((sel.anchorNode.parentNode.nodeName == "svg") || (sel.extentNode.parentNode.nodeName == "svg")) {
-
-            }else{
-              // TODO clean format before delete
-              sel.deleteFromDocument();
-              //  shelling
-              var stepParentElement = node.parentElement;
-              var stepNode = node;
-              do {
-                  if (!stepNode.innerHTML) {
-                      stepParentElement.removeChild(stepNode);
-                      stepNode = stepParentElement;
-                      stepParentElement = stepParentElement.parentElement;
-                    }else{
-                      break;
-                    }
-              }while (stepNode.id != "iAmHere");
-
-              // if (sel.anchorNode.nodeName == "#text") {
-              //   sel.anchorNode.nodeValue = "";
-              // }
-            }
-            event.preventDefault();
-            event.stopPropagation();
-          }
-
-        }
+        } 
     }
 
     function handleKeyup(event) {
+        // dahai: for svg situation, svg detect
+        var shellingTravel = function(node) {
+          var stepParentElement = node.parentElement;
+          var stepNode = node;
+          var isIAmHere = /iAmHere/i;
+          while (!isIAmHere.test(stepParentElement.id)) {
+                  stepNode = stepParentElement;
+                  stepParentElement = stepParentElement.parentElement;
+          }
+          return stepNode;
+        };
+        // dahai: for svg situation
+        var travelSelMeetSVG = function () {
+          var sel = window.getSelection();
+          var isIAmSVG = /i-am-svg/i;
+          // detect select direct
+          var position = sel.anchorNode.compareDocumentPosition(sel.focusNode);
+          var backward = false;
+          // position == 0 if nodes are the same
+          if (!position && sel.anchorOffset > sel.focusOffset || 
+            position === Node.DOCUMENT_POSITION_PRECEDING)
+            backward = true; 
+
+          var stepNode;
+          var targetNode;
+          if (backward) {
+            stepNode = shellingTravel(sel.focusNode);
+            targetNode = shellingTravel(sel.anchorNode);
+          }else{
+            stepNode = shellingTravel(sel.anchorNode);
+            targetNode = shellingTravel(sel.focusNode);
+          }
+          // var stepNode = (typeof sel.anchorNode.id === "undefined")?sel.anchorNode.parentNode:sel.anchorNode;
+          // var targetNode = (typeof sel.focusNode.id === "undefined")?sel.focusNode.parentNode:sel.focusNode;
+
+          while (true) {
+            if (isIAmSVG.test(stepNode.id)) {
+              return true;
+            }
+            if (stepNode != targetNode) {
+              stepNode = shellingTravel(stepNode.nextSibling);
+            }else{
+              break;
+            }
+          };
+          return false;
+        };
+
         var node = MediumEditor.selection.getSelectionStart(this.options.ownerDocument),
             tagName;
 
         if (!node) {
             return;
+        }
+
+        // dahai: for svg situation
+        if (travelSelMeetSVG()) {
+          return;
         }
 
         // https://github.com/yabwe/medium-editor/issues/994
