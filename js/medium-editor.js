@@ -4893,7 +4893,7 @@ MediumEditor.extensions = {};
                       var svg_rect = "<rect x=\"0\" y=\"0\" width=\""+imgWidth+"\" height=\""+imgHeight+"\" fill-opacity=\"0\" stroke-opacity=\"0\"></rect>"
                       //pastedHTML = "<div draggable=\"true\" style=\"width:"+imgWidth+";height:"+imgHeight+";\"><svg  " + "width=\"" + imgWidth + "\" " + "height=\"" + imgHeight + "\" " + "xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">" + "<image " + "height=\"" + imgHeight + "\" " + "width=\"" + imgWidth + "\" " + "xlink:href=\"" + imgSrc + "\"" + "/>" +svg_rect+ "</svg></div>";
                       var svg_svg =  "<svg  class=\"boxborder-svg\"" + "width=\"" + imgWidth + "\" " + "height=\"" + imgHeight + "\" " + "xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">" + "<image " + "height=\"" + imgHeight + "\" " + "width=\"" + imgWidth + "\" " + "xlink:href=\"" + imgSrc + "\"" + "/>" +svg_rect+ "</svg>";
-                      var pastedHTML = "<div  data-medium-editor-element=\"true\" data-disable-toolbar=\"true\" " + "style=\"text-align: center;\">"+svg_svg+"<h6><br></h6></div>";
+                      var pastedHTML = "<div id=\"i-am-svg\" i-am-svg=\"true\"  data-medium-editor-element=\"true\" data-disable-toolbar=\"true\" " + "style=\"text-align: center;\">"+svg_svg+"<h6><br></h6></div>";
                       MediumEditor.util.insertHTMLCommand(thisDocument, pastedHTML);
                       
                   };
@@ -5733,7 +5733,7 @@ MediumEditor.extensions = {};
                       var svg_rect = "<rect x=\"0\" y=\"0\" width=\""+imgWidth+"\" height=\""+imgHeight+"\" fill-opacity=\"0\" stroke-opacity=\"0\"></rect>"
                       //pastedHTML = "<div draggable=\"true\" style=\"width:"+imgWidth+";height:"+imgHeight+";\"><svg  " + "width=\"" + imgWidth + "\" " + "height=\"" + imgHeight + "\" " + "xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">" + "<image " + "height=\"" + imgHeight + "\" " + "width=\"" + imgWidth + "\" " + "xlink:href=\"" + imgSrc + "\"" + "/>" +svg_rect+ "</svg></div>";
                       var svg_svg =  "<svg  class=\"boxborder-svg\" style=\"text-align: center;\"" + "width=\"" + imgWidth + "\" " + "height=\"" + imgHeight + "\" " + "xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">" + "<image " + "height=\"" + imgHeight + "\" " + "width=\"" + imgWidth + "\" " + "xlink:href=\"" + imgSrc + "\"" + "/>" +svg_rect+ "</svg>";
-                      var pastedHTML = "<div  data-medium-editor-element=\"true\" data-disable-toolbar=\"true\" " + "style=\"text-align: center;\">"+svg_svg+"<h6><br></h6></div>";
+                      var pastedHTML = "<div id=\"i-am-svg\" i-am-svg=\"true\"  data-medium-editor-element=\"true\" data-disable-toolbar=\"true\" " + "style=\"text-align: center;\">"+svg_svg+"<h6><br></h6></div>";
                       pastedPlain = "";
                       elem.doPaste(pastedHTML, pastedPlain, editable);
                       //elem.doPaste("<p><br></p>", pastedPlain, editable);
