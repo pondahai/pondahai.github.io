@@ -7174,13 +7174,21 @@ MediumEditor.extensions = {};
           } else if (MediumEditor.util.isKey(event, MediumEditor.util.keyCode.ENTER)) {
               // is svg caption?
               // console.log(sel);
-              if ( (sel.anchorOffset === sel.focusOffset) &&
-                isIAmSVG.test(sel.anchorNode.parentNode.parentNode.id) &&
-                (sel.anchorNode.length === sel.anchorOffset)
-                ) {
+              if ( (sel.anchorNaode.nodeName === "#text") && isIAmSVG.test(sel.anchorNode.parentNode.parentNode.id)) {
+                // caption has #text
+                if ( (sel.anchorOffset === sel.focusOffset) && (sel.anchorNode.length === sel.anchorOffset) ) {
                     p = this.options.ownerDocument.createElement('p');
                     p.innerHTML = '<br>';
-                    sel.anchorNode.parentNode.parentElement.parentElement.insertBefore(p, sel.anchorNode.parentNode.parentElement.nextSibling);                
+                    sel.anchorNode.parentNode.parentElement.parentElement.insertBefore(p, sel.anchorNode.parentNode.parentElement.nextSibling);
+                }
+              }
+              if ( (sel.anchorNaode.nodeName === "h6") && isIAmSVG.test(sel.anchorNode.parentNode.id)) {
+                // caption is empty
+                if ( (sel.anchorOffset === sel.focusOffset) && (sel.anchorNode.length === sel.anchorOffset) ) {
+                    p = this.options.ownerDocument.createElement('p');
+                    p.innerHTML = '<br>';
+                    sel.anchorNode.parentNode.parentElement.parentElement.insertBefore(p, sel.anchorNode.parentNode.parentElement.nextSibling);
+                }
               }
           }
           // after svg stop the event propagation
