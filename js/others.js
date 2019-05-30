@@ -520,7 +520,7 @@ function fbshareCurrentPage(url, name)
     	// 	"https://www.facebook.com/sharer/sharer.php?u="+escape(url)+"&t="+name, '', 
     	// 	'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600'
     	// 	);
-    	window.open("https://www.facebook.com/dialog/share?&app_id=2373370826211241&display=popup&href=" + url);
+    	window.open("https://www.facebook.com/dialog/share?&app_id=2373370826211241&display=popup&href=" + url + "&redirect_uri=" + url);
     	return false; 
     }
 
