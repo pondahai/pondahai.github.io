@@ -165,10 +165,10 @@
 	}
   	//console.log(id);
   	if (gapi) {
-		//var accessToken = gapi.auth.getToken().access_token; // Here gapi is used for retrieving the access token.
+		var accessToken = gapi.auth.getToken().access_token; // Here gapi is used for retrieving the access token.
 		var xhr = new XMLHttpRequest();
 		xhr.open('GET', 'https://www.googleapis.com/drive/v3/files/' + id + '?alt=media');
-		//xhr.setRequestHeader('Authorization', 'Bearer ' + accessToken);
+		xhr.setRequestHeader('Authorization', 'Bearer ' + accessToken);
 		xhr.responseType = 'blob';
 		xhr.onload = function(e) {
 			if(this) {
