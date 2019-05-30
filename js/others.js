@@ -515,11 +515,12 @@
   }
 
 function fbshareCurrentPage(url, name)
-    {
-    	window.open(
-    		"https://www.facebook.com/sharer/sharer.php?u="+escape(url)+"&t="+name, '', 
-    		'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600'
-    		);
+    {  
+    	// window.open(
+    	// 	"https://www.facebook.com/sharer/sharer.php?u="+escape(url)+"&t="+name, '', 
+    	// 	'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600'
+    	// 	);
+    	window.open("https://www.facebook.com/dialog/share?&display=popup&href=" + url);
     	return false; 
     }
 
