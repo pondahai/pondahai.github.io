@@ -263,13 +263,14 @@
 		}
 
 		// show fb share button
-		var url = encodeURIComponent("https://pondahai.github.io/?fileid=" + id);
+		var url_encoded = encodeURIComponent("https://pondahai.github.io/?fileid=" + id);
+		var name_encoded = encodeURIComponent(name);
 		var buttonimg = document.createElement('img');
 		buttonimg.src = "https://assets.cobaltnitra.com/teams/repository/export/685/994e08a161005809f00505692530e/685994e08a161005809f00505692530e.png";
 		buttonimg.setAttribute("style","width: 30px;");
 		var fbShareButton = document.createElement('a');
 		fbShareButton.setAttribute('id','idFBshareButton');
-		fbShareButton.setAttribute('href', 'javascript:fbshareCurrentPage("'+url+'","'+name+'")');
+		fbShareButton.setAttribute('href', 'javascript:fbshareCurrentPage("'+url_encoded+'","'+name_encoded+'")');
 		fbShareButton.setAttribute('target', '_blank');
 		fbShareButton.appendChild(buttonimg);
 		document.getElementById('fbsharebuttonposition').parentNode.insertBefore(fbShareButton,document.getElementById('fbsharebuttonposition'));
