@@ -1541,6 +1541,7 @@ MediumEditor.extensions = {};
 
           while (true) {
             if (isIAmSVG.test(stepNode.id)) {
+              console.log("svg touch!");
               return true;
             }
             if (stepNode != targetNode) {
@@ -7129,7 +7130,7 @@ if (!istravelSelMeetSVG) {
         }
 
         // dahai: intercept for svg element 
-        console.log(MediumEditor.util.travelSelMeetSVG()); // dahai: 
+        //console.log(MediumEditor.util.travelSelMeetSVG()); // dahai: 
         if (MediumEditor.util.travelSelMeetSVG()){
           if (MediumEditor.util.isKey(event, MediumEditor.util.keyCode.BACKSPACE)) {
             if ( (sel.anchorNode === sel.focusNode) &&
