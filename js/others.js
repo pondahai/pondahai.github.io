@@ -358,7 +358,9 @@
 		xhr.send(form);
 	}
   }
-
+  function gotoURLbyId (id, name) {
+  	window.location.href = 'https://pondahai.github.io/?fileid=' + id;
+  }
       // Client ID and API key from the Developer Console
       var CLIENT_ID = '169837891026-oag2vd4m6ibivp7cqajreu1um7svvdhh.apps.googleusercontent.com';
       var API_KEY = 'AIzaSyCmieef4onzl_adyu8gwpCh8Lhsk7oX5Cw';
@@ -471,11 +473,10 @@
          var btn = document.createElement("BUTTON"); 
          btn.innerHTML = name + " " + ctime; 
          btn.id = id;
-         btn.setAttribute ('onclick', 'downloadFromCloud("'+id+'","'+name+'")');
+         btn.setAttribute ('onclick', 'gotoURLbyId("'+id+'","'+name+'")');
          btn.classList.add("fileslistbutton");
-        // btn.onclick = function () {downloadFromCloud(id);};
-        //btn.addEventListener("click", downloadFromCloud());
-        div.appendChild(btn);
+
+      	div.appendChild(btn);
       }
       function clearPre() {
       	var pre = document.getElementById('content');
