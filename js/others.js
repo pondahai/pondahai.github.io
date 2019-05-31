@@ -147,9 +147,9 @@
 	obj.description = document.querySelector("[property='og:description']").content;
 	obj.id = document.querySelector("[property='fileid']").content;
 	var jsonString= JSON.stringify(obj);
-	//console.log(jsonString);
+	console.log(jsonString);
 	//console.log(encodeURIComponent(jsonString));
-	return encodeURIComponent(jsonString);
+	return jsonString;
   }
   function buildMetaUrl () {
 		if (document.querySelector("[property='og:url']")) {
@@ -157,7 +157,7 @@
 		}
 		meta = document.createElement('meta');
 		meta.setAttribute('property', 'og:url');
-		meta.content = 'https://pondahai.github.io/?qdata=' + createQueryData();
+		meta.content = 'https://pondahai.github.io/?qdata=' + encodeURIComponent(createQueryData());
 		document.getElementsByTagName('head')[0].appendChild(meta);  	
   }
   function buildPageMeta (id) {
@@ -357,6 +357,30 @@
 		xhr.send();
 	}
   }
+  function rebuildShareButton (id, name) {
+		// remove button if it is exist
+		var fbShareButton = document.getElementById('idFBshareButton');
+		if (fbShareButton) {
+				fbShareButton.parentNode.removeChild(fbShareButton);
+		}
+
+		// build and show fb share button
+//		var url_encoded = encodeURIComponent("https://pondahai.github.io/?fileid=" + id);
+		// createQueryData()
+		var url_encoded = encodeURIComponent("https://pondahai.github.io/?fileid=" + encodeURIComponent(createQueryData()));
+		var name_encoded = encodeURIComponent(name);
+		var buttonimg = document.createElement('img');
+		buttonimg.src = "https://assets.cobaltnitra.com/teams/repository/export/685/994e08a161005809f00505692530e/685994e08a161005809f00505692530e.png";
+		buttonimg.setAttribute("style","width: 30px;");
+		var fbShareButton = document.createElement('a');
+		fbShareButton.setAttribute('id','idFBshareButton');
+		fbShareButton.setAttribute('href', 'javascript:fbshareCurrentPage("'+url_encoded+'","'+name_encoded+'")');
+		fbShareButton.setAttribute('target', '_blank');
+		fbShareButton.appendChild(buttonimg);
+		document.getElementById('fbsharebuttonposition').parentNode.insertBefore(fbShareButton,document.getElementById('fbsharebuttonposition'));
+
+//<a href="javascript:fbshareCurrentPage()" target="_blank" alt="Share on Facebook"><img src="https://assets.cobaltnitra.com/teams/repository/export/685/994e08a161005809f00505692530e/685994e08a161005809f00505692530e.png" style="width: 30px; alt=" alt="" /></a>		  	
+  }
   function uploadToCloudAndShare () {
   	var afterUploadThenShare = function (id, name) {
 		var accessToken = gapi.auth.getToken().access_token; // Here gapi is used for retrieving the access token.
@@ -372,26 +396,7 @@
 
 	    buildPageMeta(id);
 
-		// remove button if it is exist
-		var fbShareButton = document.getElementById('idFBshareButton');
-		if (fbShareButton) {
-				fbShareButton.parentNode.removeChild(fbShareButton);
-		}
-
-		// show fb share button
-		var url_encoded = encodeURIComponent("https://pondahai.github.io/?fileid=" + id);
-		var name_encoded = encodeURIComponent(name);
-		var buttonimg = document.createElement('img');
-		buttonimg.src = "https://assets.cobaltnitra.com/teams/repository/export/685/994e08a161005809f00505692530e/685994e08a161005809f00505692530e.png";
-		buttonimg.setAttribute("style","width: 30px;");
-		var fbShareButton = document.createElement('a');
-		fbShareButton.setAttribute('id','idFBshareButton');
-		fbShareButton.setAttribute('href', 'javascript:fbshareCurrentPage("'+url_encoded+'","'+name_encoded+'")');
-		fbShareButton.setAttribute('target', '_blank');
-		fbShareButton.appendChild(buttonimg);
-		document.getElementById('fbsharebuttonposition').parentNode.insertBefore(fbShareButton,document.getElementById('fbsharebuttonposition'));
-
-//<a href="javascript:fbshareCurrentPage()" target="_blank" alt="Share on Facebook"><img src="https://assets.cobaltnitra.com/teams/repository/export/685/994e08a161005809f00505692530e/685994e08a161005809f00505692530e.png" style="width: 30px; alt=" alt="" /></a>		
+	    rebuildShareButton(id, name);
 	 };
 
   	uploadToCloud (afterUploadThenShare);
@@ -636,7 +641,7 @@
 	    setTimeout('downloadFromCloud("'+fileid+'","");',3000);
 	    document.getElementById("iAmHere").innerHTML="<p><br></p>";
 	}
-	var qdata = aryPara['pdata'];
+	var qdata = aryPara['qdata'];
 	if (qdata) {
 		var jsonString = decodeURIComponent(qdata);
 		var json = JSON.parse(jsonString);
