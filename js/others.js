@@ -254,7 +254,7 @@
   	if (gapi) {
   		// dahai: accss_token is necessary for file download, but i dont believe, There must be a solution in the world.
   		var accessToken;
-  		if (gapi.auth.getToken) {
+  		if (gapi.auth.getToken !== null) {
 			accessToken = gapi.auth.getToken().access_token; // Here gapi is used for retrieving the access token.
 		}
 		var xhr = new XMLHttpRequest();
