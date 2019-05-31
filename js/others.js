@@ -635,7 +635,7 @@
     // for share file download from url qurey string
     var fileid = aryPara['fileid'];
     if (fileid) {
-	    setTimeout('downloadFromCloud("'+fileid+'","");',3000);
+	    setTimeout('downloadFromCloud("'+fileid+'","");',5000);
 	    document.getElementById("iAmHere").innerHTML="<p><br></p>";
 	}
 	var qdata = aryPara['qdata'];
