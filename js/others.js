@@ -141,19 +141,30 @@
   }
   function createQueryData() {
   	var obj = new Object();
-	obj.url = document.querySelector("[property='og:url']");
-	obj.type  = document.querySelector("[property='og:type']");
-	obj.title = document.querySelector("[property='og:title']");
-	obj.description = document.querySelector("[property='og:description']");
+	//obj.url = document.querySelector("[property='og:url']").content;
+	obj.type  = document.querySelector("[property='og:type']").content;
+	obj.title = document.querySelector("[property='og:title']").content;
+	obj.description = document.querySelector("[property='og:description']").content;
+	obj.id = document.querySelector("[property='fileid']").content;
 	var jsonString= JSON.stringify(obj);
-	console.log(jsonString);
-	console.log(encodeURIComponent(jsonString));
+	//console.log(jsonString);
+	//console.log(encodeURIComponent(jsonString));
+	return encodeURIComponent(jsonString);
   }
-  function buildPageMeta (url) {
-		var meta;
+  function buildMetaUrl () {
 		if (document.querySelector("[property='og:url']")) {
 			document.querySelector("[property='og:url']").remove();
 		}
+		meta = document.createElement('meta');
+		meta.setAttribute('property', 'og:url');
+		meta.content = 'https://pondahai.github.io/?qdata=' + createQueryData();
+		document.getElementsByTagName('head')[0].appendChild(meta);  	
+  }
+  function buildPageMeta (id) {
+		var meta;
+		// if (document.querySelector("[property='og:url']")) {
+		// 	document.querySelector("[property='og:url']").remove();
+		// }
 		if (document.querySelector("[property='og:type']")) {
 			document.querySelector("[property='og:type']").remove();
 		}
@@ -163,11 +174,14 @@
 		if (document.querySelector("[property='og:description']")) {
 			document.querySelector("[property='og:description']").remove();
 		}
+		if (document.querySelector("[property='fileid']")) {
+			document.querySelector("[property='fileid']").remove();
+		}
 		
-		meta = document.createElement('meta');
-		meta.setAttribute('property', 'og:url');
-		meta.content = url;
-		document.getElementsByTagName('head')[0].appendChild(meta);
+		// meta = document.createElement('meta');
+		// meta.setAttribute('property', 'og:url');
+		// meta.content = 'https://pondahai.github.io/?qdata=' + createQueryData();
+		// document.getElementsByTagName('head')[0].appendChild(meta);
 		meta = document.createElement('meta');
 		meta.setAttribute('property', 'og:type');
 		meta.content = "article";
@@ -180,8 +194,57 @@
 		meta.setAttribute('property', 'og:description');
 		meta.content = getFirstParagraph();
 		document.getElementsByTagName('head')[0].appendChild(meta);
+		meta = document.createElement('meta');
+		meta.setAttribute('property', 'fileid');
+		meta.content = id;
+		document.getElementsByTagName('head')[0].appendChild(meta);
 
 		document.title = getFirstLine();
+  }
+  function rebuildPageMeta (json) {
+		var meta;
+		var url;
+		// if (document.querySelector("[property='og:url']")) {
+		// 	document.querySelector("[property='og:url']").remove();
+		// }
+		if (document.querySelector("[property='og:type']")) {
+			document.querySelector("[property='og:type']").remove();
+		}
+		if (document.querySelector("[property='og:title']")) {
+			document.querySelector("[property='og:title']").remove();
+		}
+		if (document.querySelector("[property='og:description']")) {
+			document.querySelector("[property='og:description']").remove();
+		}
+		if (document.querySelector("[property='fileid']")) {
+			document.querySelector("[property='fileid']").remove();
+		}
+		
+		meta = document.createElement('meta');
+		meta.setAttribute('property', 'og:type');
+		meta.content = json.type;
+		document.getElementsByTagName('head')[0].appendChild(meta);
+		meta = document.createElement('meta');
+		meta.setAttribute('property', 'og:title');
+		meta.content = json.title;
+		document.getElementsByTagName('head')[0].appendChild(meta);
+		meta = document.createElement('meta');
+		meta.setAttribute('property', 'og:description');
+		meta.content = json.description;
+		document.getElementsByTagName('head')[0].appendChild(meta);
+		meta = document.createElement('meta');
+		meta.setAttribute('property', 'fileid');
+		meta.content = json.fileid;
+		document.getElementsByTagName('head')[0].appendChild(meta);
+		meta = document.createElement('meta');
+		meta.setAttribute('property', 'og:url');
+		url = 'https://pondahai.github.io/?qdata=' + createQueryData()
+		meta.content = url;
+		document.getElementsByTagName('head')[0].appendChild(meta);
+
+		document.title = getFirstLine();
+
+		console.log(url);
   }
 
   function downloadFromCloud (id,name) {
@@ -217,7 +280,7 @@
 				     	document.title = getFirstLine();
 
 				     	var url = 'https://pondahai.github.io/?fileid=' + id;
-				     	buildPageMeta(url);
+				     	buildPageMeta(id);
 
 				     	var file_id = null;
 				     	var file_name = null;
@@ -307,7 +370,7 @@
 	    var url = 'https://pondahai.github.io/?fileid=' + id;
 	    console.log(url);
 
-	    buildPageMeta(url);
+	    buildPageMeta(id);
 
 		// remove button if it is exist
 		var fbShareButton = document.getElementById('idFBshareButton');
@@ -572,6 +635,16 @@
     if (fileid) {
 	    setTimeout('downloadFromCloud("'+fileid+'","");',3000);
 	    document.getElementById("iAmHere").innerHTML="<p><br></p>";
+	}
+	var qdata = aryPara['pdata'];
+	if (qdata) {
+		var jsonString = decodeURIComponent(qdata);
+		var json = JSON.parse(jsonString);
+		if (json.fileid){
+	    	setTimeout('downloadFromCloud("'+fileid+'","");',1000);
+	    }
+	    rebuildPageMeta();
+	    document.getElementById("iAmHere").innerHTML="<p><br></p>";		
 	}
   }
 
