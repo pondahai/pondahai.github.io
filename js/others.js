@@ -74,6 +74,8 @@
     a.download = filename;
     a.href = 'data:text/html;base64,' + base64doc;
     a.dispatchEvent(e);
+
+    buildPageMeta("");
   }
 
   function checkAndFindMyContent(s) {
@@ -129,13 +131,23 @@
 	     	document.getElementById("iAmHere").innerHTML=checkAndFindMyContent(stripScripts(content));
 	     	document.getElementById("iAmHere").dispatchEvent(new MouseEvent('click'));
 	     	$('html, body').animate({ scrollTop: 0 }, 'fast');
-	     	document.title = getFirstLine();
+	     	buildPageMeta("");
 	   	}
 
   	    //document.getElementById("container").innerHTML='<object type="text/html" data='+file.name+' ></object>';
 	}
 
 	input.click();
+  }
+  function createQueryData() {
+  	var obj = new Object();
+	obj.url = document.querySelector("[property='og:url']");
+	obj.type  = document.querySelector("[property='og:type']");
+	obj.title = document.querySelector("[property='og:title']");
+	obj.description = document.querySelector("[property='og:description']");
+	var jsonString= JSON.stringify(obj);
+	console.log(jsonString);
+	console.log(encodeURIComponent(jsonString));
   }
   function buildPageMeta (url) {
 		var meta;
@@ -168,6 +180,8 @@
 		meta.setAttribute('property', 'og:description');
 		meta.content = getFirstParagraph();
 		document.getElementsByTagName('head')[0].appendChild(meta);
+
+		document.title = getFirstLine();
   }
 
   function downloadFromCloud (id,name) {
