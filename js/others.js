@@ -643,7 +643,7 @@
 		if (json.fileid){
 	    	setTimeout('downloadFromCloud("'+fileid+'","");',1000);
 	    }
-	    rebuildPageMeta();
+	    rebuildPageMeta(json);
 	    document.getElementById("iAmHere").innerHTML="<p><br></p>";		
 	}
   }
