@@ -473,6 +473,8 @@
   function gotoURLbyId (id, name) {
   	window.location.href = 'https://pondahai.github.io/?fileid=' + id;
   }
+
+  
       // Client ID and API key from the Developer Console
       var CLIENT_ID = '169837891026-oag2vd4m6ibivp7cqajreu1um7svvdhh.apps.googleusercontent.com';
       var API_KEY = 'AIzaSyCmieef4onzl_adyu8gwpCh8Lhsk7oX5Cw';
@@ -534,6 +536,13 @@
           savecloudfileButton.style.display = '';
           shareFileButton.style.display = '';
           listFiles();
+  var profile = gapi.auth2.currentUser.get().getBasicProfile();
+  console.log('ID: ' + profile.getId());
+  console.log('Full Name: ' + profile.getName());
+  console.log('Given Name: ' + profile.getGivenName());
+  console.log('Family Name: ' + profile.getFamilyName());
+  console.log('Image URL: ' + profile.getImageUrl());
+  console.log('Email: ' + profile.getEmail());
         } else {
           authorizeButton.style.display = '';
           signoutButton.style.display = 'none';
