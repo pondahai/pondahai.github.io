@@ -643,7 +643,7 @@
 		var jsonString = decodeURIComponent(qdata);
 		var json = JSON.parse(jsonString);
 		if (json.fileid){
-	    	setTimeout('downloadFromCloud("'+fileid+'","");',5000);
+	    	setTimeout('downloadFromCloud("'+json.fileid+'","");',5000);
 	    }
 	    rebuildPageMeta(json);
 	    document.getElementById("iAmHere").innerHTML="<p><br></p>";		
