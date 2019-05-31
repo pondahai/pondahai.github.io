@@ -436,7 +436,30 @@
 		xhr.onload = () => {
 		    //console.log(xhr.response); // Retrieve uploaded file ID.
 		    listFiles();
+
 		    if (xhr.status === 200) {
+			    var input;
+	     		if (!document.getElementById('current_file_id')) {
+					input = document.createElement("input");
+	     		}else{
+	     			input = document.getElementById('current_file_id');
+	     		}
+				input.setAttribute("type", "hidden");
+				input.setAttribute("name", "current_file_id");
+				input.setAttribute("id", "current_file_id");
+				input.setAttribute("value", xhr.response.id);
+				document.body.insertBefore(input,document.getElementById('iAmHere'));
+	     		if (!document.getElementById('current_file_name')) {
+		     		input = document.createElement("input");
+	     		}else{
+					input = document.getElementById('current_file_name');
+	     		}
+				input.setAttribute("type", "hidden");
+				input.setAttribute("name", "current_file_name");
+				input.setAttribute("id", "current_file_name");
+				input.setAttribute("value", filename);
+				document.body.insertBefore(input,document.getElementById('iAmHere'));
+		    	
 			    if (afterUploadThenShareFunction) {
 			    	afterUploadThenShareFunction(xhr.response.id, filename);
 				}
