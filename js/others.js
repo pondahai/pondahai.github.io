@@ -145,13 +145,14 @@
 	obj.type  = document.querySelector("[property='og:type']").content;
 	obj.title = document.querySelector("[property='og:title']").content;
 	obj.description = document.querySelector("[property='og:description']").content;
-	obj.id = document.querySelector("[property='fileid']").content;
+	obj.fileid = document.querySelector("[property='fileid']").content;
 	var jsonString= JSON.stringify(obj);
 	console.log(jsonString);
 	//console.log(encodeURIComponent(jsonString));
 	return jsonString;
   }
   function buildMetaUrl () {
+  	var meta;
 		if (document.querySelector("[property='og:url']")) {
 			document.querySelector("[property='og:url']").remove();
 		}
@@ -199,11 +200,12 @@
 		meta.content = id;
 		document.getElementsByTagName('head')[0].appendChild(meta);
 
+		buildMetaUrl();
+
 		document.title = getFirstLine();
   }
   function rebuildPageMeta (json) {
 		var meta;
-		var url;
 		// if (document.querySelector("[property='og:url']")) {
 		// 	document.querySelector("[property='og:url']").remove();
 		// }
@@ -236,15 +238,10 @@
 		meta.setAttribute('property', 'fileid');
 		meta.content = json.fileid;
 		document.getElementsByTagName('head')[0].appendChild(meta);
-		meta = document.createElement('meta');
-		meta.setAttribute('property', 'og:url');
-		url = 'https://pondahai.github.io/?qdata=' + createQueryData()
-		meta.content = url;
-		document.getElementsByTagName('head')[0].appendChild(meta);
+		
+		buildMetaUrl();
 
 		document.title = getFirstLine();
-
-		console.log(url);
   }
 
   function downloadFromCloud (id,name) {
