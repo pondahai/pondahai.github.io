@@ -265,7 +265,12 @@
 						var blob = this.response;
 						var reader = new FileReader();
 						reader.onload = function() {
-							console.log(reader.result);
+							var res = reader.result;
+							console.log(res);
+							if (res.match("requires signup")) {
+								// "requires signup"
+								handleAuthClick();
+							}							
 						};
 						reader.readAsText(blob);
 					}
