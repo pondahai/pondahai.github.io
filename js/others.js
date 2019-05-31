@@ -364,7 +364,7 @@
 		// build and show fb share button
 //		var url_encoded = encodeURIComponent("https://pondahai.github.io/?fileid=" + id);
 		// createQueryData()
-		var url_encoded = encodeURIComponent("https://pondahai.github.io/?fileid=" + encodeURIComponent(createQueryData()));
+		var url_encoded = encodeURIComponent("https://pondahai.github.io/?qdata=" + encodeURIComponent(createQueryData()));
 		var name_encoded = encodeURIComponent(name);
 		var buttonimg = document.createElement('img');
 		buttonimg.src = "https://assets.cobaltnitra.com/teams/repository/export/685/994e08a161005809f00505692530e/685994e08a161005809f00505692530e.png";
@@ -389,7 +389,7 @@
 	    gapi.load('drive-share', init);
 
 	    var url = 'https://pondahai.github.io/?fileid=' + id;
-	    console.log(url);
+	    //console.log(url);
 
 	    buildPageMeta(id);
 
