@@ -7190,6 +7190,17 @@ if (!istravelSelMeetSVG) {
           //event.stopPropagation();
           return;          
         }
+        // dahai: svg delete by backspace
+        if (node.previousSibling && isIAmSVG.test(node.previousSibling.id) &&
+            MediumEditor.util.isKey(event, MediumEditor.util.keyCode.BACKSPACE) &&
+            ((sel.anchorOffset === 0) && (sel.focusOffset === 0))
+          ) {
+          console.log("prevSibling is svg",node.previousSibling);
+          var svgDivNode = node.previousSibling;
+          svgDivNode.parentElement.removeChild(svgDivNode);
+          event.preventDefault();
+          return;
+        }
         // dahai: below: original
         if (MediumEditor.util.isKey(event, [MediumEditor.util.keyCode.BACKSPACE, MediumEditor.util.keyCode.ENTER]) &&
                 // has a preceeding sibling
