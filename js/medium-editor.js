@@ -7135,15 +7135,19 @@ if (!istravelSelMeetSVG) {
           if (MediumEditor.util.isKey(event, MediumEditor.util.keyCode.BACKSPACE)) {
             if ( (sel.anchorNode === sel.focusNode) &&
             (sel.anchorOffset === sel.focusOffset) &&
-            ((sel.anchorOffset > 0) && (sel.focusOffset > 0))
+            ((sel.anchorOffset > 0) && (sel.focusOffset > 0)) &&
+            node.nodeName !== "svg"
             ) {
               // in the same node
                 var range = document.createRange();
                 range.setStart(sel.anchorNode, sel.anchorOffset-1);
                 range.setEnd(sel.focusNode, sel.focusOffset);
                 sel.removeAllRanges();
-                sel.addRange(range);                  
-                sel.deleteFromDocument();                
+                sel.addRange(range);
+                sel.deleteFromDocument();
+                if (sel.anchorOffset === 0 && node.nodeName === "text") {
+                  node.parentElement.removeChild(node);
+                }
             }
             if ( !isIAmSVG.test(MediumEditor.util.shellingTravel(sel.anchorNode).id) && 
                   !isIAmSVG.test(MediumEditor.util.shellingTravel(sel.focusNode).id)
@@ -7186,7 +7190,7 @@ if (!istravelSelMeetSVG) {
           //event.stopPropagation();
           return;          
         }
-
+        // dahai: below: original
         if (MediumEditor.util.isKey(event, [MediumEditor.util.keyCode.BACKSPACE, MediumEditor.util.keyCode.ENTER]) &&
                 // has a preceeding sibling
                 node.previousElementSibling &&
