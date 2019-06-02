@@ -1586,6 +1586,41 @@ MediumEditor.extensions = {};
             }
           };
           return null;          
+        },
+        getMeetSVGs: function () {
+          var sel = window.getSelection();
+          var isIAmSVG = /i-am-svg/i;
+          // detect select direct
+          var position = sel.anchorNode.compareDocumentPosition(sel.focusNode);
+          var backward = false;
+          // position == 0 if nodes are the same
+          if (!position && sel.anchorOffset > sel.focusOffset || 
+            position === Node.DOCUMENT_POSITION_PRECEDING)
+            backward = true; 
+
+          var stepNode;
+          var targetNode;
+          if (backward) {
+            stepNode = this.shellingTravel(sel.focusNode);
+            targetNode = this.shellingTravel(sel.anchorNode);
+          }else{
+            stepNode = this.shellingTravel(sel.anchorNode);
+            targetNode = this.shellingTravel(sel.focusNode);
+          }
+          // var stepNode = (typeof sel.anchorNode.id === "undefined")?sel.anchorNode.parentNode:sel.anchorNode;
+          // var targetNode = (typeof sel.focusNode.id === "undefined")?sel.focusNode.parentNode:sel.focusNode;
+          var svgNodes=[];
+          while (true) {
+            if (isIAmSVG.test(stepNode.id)) {
+              svgNodes.push(stepNode);
+            }
+            if (stepNode != targetNode) {
+              stepNode = this.shellingTravel(stepNode.nextSibling);
+            }else{
+              break;
+            }
+          };
+          return svgNodes;          
         }
 
     };
@@ -7132,6 +7167,7 @@ if (!istravelSelMeetSVG) {
         // dahai: intercept for svg element 
         //console.log(MediumEditor.util.travelSelMeetSVG()); // dahai: 
         if (MediumEditor.util.travelSelMeetSVG()){
+          // meet svg inside or touch
           if (MediumEditor.util.isKey(event, MediumEditor.util.keyCode.BACKSPACE)) {
             if ( (sel.anchorNode === sel.focusNode) &&
             (sel.anchorOffset === sel.focusOffset) &&
@@ -7162,18 +7198,31 @@ if (!istravelSelMeetSVG) {
             else if ( !isIAmSVG.test(MediumEditor.util.shellingTravel(sel.anchorNode).id) && 
                   !isIAmSVG.test(MediumEditor.util.shellingTravel(sel.focusNode).id)
               ) {
-                // svg completely wrapped
+                // svg completely wrapped, maybe select all
               //console.log(sel);
-                var svgNode = MediumEditor.util.getFirstMeetSVG();
-                // for svg detele revert by using execCommand
-                var range = document.createRange();
-                range.selectNode(svgNode);
-                var sel = window.getSelection();
-                sel.removeAllRanges();
-                sel.addRange(range);
-                //svgNode.parentNode.removeChild(svgNode);
-                document.execCommand('delete', null, false);
-                document.execCommand('delete', null, false);
+                // var svgNode = MediumEditor.util.getFirstMeetSVG();
+                // // for svg detele revert by using execCommand
+                // var range = document.createRange();
+                // range.selectNode(svgNode);
+                // var sel = window.getSelection();
+                // sel.removeAllRanges();
+                // sel.addRange(range);
+                // //svgNode.parentNode.removeChild(svgNode);
+                // document.execCommand('delete', null, false);
+                // document.execCommand('delete', null, false);
+
+                var svgNodes = MediumEditor.util.getMeetSVGs();
+                svgNodes.forEach(function(item, index, array){
+                  var range = document.createRange();
+                  range.selectNode(item);
+                  var sel = window.getSelection();
+                  sel.removeAllRanges();
+                  sel.addRange(range);
+                  //svgNode.parentNode.removeChild(svgNode);
+                  document.execCommand('delete', null, false);
+                  document.execCommand('delete', null, false);                  
+                });
+                return;
             }
             // is svg caption?
             // console.log(sel);
