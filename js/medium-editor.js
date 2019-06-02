@@ -7144,22 +7144,40 @@ if (!istravelSelMeetSVG) {
                 range.setEnd(sel.focusNode, sel.focusOffset);
                 sel.removeAllRanges();
                 sel.addRange(range);
-                sel.deleteFromDocument();
+                //sel.deleteFromDocument();
+                document.execCommand('delete', null, false);
                 if (sel.anchorOffset === 0 && node.nodeName === "text") {
-                  node.parentElement.removeChild(node);
+                  // execCommand undo manager doesnt handle node like <div> or <text> inside svg
+                  // empty text doesnt delete itself
+                  // but if i dont help to removeChild, it is left empty <text>
+                  // console.log(node);
+                  // range.selectNode(node);
+                  // var sel = window.getSelection();
+                  // sel.removeAllRanges();
+                  // sel.addRange(range);
+                  // //node.parentNode.removeChild(node);
+                  // document.execCommand('delete', null, false);
                 }
             }
-            if ( !isIAmSVG.test(MediumEditor.util.shellingTravel(sel.anchorNode).id) && 
+            else if ( !isIAmSVG.test(MediumEditor.util.shellingTravel(sel.anchorNode).id) && 
                   !isIAmSVG.test(MediumEditor.util.shellingTravel(sel.focusNode).id)
               ) {
                 // svg completely wrapped
               //console.log(sel);
                 var svgNode = MediumEditor.util.getFirstMeetSVG();
-                svgNode.parentNode.removeChild(svgNode);
+                // for svg detele revert by using execCommand
+                var range = document.createRange();
+                range.selectNode(svgNode);
+                var sel = window.getSelection();
+                sel.removeAllRanges();
+                sel.addRange(range);
+                //svgNode.parentNode.removeChild(svgNode);
+                document.execCommand('delete', null, false);
+                document.execCommand('delete', null, false);
             }
             // is svg caption?
             // console.log(sel);
-            if ((sel.anchorOffset === 0) && (sel.focusOffset === 0) &&
+            else if ((sel.anchorOffset === 0) && (sel.focusOffset === 0) &&
               isIAmSVG.test(sel.anchorNode.parentNode.parentNode.id) &&
               (sel.anchorNode.length === 0)
               ) {
@@ -7197,7 +7215,17 @@ if (!istravelSelMeetSVG) {
           ) {
           console.log("prevSibling is svg",node.previousSibling);
           var svgDivNode = node.previousSibling;
-          svgDivNode.parentElement.removeChild(svgDivNode);
+          //var el = document.getElementById("i-am-svg");
+          var range = document.createRange();
+          range.selectNode(svgDivNode);
+          var sel = window.getSelection();
+          sel.removeAllRanges();
+          sel.addRange(range);
+          // execCommand undo manager doesnt handle node like div
+          // for svg detele revert by using execCommand
+          document.execCommand('delete', null, false);
+          document.execCommand('delete', null, false);
+          //svgDivNode.parentNode.removeChild(svgDivNode);
           event.preventDefault();
           return;
         }
