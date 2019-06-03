@@ -158,7 +158,7 @@
 		}
 		meta = document.createElement('meta');
 		meta.setAttribute('property', 'og:url');
-		meta.content = 'https://pondahai.github.io/?qdata=' + encodeURIComponent(createQueryData());
+		meta.content = 'https://'+window.location.hostname+'/?qdata=' + encodeURIComponent(createQueryData());
 		document.getElementsByTagName('head')[0].appendChild(meta);  	
   }
   function buildPageMeta (id) {
@@ -181,7 +181,7 @@
 		
 		// meta = document.createElement('meta');
 		// meta.setAttribute('property', 'og:url');
-		// meta.content = 'https://pondahai.github.io/?qdata=' + createQueryData();
+		// meta.content = 'https://window.location.hostname/?qdata=' + createQueryData();
 		// document.getElementsByTagName('head')[0].appendChild(meta);
 		meta = document.createElement('meta');
 		meta.setAttribute('property', 'og:type');
@@ -276,7 +276,7 @@
 				     	$('html, body').animate({ scrollTop: 0 }, 'fast');
 				     	document.title = getFirstLine();
 
-				     	var url = 'https://pondahai.github.io/?fileid=' + id;
+				     	var url = 'https://'+window.location.hostname+'/?fileid=' + id;
 				     	buildPageMeta(id);
 
 				     	var file_id = null;
@@ -362,9 +362,9 @@
 		}
 
 		// build and show fb share button
-//		var url_encoded = encodeURIComponent("https://pondahai.github.io/?fileid=" + id);
+//		var url_encoded = encodeURIComponent("https://window.location.hostname/?fileid=" + id);
 		// createQueryData()
-		var url_encoded = encodeURIComponent("https://pondahai.github.io/?qdata=" + encodeURIComponent(createQueryData()));
+		var url_encoded = encodeURIComponent("https://"+window.location.hostname+"/?qdata=" + encodeURIComponent(createQueryData()));
 		var name_encoded = encodeURIComponent(name);
 		var buttonimg = document.createElement('img');
 		buttonimg.src = "https://assets.cobaltnitra.com/teams/repository/export/685/994e08a161005809f00505692530e/685994e08a161005809f00505692530e.png";
@@ -388,7 +388,7 @@
 	    }
 	    gapi.load('drive-share', init);
 
-	    var url = 'https://pondahai.github.io/?fileid=' + id;
+	    var url = 'https://'+window.location.hostname+'/?fileid=' + id;
 	    //console.log(url);
 
 	    buildPageMeta(id);
@@ -471,7 +471,7 @@
 	}
   }
   function gotoURLbyId (id, name) {
-  	window.location.href = 'https://pondahai.github.io/?fileid=' + id;
+  	window.location.href = 'https://'+window.location.hostname+'/?fileid=' + id;
   }
 
   
@@ -688,7 +688,10 @@ function fbshareCurrentPage(url, name)
     	// 	"https://www.facebook.com/sharer/sharer.php?u="+escape(url)+"&t="+name, '', 
     	// 	'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600'
     	// 	);
-    	window.open("https://www.facebook.com/dialog/share?&app_id=2373370826211241&display=popup&href=" + url + "&redirect_uri=" + url);
+    	console.log(url);
+    	var fbShareRest = "https://www.facebook.com/dialog/share?&app_id=2373370826211241&display=popup&href=" + encodeURIComponent(url) + "&redirect_uri=" + encodeURIComponent(url);
+    	console.log(fbShareRest);
+    	window.open(fbShareRest);
     	return false; 
     }
 
