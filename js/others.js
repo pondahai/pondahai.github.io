@@ -158,7 +158,7 @@
 		}
 		meta = document.createElement('meta');
 		meta.setAttribute('property', 'og:url');
-		meta.content = 'https://'+window.location.hostname+'/?qdata=' + encodeURIComponent(createQueryData());
+		meta.content = 'https://'+window.location.hostname+'/?qdata=' + encodeURIComponent(encodeURIComponent(createQueryData()));
 		document.getElementsByTagName('head')[0].appendChild(meta);  	
   }
   function buildPageMeta (id) {
@@ -241,7 +241,7 @@
 		
 		buildMetaUrl();
 
-		document.title = getFirstLine();
+		//document.title = getFirstLine();
   }
 
   function downloadFromCloud (id,name) {
@@ -382,20 +382,81 @@
   	var afterUploadThenShare = function (id, name) {
 //		var accessToken = gapi.auth.getToken().access_token; // Here gapi is used for retrieving the access token.
 		var accessToken = gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse().access_token; // Here gapi is used for retrieving the access token.
-	    var init = function() {
-	        var s = new gapi.drive.share.ShareClient();
-	        s.setOAuthToken(accessToken);
-	        s.setItemIds([id]);
 
-	        	s.showSettingsDialog();
 
-	    }
+// 	gapi.client.request({
+// 		'path': 'https://www.googleapis.com/drive/v3/files/'+id+'/permissions',
+// 		'method': 'GET',
+// 		'params': '{"fileId": '+id+'}',
+// 	}).then(function(response) {
+//   // Handle response
+//   console.log(response);
+// }, function(reason) {
+//   // Handle error
+//   console.log(reason);
+// });
 
-	    	
 
-	    gapi.load('drive-share', init);
+	gapi.client.request({
+		'path': 'https://www.googleapis.com/drive/v3/files/'+id+'/permissions',
+		'method': 'POST',
+		'params': '{"fileId": '+id+'}',
+		'body': '{"role":"reader","type":"anyone"}'
+	}).then(function(response) {
+  // Handle response
+  console.log(response);
+}, function(reason) {
+  // Handle error
+  console.log(reason);
+});
 
-	    var url = 'https://'+window.location.hostname+'/?fileid=' + id;
+
+
+		// var form = new FormData();
+		// form.append('role', 'reader');
+		// form.append('type', 'anyone');
+
+		// var xhr = new XMLHttpRequest();
+		// xhr.open('POST', 'https://www.googleapis.com/drive/v3/files/'+id+'/permissions');
+		// //xhr.setRequestHeader('Authorization', 'Bearer ' + accessToken);
+		// xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+		// xhr.responseType = 'blob';
+		// xhr.onload = function(e) {
+		// 	if (this.status === 200) {
+		// 	    var init = function() {
+		// 	        var s = new gapi.drive.share.ShareClient();
+		// 	        s.setOAuthToken(accessToken);
+		// 	        s.setItemIds([id]);
+
+		// 	        	s.showSettingsDialog();
+
+		// 	    }
+		// 	    gapi.load('drive-share', init);
+		// 	}else{
+		// 			if (this.response.type === "application/json") {
+		// 				var blob = this.response;
+		// 				var reader = new FileReader();
+		// 				reader.onload = function() {
+		// 					var res = reader.result;
+		// 					console.log(res);
+		// 				};
+		// 				reader.readAsText(blob);
+		// 			}
+		// 	}
+		// };
+		// xhr.send(form);
+
+
+
+// POST https://www.googleapis.com/drive/v3/files/{fileId}/permissions?key={YOUR_API_KEY}
+// {
+// "role":"reader",
+// "type":"user",
+// "emailAddress":"xxxxxxxx@xxx.com"
+// }
+
+
+	    //var url = 'https://'+window.location.hostname+'/?fileid=' + id;
 	    //console.log(url);
 
 	    buildPageMeta(id);
@@ -491,7 +552,7 @@
 
       // Authorization scopes required by the API; multiple scopes can be
       // included, separated by spaces.
-      var SCOPES = 'https://www.googleapis.com/auth/drive.file';
+      var SCOPES = 'https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/drive.file';
 
       var authorizeButton = document.getElementById('authorize_button');
       var signoutButton = document.getElementById('signout_button');
