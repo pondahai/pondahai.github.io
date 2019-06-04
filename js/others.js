@@ -380,12 +380,19 @@
   }
   function uploadToCloudAndShare () {
   	var afterUploadThenShare = function (id, name) {
-		var accessToken = gapi.auth.getToken().access_token; // Here gapi is used for retrieving the access token.
+//		var accessToken = gapi.auth.getToken().access_token; // Here gapi is used for retrieving the access token.
+		var accessToken = gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse().access_token; // Here gapi is used for retrieving the access token.
 	    var init = function() {
 	        var s = new gapi.drive.share.ShareClient();
 	        s.setOAuthToken(accessToken);
 	        s.setItemIds([id]);
+
+	        	s.showSettingsDialog();
+
 	    }
+
+	    	
+
 	    gapi.load('drive-share', init);
 
 	    var url = 'https://'+window.location.hostname+'/?fileid=' + id;
@@ -484,7 +491,7 @@
 
       // Authorization scopes required by the API; multiple scopes can be
       // included, separated by spaces.
-      var SCOPES = 'https://www.googleapis.com/auth/drive';
+      var SCOPES = 'https://www.googleapis.com/auth/drive.file';
 
       var authorizeButton = document.getElementById('authorize_button');
       var signoutButton = document.getElementById('signout_button');
