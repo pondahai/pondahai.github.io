@@ -229,7 +229,7 @@
 		meta.content = json.type;
 		if (document.querySelector("[property='og:type']")) {
 			if (document.querySelector("[property='og:type']").content !== meta.content) {
-				document.querySelector("[property='og:description']").content = meta.content;
+				document.querySelector("[property='og:type']").content = meta.content;
 			}
 		}else{
 			document.getElementsByTagName('head')[0].appendChild(meta);
@@ -240,7 +240,7 @@
 		meta.content = json.title;
 		if (document.querySelector("[property='og:title']")) {
 			if (document.querySelector("[property='og:title']").content !== meta.content) {
-				document.querySelector("[property='og:description']").content = meta.content;
+				document.querySelector("[property='og:title']").content = meta.content;
 			}
 		}else{
 			document.getElementsByTagName('head')[0].appendChild(meta);
@@ -262,7 +262,7 @@
 		meta.content = json.fileid;
 		if (document.querySelector("[property='fileid']")) {
 			if (document.querySelector("[property='fileid']").content !== meta.content) {
-				document.querySelector("[property='og:description']").content = meta.content;
+				document.querySelector("[property='fileid']").content = meta.content;
   			}
 		}else{
 			document.getElementsByTagName('head')[0].appendChild(meta);
