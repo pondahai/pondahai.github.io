@@ -1,42 +1,7 @@
-<?php 
-	if (isset($_GET['fileid'])) {
-    	$fileid = $_GET['fileid'];
-	}
-	if (isset($_GET['qdata'])) {
-		$qdata =  $_GET['qdata'];	
-	    $json = base64_decode(strtr($qdata, ' ', '+'));
-	    $var = json_decode($json, true);
-	    //var_dump ($var);
-	    $type = $var["type"];
-	    $title = $var["title"];
-	    $description = $var["description"];
-	    $fileid = $var["fileid"];
-	}
-    
-    $host_name = $_SERVER['HTTP_HOST'];
-
-?>
 <html >
 <head>
-<?php
-	if (isset($title)) {
-		echo '<meta property="og:title" content="'.$title.'" />';
-		echo '<title>'.$title.'</title>';
-	}
-	if (isset($type)) {
-		echo '<meta property="og:type" content="'.$type.'" />';
-	}
-	if (isset($description)) {
-		echo '<meta property="og:description" content="'.$description.'" />';
-	}	
-	if (isset($qdata)) {
-		echo '<meta property="og:url" content="https://'.$host_name.'/?qdata='.$qdata.'" />';
-	}	
-	if (isset($fileid)) {
-		echo '<meta property="fileid" content="'.$fileid.'" />';
-	}
+    <?php include("head.php"); ?>
 
-?>
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-57926490-2"></script>
 <script>
@@ -58,58 +23,79 @@
 <link rel="stylesheet" href="css/medium-editor.css"> <!-- Core -->
 <link rel="stylesheet" href="css/themes/dahai.css"> <!-- or any other theme -->
 <link rel="stylesheet" href="css/others.css"> <!-- or any other theme -->
+
 </head>
 <body >
 	   <div id="iAmHere" class="editable" ></div>
 
 <div style="background-color:#220000;padding:10px;height:100%;background-repeat:repeat-x">
    
+   <!-- function buttons -->
+    <span style="float:left;margin:20px;">
+        <!--Add buttons to initiate auth sequence and sign out-->
+        <button id="authorize_button" class="example_b" style="display: none;">Google Account Authorize</button>
+        <button id="signout_button" class="example_b" style="display: none;">Sign Out</button>
 
-    <!--Add buttons to initiate auth sequence and sign out-->
-    <button id="authorize_button" class="example_b" style="display: none;">Google Account Authorize</button>
-    <button id="signout_button" class="example_b" style="display: none;">Sign Out</button>
+        
 
-    
+        <button id="savefile_button" class="example_b" onclick="downloadFileFromCurrentDocument();"><font size="5">&#x21D2; &#128190;</font></button>
+        <button id="loadfile_button" class="example_b" onclick="uploadFileToCurrentDocument();"><font size="5">&#128190; &#x21D2;</font></button>
 
-    <button id="savefile_button" class="example_b" onclick="downloadFileFromCurrentDocument();"><font size="5">&#x21D2; &#128190;</font></button>
-    <button id="loadfile_button" class="example_b" onclick="uploadFileToCurrentDocument();"><font size="5">&#128190; &#x21D2;</font></button>
-
-    <!--
-    <button id="loadcloudfile_button" class="example_b" onclick="downloadFromCloud();"><font size="5">&#9729; &#x21D2;</font></button>
--->
-    <button id="savecloudfile_button" class="example_b" onclick="uploadToCloud();"><font size="5">&#x21D2; &#9729;</font></button>
-
-    <button id="sharefile_button" class="example_b" onclick="uploadToCloudAndShare();"><font size="5">分</font></button>
-    
-    <!-- 
-        fb share button
+        <!--
+        <button id="loadcloudfile_button" class="example_b" onclick="downloadFromCloud();"><font size="5">&#9729; &#x21D2;</font></button>
     -->
+        <button id="savecloudfile_button" class="example_b" onclick="uploadToCloud();"><font size="5">&#x21D2; &#9729;</font></button>
 
-    <div id="fbsharebuttonposition"></div>
+        <button id="sharefile_button" class="example_b" onclick="uploadToCloudAndShare();"><font size="5">分</font></button>
+        
+        <!-- 
+            fb share button
+        -->
 
+        <div id="fbsharebuttonposition"></div>
+
+    </span>
+
+
+    <!-- radio button for paper style change -->
+
+    <span style="float:middle;">
+        <!-- <form > -->
+        <div  class="radio-group">
+            <input type="radio" id="option-one" name="paperstyleselector" onclick="changePaperStyle(1);"><label for="option-one">口</label><input type="radio" id="option-two" name="paperstyleselector" checked="checked" onclick="changePaperStyle(2);"><label for="option-two">三</label><input type="radio" id="option-three" name="paperstyleselector" onclick="changePaperStyle(3);"><label for="option-three">回</label>
+        </div>
+        <!-- </form> -->
+    </span>
+
+    <!-- pondahai -->
     <!--
     <span style="float:right;" ><font color="white" size="1"><a href="https://www.facebook.com/pondahai">pondahai 2019</a></font></span>
     -->
-    <span style="float:right;" >
-  <svg width="100%" height="100" >
-    <text text-anchor="middle" x="50%" y="50%" class="text text-1 ">
-    <a href="https://www.facebook.com/pondahai">pondahai 2019</a>
-    </text>
-    <text text-anchor="middle" x="50%" y="50%" class="text text-2 ">
-    <a href="https://www.facebook.com/pondahai">pondahai 2019</a>
-    </text>
-    <text text-anchor="middle" x="50%" y="50%" class="text text-3 ">
-    <a href="https://www.facebook.com/pondahai">pondahai 2019</a>
-    </text>
-    <text text-anchor="middle" x="50%" y="50%" class="text text-4 ">
-    <a href="https://www.facebook.com/pondahai">pondahai 2019</a>
-    </text>
-  </svg> 
-  </span>
-  <div align="center" style="color:white;">
-    <div align="left" id="fileslist" style="white-space: pre-wrap;width:95%;"></div>
-  </div>
+    <span style="float:right;">
+      <svg width="100%" height="100" >
+        <text text-anchor="middle" x="50%" y="50%" class="text text-1 ">
+        <a href="https://www.facebook.com/pondahai">pondahai 2019</a>
+        </text>
+        <text text-anchor="middle" x="50%" y="50%" class="text text-2 ">
+        <a href="https://www.facebook.com/pondahai">pondahai 2019</a>
+        </text>
+        <text text-anchor="middle" x="50%" y="50%" class="text text-3 ">
+        <a href="https://www.facebook.com/pondahai">pondahai 2019</a>
+        </text>
+        <text text-anchor="middle" x="50%" y="50%" class="text text-4 ">
+        <a href="https://www.facebook.com/pondahai">pondahai 2019</a>
+        </text>
+      </svg> 
+    </span>
+
+    <div >
+        <!-- <span style="float:left;color:white;"> -->
+            <span align="left" id="fileslist" style="float:left;color:white;white-space: pre-wrap;width:95%;"></span>
+        <!-- </span> -->
+    </div>
 </div>
+
+
 
 <!--
 <div class="button_cont" align="center"><a class="example_b" href="add-website-here" target="_blank" rel="nofollow noopener" onclick="downloadCurrentDocument();">&#x21D2; &#128190;</a></div>

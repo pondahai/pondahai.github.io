@@ -717,41 +717,7 @@
     console.log("ID Token: " + id_token);
   }
 
-  var strUrl = location.search;
-  var getPara, ParaVal;
-  var aryPara = [];
 
-  if (strUrl.indexOf("?") != -1) {
-    var getSearch = strUrl.split("?");
-    getPara = getSearch[1].split("&");
-    for (var i = 0; i < getPara.length; i++) {
-      ParaVal = getPara[i].split("=");
-      aryPara.push(ParaVal[0]);
-      aryPara[ParaVal[0]] = ParaVal[1];
-    }
-    //console.log(aryPara['fileid']);
-    // for share file download from url qurey string
-    var fileid = aryPara['fileid'];
-    if (fileid) {
-	    setTimeout('downloadFromCloud("'+fileid+'","");',5000);
-	    document.getElementById("iAmHere").innerHTML="<p><br></p>";
-	}
-	var qdata = aryPara['qdata'];
-	if (qdata) {
-		// because when i build the fb share button, the data has been encode again, so here i must decode first
-		// https://stackoverflow.com/a/44344774
-		// server side will exchange 'plus' replace by 'space'
-		var decoded = decodeURIComponent(qdata);
-		var replaced = decoded.split(' ').join('+');
-		var jsonString = decodeURIComponent(escape(atob(replaced)));
-		var json = JSON.parse(jsonString);
-		if (json.fileid){
-	    	setTimeout('downloadFromCloud("'+json.fileid+'","");',5000);
-	    }
-	    rebuildPageMetaFromQdata(json);
-	    document.getElementById("iAmHere").innerHTML="<p><br></p>";		
-	}
-  }
 
 function tryToReloadFile() {
 	if (document.querySelector("[property='fileid']")) {
@@ -772,4 +738,67 @@ function fbshareCurrentPage(url_encoded, name)
     	return false; 
     }
 
+function changePaperStyle(num) {
+	var editAreaElement = document.getElementById('iAmHere');
+	if (num === 1) {
+		editAreaElement.classList.remove('notebook-paper','printer-paper');
+		editAreaElement.classList.add('white-paper');
+	}
+	if (num === 2) {
+		editAreaElement.classList.remove('white-paper','printer-paper');
+		editAreaElement.classList.add('notebook-paper');
+	}
+	if (num === 3) {
+		editAreaElement.classList.remove('white-paper','notebook-paper');
+		editAreaElement.classList.add('printer-paper');
+	}
+}
 
+
+var strUrl = location.search;
+var getPara, ParaVal;
+var aryPara = [];
+
+if (strUrl.indexOf("?") != -1) {
+var getSearch = strUrl.split("?");
+getPara = getSearch[1].split("&");
+for (var i = 0; i < getPara.length; i++) {
+  ParaVal = getPara[i].split("=");
+  aryPara.push(ParaVal[0]);
+  aryPara[ParaVal[0]] = ParaVal[1];
+}
+//console.log(aryPara['fileid']);
+// for share file download from url qurey string
+var fileid = aryPara['fileid'];
+if (fileid) {
+    setTimeout('downloadFromCloud("'+fileid+'","");',5000);
+    document.getElementById("iAmHere").innerHTML="<p><br></p>";
+}
+var qdata = aryPara['qdata'];
+if (qdata) {
+		// because when i build the fb share button, the data has been encode again, so here i must decode first
+		// https://stackoverflow.com/a/44344774
+		// server side will exchange 'plus' replace by 'space'
+		var decoded = decodeURIComponent(qdata);
+		var replaced = decoded.split(' ').join('+');
+		var jsonString = decodeURIComponent(escape(atob(replaced)));
+		var json = JSON.parse(jsonString);
+		if (json.fileid){
+	    	setTimeout('downloadFromCloud("'+json.fileid+'","");',5000);
+	    }
+	    rebuildPageMetaFromQdata(json);
+	    document.getElementById("iAmHere").innerHTML="<p><br></p>";		
+	}
+}
+
+var radios = document.getElementsByName('paperstyleselector');
+
+for (var i = 0, length = radios.length; i < length; i++) {
+    if (radios[i].checked) {
+        // do whatever you want with the checked radio
+        radios[i].click();
+
+        // only one radio can be logically checked, don't check the rest
+        break;
+    }
+}
