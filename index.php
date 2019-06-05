@@ -18,6 +18,25 @@
 ?>
 <html >
 <head>
+<?php
+	if (isset($title)) {
+		echo '<meta property="og:title" content="'.$title.'" />';
+		echo '<title>'.$title.'</title>';
+	}
+	if (isset($type)) {
+		echo '<meta property="og:type" content="'.$type.'" />';
+	}
+	if (isset($description)) {
+		echo '<meta property="og:description" content="'.$description.'" />';
+	}	
+	if (isset($qdata)) {
+		echo '<meta property="og:url" content="https://'.$host_name.'/?qdata='.$qdata.'" />';
+	}	
+	if (isset($fileid)) {
+		echo '<meta property="fileid" content="'.$fileid.'" />';
+	}
+
+?>
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-57926490-2"></script>
 <script>

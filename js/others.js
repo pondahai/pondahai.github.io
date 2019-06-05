@@ -582,7 +582,8 @@
           authorizeButton.onclick = handleAuthClick;
           signoutButton.onclick = handleSignoutClick;
         }, function(error) {
-          appendFilesList(JSON.stringify(error, null, 2));
+          appendFilesList("Need to connecnt to your Google Account.");
+          console.log(JSON.stringify(error, null, 2));
         });
         //appendFilesList('hello');
         //appendFilesList2('name','datetime','ooxx1122');
