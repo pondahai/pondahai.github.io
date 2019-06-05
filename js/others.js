@@ -158,7 +158,7 @@
 		}
 		meta = document.createElement('meta');
 		meta.setAttribute('property', 'og:url');
-		meta.content = 'https://'+window.location.hostname+'/?qdata=' + encodeURIComponent(encodeURIComponent(createQueryData()));
+		meta.content = 'https://'+window.location.hostname+'/?qdata=' + btoa(unescape(encodeURIComponent(createQueryData())));
 		document.getElementsByTagName('head')[0].appendChild(meta);  	
   }
   function buildPageMeta (id) {
@@ -179,10 +179,6 @@
 			document.querySelector("[property='fileid']").remove();
 		}
 		
-		// meta = document.createElement('meta');
-		// meta.setAttribute('property', 'og:url');
-		// meta.content = 'https://window.location.hostname/?qdata=' + createQueryData();
-		// document.getElementsByTagName('head')[0].appendChild(meta);
 		meta = document.createElement('meta');
 		meta.setAttribute('property', 'og:type');
 		meta.content = "article";
@@ -204,7 +200,7 @@
 
 		document.title = getFirstLine();
   }
-  function rebuildPageMeta (json) {
+  function rebuildPageMetaFromQdata (json) {
 		var meta;
 		// if (document.querySelector("[property='og:url']")) {
 		// 	document.querySelector("[property='og:url']").remove();
@@ -238,7 +234,7 @@
 		meta.setAttribute('property', 'fileid');
 		meta.content = json.fileid;
 		document.getElementsByTagName('head')[0].appendChild(meta);
-		
+
 		buildMetaUrl();
 
 		//document.title = getFirstLine();
@@ -254,7 +250,7 @@
   	if (gapi) {
   		// dahai: accss_token is necessary for file download, but i dont believe, There must be a solution in the world.
   		var accessToken;
-  		if (gapi.auth.getToken !== null) {
+  		if (gapi.auth2.getAuthInstance().isSignedIn.get()) {
 			accessToken = gapi.auth.getToken().access_token; // Here gapi is used for retrieving the access token.
 		}
 		var xhr = new XMLHttpRequest();
@@ -343,7 +339,8 @@
 							console.log(res);
 							if (res.match("requires signup")) {
 								// "requires signup"
-								handleAuthClick();
+								//handleAuthClick();
+								authorizeButton.click();
 							}							
 						};
 						reader.readAsText(blob);
@@ -362,9 +359,7 @@
 		}
 
 		// build and show fb share button
-//		var url_encoded = encodeURIComponent("https://window.location.hostname/?fileid=" + id);
-		// createQueryData()
-		var url_encoded = encodeURIComponent("https://"+window.location.hostname+"/?qdata=" + encodeURIComponent(createQueryData()));
+		var url_encoded = encodeURIComponent("https://"+window.location.hostname+"/?qdata=" + btoa(unescape(encodeURIComponent(createQueryData()))));
 		var name_encoded = encodeURIComponent(name);
 		var buttonimg = document.createElement('img');
 		buttonimg.src = "https://assets.cobaltnitra.com/teams/repository/export/685/994e08a161005809f00505692530e/685994e08a161005809f00505692530e.png";
@@ -381,6 +376,7 @@
   function uploadToCloudAndShare () {
   	var afterUploadThenShare = function (id, name) {
 //		var accessToken = gapi.auth.getToken().access_token; // Here gapi is used for retrieving the access token.
+		
 		var accessToken = gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse().access_token; // Here gapi is used for retrieving the access token.
 
 
@@ -604,6 +600,7 @@
           savecloudfileButton.style.display = '';
           shareFileButton.style.display = '';
           listFiles();
+          tryToReloadFile();
   // var profile = gapi.auth2.currentUser.get().getBasicProfile();
   // console.log('ID: ' + profile.getId());
   // console.log('Full Name: ' + profile.getName());
@@ -740,24 +737,35 @@
 	}
 	var qdata = aryPara['qdata'];
 	if (qdata) {
-		var jsonString = decodeURIComponent(qdata);
+		// because when i build the fb share button, the data has been encode again, so here i must decode first
+		// https://stackoverflow.com/a/44344774
+		// server side will exchange 'plus' replace by 'space'
+		var decoded = decodeURIComponent(qdata);
+		var replaced = decoded.split(' ').join('+');
+		var jsonString = decodeURIComponent(escape(atob(replaced)));
 		var json = JSON.parse(jsonString);
 		if (json.fileid){
 	    	setTimeout('downloadFromCloud("'+json.fileid+'","");',5000);
 	    }
-	    rebuildPageMeta(json);
+	    rebuildPageMetaFromQdata(json);
 	    document.getElementById("iAmHere").innerHTML="<p><br></p>";		
 	}
   }
 
-function fbshareCurrentPage(url, name)
+function tryToReloadFile() {
+	if (document.querySelector("[property='fileid']")) {
+		var fileid = document.querySelector("[property='fileid']").content;
+		downloadFromCloud(fileid,"");
+	}
+}
+function fbshareCurrentPage(url_encoded, name)
     {  
     	// window.open(
     	// 	"https://www.facebook.com/sharer/sharer.php?u="+escape(url)+"&t="+name, '', 
     	// 	'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600'
     	// 	);
-    	console.log(url);
-    	var fbShareRest = "https://www.facebook.com/dialog/share?&app_id=2373370826211241&display=popup&href=" + encodeURIComponent(url) + "&redirect_uri=" + encodeURIComponent(url);
+    	console.log(url_encoded);
+    	var fbShareRest = "https://www.facebook.com/dialog/share?&app_id=2373370826211241&display=popup&href=" + url_encoded + "&redirect_uri=" + url_encoded;
     	console.log(fbShareRest);
     	window.open(fbShareRest);
     	return false; 
