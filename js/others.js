@@ -153,49 +153,68 @@
   }
   function buildMetaUrl () {
   	var meta;
-		if (document.querySelector("[property='og:url']")) {
-			document.querySelector("[property='og:url']").remove();
-		}
 		meta = document.createElement('meta');
 		meta.setAttribute('property', 'og:url');
 		meta.content = 'https://'+window.location.hostname+'/?qdata=' + btoa(unescape(encodeURIComponent(createQueryData())));
-		document.getElementsByTagName('head')[0].appendChild(meta);  	
+		if (document.querySelector("[property='og:url']")) {
+			if (document.querySelector("[property='og:url']").content !== meta.content) {
+				document.querySelector("[property='og:url']").content = meta.content;
+			}
+		}else{
+			document.getElementsByTagName('head')[0].appendChild(meta);
+		}
   }
   function buildPageMeta (id) {
 		var meta;
 		// if (document.querySelector("[property='og:url']")) {
 		// 	document.querySelector("[property='og:url']").remove();
 		// }
-		if (document.querySelector("[property='og:type']")) {
-			document.querySelector("[property='og:type']").remove();
-		}
-		if (document.querySelector("[property='og:title']")) {
-			document.querySelector("[property='og:title']").remove();
-		}
-		if (document.querySelector("[property='og:description']")) {
-			document.querySelector("[property='og:description']").remove();
-		}
-		if (document.querySelector("[property='fileid']")) {
-			document.querySelector("[property='fileid']").remove();
-		}
-		
+
+
 		meta = document.createElement('meta');
 		meta.setAttribute('property', 'og:type');
-		meta.content = "article";
-		document.getElementsByTagName('head')[0].appendChild(meta);
+		meta.content = "article";		
+		if (document.querySelector("[property='og:type']")) {
+			if (document.querySelector("[property='og:type']").content !== meta.content) {
+				document.querySelector("[property='og:type']").content = meta.content;
+			}
+		}else{
+			document.getElementsByTagName('head')[0].appendChild(meta);
+		}
+
 		meta = document.createElement('meta');
 		meta.setAttribute('property', 'og:title');
 		meta.content = getFirstLine();
-		document.getElementsByTagName('head')[0].appendChild(meta);
+		if (document.querySelector("[property='og:title']")) {
+			if (document.querySelector("[property='og:title']").content !== meta.content) {
+				document.querySelector("[property='og:title']").content = meta.content;
+			}
+		}else{
+			document.getElementsByTagName('head')[0].appendChild(meta);
+		}
+
 		meta = document.createElement('meta');
 		meta.setAttribute('property', 'og:description');
 		meta.content = getFirstParagraph();
-		document.getElementsByTagName('head')[0].appendChild(meta);
+		if (document.querySelector("[property='og:description']")) {
+			if (document.querySelector("[property='og:description']").content !== meta.content) {
+				document.querySelector("[property='og:description']").content = meta.content;
+			}
+		}else{
+			document.getElementsByTagName('head')[0].appendChild(meta);
+		}
+
 		meta = document.createElement('meta');
 		meta.setAttribute('property', 'fileid');
 		meta.content = id;
-		document.getElementsByTagName('head')[0].appendChild(meta);
-
+		if (document.querySelector("[property='fileid']")) {
+			if (document.querySelector("[property='fileid']").content !== meta.content) {
+				document.querySelector("[property='fileid']").content = meta.content;
+			}
+		}else{
+			document.getElementsByTagName('head')[0].appendChild(meta);
+		}
+		
 		buildMetaUrl();
 
 		document.title = getFirstLine();
@@ -205,35 +224,50 @@
 		// if (document.querySelector("[property='og:url']")) {
 		// 	document.querySelector("[property='og:url']").remove();
 		// }
-		if (document.querySelector("[property='og:type']")) {
-			document.querySelector("[property='og:type']").remove();
-		}
-		if (document.querySelector("[property='og:title']")) {
-			document.querySelector("[property='og:title']").remove();
-		}
-		if (document.querySelector("[property='og:description']")) {
-			document.querySelector("[property='og:description']").remove();
-		}
-		if (document.querySelector("[property='fileid']")) {
-			document.querySelector("[property='fileid']").remove();
-		}
-		
 		meta = document.createElement('meta');
 		meta.setAttribute('property', 'og:type');
 		meta.content = json.type;
-		document.getElementsByTagName('head')[0].appendChild(meta);
+		if (document.querySelector("[property='og:type']")) {
+			if (document.querySelector("[property='og:type']").content !== meta.content) {
+				document.querySelector("[property='og:description']").content = meta.content;
+			}
+		}else{
+			document.getElementsByTagName('head')[0].appendChild(meta);
+		}
+
 		meta = document.createElement('meta');
 		meta.setAttribute('property', 'og:title');
 		meta.content = json.title;
-		document.getElementsByTagName('head')[0].appendChild(meta);
+		if (document.querySelector("[property='og:title']")) {
+			if (document.querySelector("[property='og:title']").content !== meta.content) {
+				document.querySelector("[property='og:description']").content = meta.content;
+			}
+		}else{
+			document.getElementsByTagName('head')[0].appendChild(meta);
+		}
+
 		meta = document.createElement('meta');
 		meta.setAttribute('property', 'og:description');
 		meta.content = json.description;
-		document.getElementsByTagName('head')[0].appendChild(meta);
+		if (document.querySelector("[property='og:description']")) {
+			if (document.querySelector("[property='og:description']").content !== meta.content) {
+				document.querySelector("[property='og:description']").content = meta.content;
+			}
+		}else{
+			document.getElementsByTagName('head')[0].appendChild(meta);
+		}
+
 		meta = document.createElement('meta');
 		meta.setAttribute('property', 'fileid');
 		meta.content = json.fileid;
-		document.getElementsByTagName('head')[0].appendChild(meta);
+		if (document.querySelector("[property='fileid']")) {
+			if (document.querySelector("[property='fileid']").content !== meta.content) {
+				document.querySelector("[property='og:description']").content = meta.content;
+  			}
+		}else{
+			document.getElementsByTagName('head')[0].appendChild(meta);
+		}
+		
 
 		buildMetaUrl();
 
