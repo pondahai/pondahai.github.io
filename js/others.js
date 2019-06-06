@@ -396,7 +396,7 @@
 		var url_encoded = encodeURIComponent("https://"+window.location.hostname+"/?qdata=" + btoa(unescape(encodeURIComponent(createQueryData()))));
 		var name_encoded = encodeURIComponent(name);
 		// var buttonimg = document.createElement('img');
-		var svg_element = '<g style="pointer-events:all"><title style="pointer-events:inherit">Layer 1</title><rect fill="#0033ff" stroke="#000" stroke-width="0" x="185.0000585615635" y="136.43743801116943" width="75" height="70" id="svg_1" rx="16" stroke-dasharray="none"></rect><g id="svg_6"><rect fill="#000000" stroke="#000" stroke-width="0" stroke-opacity="null" x="215.99970450606156" y="163.99977459116235" width="10.499985635711312" height="33.999953487065255" id="svg_2"></rect><rect fill="#000000" stroke="#000" stroke-width="0" stroke-opacity="null" x="203.49972160352587" y="161.49977797178178" width="36.49995006699652" height="10.49998563571134" id="svg_3" rx="2"></rect><path fill="#000000" stroke="#000" stroke-width="0" stroke-opacity="null" d="M215.49971,163.49978C216.4997,153.49979 217.9997,145.9998 219.9997,145.4998C221.9997,144.9998 233.99968,144.9998 234.49968,144.9998C234.99968,144.9998 236.49968,154.99979 234.99968,154.99979C233.49968,154.99979 229.99969,153.49979 228.49969,154.99979C226.99969,156.49978 226.49969,161.99978 226.49969,161.49978C226.49969,161.99978 226.49969,165.49977 226.49969,164.99977C226.49969,165.49977 214.49971,173.49976 215.49971,163.49978z" id="svg_4"></path></g></g>';
+		var svg_element = '<g style="pointer-events:all"><title style="pointer-events:inherit">Layer 1</title><rect fill="#0033ff" stroke="#000" stroke-width="0" x="0" y="0" width="75" height="70" id="svg_1" rx="16" stroke-dasharray="none"></rect><g id="svg_6"><rect fill="#000000" stroke="#000" stroke-width="0" stroke-opacity="null" x="0" y="0" width="10.499985635711312" height="33.999953487065255" id="svg_2"></rect><rect fill="#000000" stroke="#000" stroke-width="0" stroke-opacity="null" x="0" y="0" width="36.49995006699652" height="10.49998563571134" id="svg_3" rx="2"></rect><path fill="#000000" stroke="#000" stroke-width="0" stroke-opacity="null" d="M215.49971,163.49978C216.4997,153.49979 217.9997,145.9998 219.9997,145.4998C221.9997,144.9998 233.99968,144.9998 234.49968,144.9998C234.99968,144.9998 236.49968,154.99979 234.99968,154.99979C233.49968,154.99979 229.99969,153.49979 228.49969,154.99979C226.99969,156.49978 226.49969,161.99978 226.49969,161.49978C226.49969,161.99978 226.49969,165.49977 226.49969,164.99977C226.49969,165.49977 214.49971,173.49976 215.49971,163.49978z" id="svg_4"></path></g></g>';
 		// buttonimg.src = "https://assets.cobaltnitra.com/teams/repository/export/685/994e08a161005809f00505692530e/685994e08a161005809f00505692530e.png";
 		// buttonimg.setAttribute("style","width: 30px;");
 		var fbShareButton = document.createElement('a');
@@ -417,6 +417,8 @@
 		fbShareButtonSvg.appendChild(fbShareButton);
 		// fbShareButtonSvg.setAttribute('viewBox', '0 0 100 100');
 		fbShareButtonSvg.setAttribute('id', 'idFBshareButton');
+		fbShareButtonSvg.setAttribute('x','0');
+		fbShareButtonSvg.setAttribute('y','0');
 		fbShareButtonSvg.setAttribute('width', '100');
 		fbShareButtonSvg.setAttribute('height', '100');
 		fbShareButtonSvg.setAttribute('version', '1.1');
