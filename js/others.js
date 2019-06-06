@@ -429,7 +429,8 @@
 		// fbShareButton.setAttribute('href', 'javascript:fbshareCurrentPage("'+url_encoded+'","'+name_encoded+'")');
 		// fbShareButton.setAttribute('target', '_blank');
 		// fbShareButton.appendChild(buttonimg);
-		document.getElementById('fbsharebuttonposition').parentNode.insertBefore(fbShareButtonSvg,document.getElementById('fbsharebuttonposition'));
+		//document.getElementById('fbsharebuttonposition').parentNode.insertBefore(fbShareButtonSvg,document.getElementById('fbsharebuttonposition'));
+		document.getElementById('fbsharebuttonposition').appendChild(fbShareButtonSvg);
 
 //<a href="javascript:fbshareCurrentPage()" target="_blank" alt="Share on Facebook"><img src="https://assets.cobaltnitra.com/teams/repository/export/685/994e08a161005809f00505692530e/685994e08a161005809f00505692530e.png" style="width: 30px; alt=" alt="" /></a>		  	
   }
