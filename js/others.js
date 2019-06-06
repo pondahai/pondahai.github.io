@@ -408,14 +408,14 @@
 		var svgRect = document.createElement('rect');
 		svgRect.setAttribute('x','0');
 		svgRect.setAttribute('y','0');
-		svgRect.setAttribute('width','100');
-		svgRect.setAttribute('height','100');
+		svgRect.setAttribute('width','30');
+		svgRect.setAttribute('height','30');
 		svgRect.setAttribute('fill-opacity','0');
 		svgRect.setAttribute('stroke-opacity','0');
 		var fbShareButtonSvg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-		document.getElementById('fbsharebuttonposition').appendChild(fbShareButtonSvg);
 		fbShareButtonSvg.appendChild(svgRect);
 		fbShareButtonSvg.appendChild(fbShareButton);
+		document.getElementById('fbsharebuttonposition').appendChild(fbShareButtonSvg);
 		// fbShareButtonSvg.setAttribute('viewBox', '0 0 100 100');
 		fbShareButtonSvg.setAttribute('id', 'idFBshareButton');
 		// fbShareButtonSvg.setAttribute('x','0');
