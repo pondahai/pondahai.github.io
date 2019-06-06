@@ -419,8 +419,8 @@
 		fbShareButtonSvg.setAttribute('id', 'idFBshareButton');
 		// fbShareButtonSvg.setAttribute('x','0');
 		// fbShareButtonSvg.setAttribute('y','0');
-		// fbShareButtonSvg.setAttribute('width', '100');
-		// fbShareButtonSvg.setAttribute('height', '100');
+		fbShareButtonSvg.setAttribute('width', '30');
+		fbShareButtonSvg.setAttribute('height', '30');
 		fbShareButtonSvg.setAttribute('version', '1.1');
 		fbShareButtonSvg.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
 		fbShareButtonSvg.setAttribute('xmlns:xlink', 'http://www.w3.org/1999/xlink');
