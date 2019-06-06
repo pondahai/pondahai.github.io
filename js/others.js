@@ -402,7 +402,7 @@
 		var fbShareButton = document.createElementNS("http://www.w3.org/2000/svg", 'a');
 		// viewBox="0 0 362 232" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
 		//fbShareButton.setAttribute('id','idFBshareButton');
-		fbShareButton.setAttribute('xlink:href', 'javascript:fbshareCurrentPage("'+url_encoded+'","'+name_encoded+'")');
+		fbShareButton.setAttributeNS("http://www.w3.org/2000/svg", 'xlink:href', 'javascript:fbshareCurrentPage("'+url_encoded+'","'+name_encoded+'")');
 		fbShareButton.innerHTML = svg_element;
 		// <rect x="0" y="0" width="146" height="94" fill-opacity="0" stroke-opacity="0"></rect>
 		var svgRect = document.createElementNS("http://www.w3.org/2000/svg", 'rect');
