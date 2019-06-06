@@ -8,8 +8,12 @@
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
+if (window.location.hostname.match('jolted-troop.000webhostapp.com')) {
+  gtag('config', 'UA-57926490-3');
+}
+if (window.location.hostname.match('pondahai.github.io')) {
   gtag('config', 'UA-57926490-2');
+}
 </script>
 
 <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
