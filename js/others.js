@@ -427,7 +427,7 @@
 		fbShareButtonSvg.setAttributeNS("http://www.w3.org/2000/svg", 'height', '30');
 		fbShareButtonSvg.setAttributeNS("http://www.w3.org/2000/svg", 'version', '1.1');
 		// fbShareButtonSvg.setAttributeNS("http://www.w3.org/2000/svg", 'xmlns', 'http://www.w3.org/2000/svg');
-		fbShareButtonSvg.setAttributeNS("http://www.w3.org/2000/svg", 'xmlns:xlink', 'http://www.w3.org/1999/xlink');
+		// fbShareButtonSvg.setAttributeNS("http://www.w3.org/2000/svg", 'xmlns:xlink', 'http://www.w3.org/1999/xlink');
 		// var fbShareButton = document.createElement('a');
 		// fbShareButton.setAttribute('id','idFBshareButton');
 		// fbShareButton.setAttribute('href', 'javascript:fbshareCurrentPage("'+url_encoded+'","'+name_encoded+'")');
