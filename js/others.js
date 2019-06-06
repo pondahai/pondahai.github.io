@@ -413,6 +413,7 @@
 		svgRect.setAttribute('fill-opacity','0');
 		svgRect.setAttribute('stroke-opacity','0');
 		var fbShareButtonSvg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+		document.getElementById('fbsharebuttonposition').appendChild(fbShareButtonSvg);
 		fbShareButtonSvg.appendChild(svgRect);
 		fbShareButtonSvg.appendChild(fbShareButton);
 		// fbShareButtonSvg.setAttribute('viewBox', '0 0 100 100');
@@ -430,7 +431,6 @@
 		// fbShareButton.setAttribute('target', '_blank');
 		// fbShareButton.appendChild(buttonimg);
 		//document.getElementById('fbsharebuttonposition').parentNode.insertBefore(fbShareButtonSvg,document.getElementById('fbsharebuttonposition'));
-		document.getElementById('fbsharebuttonposition').appendChild(fbShareButtonSvg);
 
 //<a href="javascript:fbshareCurrentPage()" target="_blank" alt="Share on Facebook"><img src="https://assets.cobaltnitra.com/teams/repository/export/685/994e08a161005809f00505692530e/685994e08a161005809f00505692530e.png" style="width: 30px; alt=" alt="" /></a>		  	
   }
