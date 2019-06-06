@@ -417,10 +417,10 @@
 		fbShareButtonSvg.appendChild(fbShareButton);
 		// fbShareButtonSvg.setAttribute('viewBox', '0 0 100 100');
 		fbShareButtonSvg.setAttribute('id', 'idFBshareButton');
-		fbShareButtonSvg.setAttribute('x','0');
-		fbShareButtonSvg.setAttribute('y','0');
-		fbShareButtonSvg.setAttribute('width', '100');
-		fbShareButtonSvg.setAttribute('height', '100');
+		// fbShareButtonSvg.setAttribute('x','0');
+		// fbShareButtonSvg.setAttribute('y','0');
+		// fbShareButtonSvg.setAttribute('width', '100');
+		// fbShareButtonSvg.setAttribute('height', '100');
 		fbShareButtonSvg.setAttribute('version', '1.1');
 		fbShareButtonSvg.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
 		fbShareButtonSvg.setAttribute('xmlns:xlink', 'http://www.w3.org/1999/xlink');
