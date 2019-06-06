@@ -387,9 +387,10 @@
   }
   function rebuildShareButton (id, name) {
 		// remove button if it is exist
-		var fbShareButton = document.getElementById('idFBshareButton');
+		var fbShareButton = document.getElementById('fbsharebuttonposition');
 		if (fbShareButton) {
-				fbShareButton.parentNode.removeChild(fbShareButton);
+				// fbShareButton.parentNode.removeChild(fbShareButton);
+				fbShareButton.innerHTML = "";
 		}
 
 		// build and show fb share button
