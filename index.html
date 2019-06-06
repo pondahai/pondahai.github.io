@@ -52,7 +52,7 @@
             fb share button
         -->
 
-        <div id="fbsharebuttonposition"></div>
+        <span id="fbsharebuttonposition"></span>
 
     </span>
 
