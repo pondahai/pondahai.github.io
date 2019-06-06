@@ -412,7 +412,7 @@
 		svgRect.setAttribute('height','100');
 		svgRect.setAttribute('fill-opacity','0');
 		svgRect.setAttribute('stroke-opacity','0');
-		var fbShareButtonSvg = document.createElement('svg');
+		var fbShareButtonSvg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
 		fbShareButtonSvg.appendChild(svgRect);
 		fbShareButtonSvg.appendChild(fbShareButton);
 		// fbShareButtonSvg.setAttribute('viewBox', '0 0 100 100');
