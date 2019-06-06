@@ -401,13 +401,22 @@
 		// buttonimg.setAttribute("style","width: 30px;");
 		var fbShareButton = document.createElement('a');
 		// viewBox="0 0 362 232" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-		fbShareButton.setAttribute('id','idFBshareButton');
+		//fbShareButton.setAttribute('id','idFBshareButton');
 		fbShareButton.setAttribute('xlink:href', 'javascript:fbshareCurrentPage("'+url_encoded+'","'+name_encoded+'")');
 		fbShareButton.innerHTML = svg_element;
-
+		// <rect x="0" y="0" width="146" height="94" fill-opacity="0" stroke-opacity="0"></rect>
+		var svgRect = document.createElement('rect');
+		svgRect.setAttribute('x','0');
+		svgRect.setAttribute('y','0');
+		svgRect.setAttribute('width','100');
+		svgRect.setAttribute('height','100');
+		svgRect.setAttribute('fill-opacity','0');
+		svgRect.setAttribute('stroke-opacity','0');
 		var fbShareButtonSvg = document.createElement('svg');
+		fbShareButtonSvg.appendChild(svgRect);
 		fbShareButtonSvg.appendChild(fbShareButton);
-		fbShareButtonSvg.setAttribute('viewBox', '0 0 100 100');
+		// fbShareButtonSvg.setAttribute('viewBox', '0 0 100 100');
+		fbShareButtonSvg.setAttribute('id', 'idFBshareButton');
 		fbShareButtonSvg.setAttribute('width', '100');
 		fbShareButtonSvg.setAttribute('height', '100');
 		fbShareButtonSvg.setAttribute('version', '1.1');
