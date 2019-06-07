@@ -55,8 +55,7 @@ if (window.location.hostname.match('pondahai.github.io')) {
         <!-- 
             fb share button
         -->
-
-        <span id="fbsharebuttonposition"></span>
+        	<span id="fbsharebuttonposition"></span>
 
     </span>
 
