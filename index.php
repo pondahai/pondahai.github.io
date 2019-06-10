@@ -18,7 +18,7 @@ if (window.location.hostname.match('pondahai.github.io')) {
 
 <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
     <meta name="google-signin-scope" content="profile email">
-    <meta name="google-signin-client_id" content="169837891026-oag2vd4m6ibivp7cqajreu1um7svvdhh.apps.googleusercontent.com">
+    <meta name="google-signin-client_id" content="797948848378-0po451kj7nqm08atu85jha2vckrn9pgh.apps.googleusercontent.com">
 <script src="js/jquery-3.4.1.min.js"></script>
 <script src="js/medium-editor.js"></script>
 <script src="js/svg.js"></script>
