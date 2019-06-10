@@ -677,8 +677,8 @@
 
   
       // Client ID and API key from the Developer Console
-      var CLIENT_ID = '169837891026-oag2vd4m6ibivp7cqajreu1um7svvdhh.apps.googleusercontent.com';
-      var API_KEY = 'AIzaSyCmieef4onzl_adyu8gwpCh8Lhsk7oX5Cw';
+      var CLIENT_ID = '797948848378-0po451kj7nqm08atu85jha2vckrn9pgh.apps.googleusercontent.com';
+      var API_KEY = 'FiQbLSlnaG4ZGpz7YjzY0AHB';
 
       // Array of API discovery doc URLs for APIs used by the quickstart
       var DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"];
