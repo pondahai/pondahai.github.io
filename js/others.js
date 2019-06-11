@@ -13,8 +13,9 @@
 			break;
 		}
 	}
+	var text = (paragraphNode.innerText)?paragraphNode.innerText.substring(0,100):null;
 
-	return (paragraphNode.innerHTML)?paragraphNode.innerHTML:null;
+	return text;
   }
 
   function getFirstLine () {
