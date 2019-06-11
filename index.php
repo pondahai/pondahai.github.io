@@ -3,11 +3,14 @@
     <?php include("head.php"); ?>
 
 <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-57926490-2"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-57926490-4"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
+if (window.location.hostname.match('wripix.xyz')) {
+  gtag('config', 'UA-57926490-4');
+}
 if (window.location.hostname.match('jolted-troop.000webhostapp.com')) {
   gtag('config', 'UA-57926490-3');
 }
