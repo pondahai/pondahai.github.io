@@ -41,8 +41,11 @@ if (window.location.hostname.match('pondahai.github.io')) {
     <span style="float:left;">
         <div class="radio-group" >
         <!--Add buttons to initiate auth sequence and sign out-->
-        <button id="authorize_button" class="" style="display: none;"><label>Google Account Authorize</label></button>
-        <button id="signout_button" class="" style="display: none;"><label>Sign Out</label></button>
+        <button id="authorize_button" class="" style="display: none;"><label><font size="5">Google
+        Account
+    Authorize</font></label></button>
+        <button id="signout_button" class="" style="display: none;"><label><font size="5">Sign
+        Out</font></label></button>
 
         
 
