@@ -41,12 +41,12 @@ if (window.location.hostname.match('pondahai.github.io')) {
     <span style="float:left;">
         <div class="radio-group" >
         <!--Add buttons to initiate auth sequence and sign out-->
-        <button id="authorize_button" class="" style="display: none;"><label><font size="3">Google<br>Account<br>Authorize</font></label></button>
-        <button id="signout_button" class="" style="display: none;"><label><font size="4">Sign<br>Out</font></label></button>
+        <button id="authorize_button" class="" style="display: none;"><label><font size="5">&#10145; &#128682;</font></label></button>
+        <button id="signout_button" class="" style="display: none;"><label><font size="5">&#128682; &#10145;</font></label></button>
 
         
 
-        <button id="savefile_button" class="" onclick="downloadFileFromCurrentDocument();"><label><font size="5">&#x21D2; &#128190;</font></label></button><button id="loadfile_button" class="" onclick="uploadFileToCurrentDocument();"><label><font size="5">&#128190; &#x21D2;</font></label></button><button id="savecloudfile_button" class="" onclick="uploadToCloud();"><label><font size="5">&#x21D2; &#9729;</font></label></button><button id="sharefile_button" class="" onclick="uploadToCloudAndShare();"><label><font size="5">分</font></label></button>
+        <button id="savefile_button" class="" onclick="downloadFileFromCurrentDocument();"><label><font size="5">&#10145; &#128190;</font></label></button><button id="loadfile_button" class="" onclick="uploadFileToCurrentDocument();"><label><font size="5">&#128190; &#10145;</font></label></button><button id="savecloudfile_button" class="" onclick="uploadToCloud();"><label><font size="5">&#10145; &#9729;</font></label></button><button id="sharefile_button" class="" onclick="uploadToCloudAndShare();"><label><font size="5">分</font></label></button>
         
         <!-- 
             fb share button
