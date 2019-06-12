@@ -13,8 +13,10 @@
 			break;
 		}
 	}
-	var text = (paragraphNode.innerText)?paragraphNode.innerText.substring(0,100):null;
-
+	var text = "";
+	if (paragraphNode) {
+		text = (paragraphNode.innerText)?paragraphNode.innerText.substring(0,100):null;
+	}
 	return text;
   }
 
@@ -28,11 +30,13 @@
 
 	var firstLineText = "";
 	var firstfirstLine = "";
-	if (firstLine[0].innerText) {
-		firstLineText = firstLine[0].innerText;
-	}
-	if (firstLineText.split('\n')[0]){
-		firstfirstLine = firstLineText.split('\n')[0];
+	if (firstLine[0]) {
+		if (firstLine[0].innerText) {
+			firstLineText = firstLine[0].innerText;
+		}
+		if (firstLineText.split('\n')[0]){
+			firstfirstLine = firstLineText.split('\n')[0];
+		}
 	}
 	return firstfirstLine;
   }
@@ -47,11 +51,13 @@
 
 	var firstLineText = "";
 	var firstfirstLine = "";
-	if (firstLine[0].innerText) {
-		firstLineText = firstLine[0].innerText;
-	}
-	if (firstLineText.split('\n')[0]){
-		firstfirstLine = firstLineText.split('\n')[0];
+	if (firstLine[0]) {
+		if (firstLine[0].innerText) {
+			firstLineText = firstLine[0].innerText;
+		}
+		if (firstLineText.split('\n')[0]){
+			firstfirstLine = firstLineText.split('\n')[0];
+		}
 	}
 	var filename = "";
 	if (firstfirstLine == ""){
