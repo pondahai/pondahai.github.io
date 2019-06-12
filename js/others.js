@@ -672,7 +672,13 @@
 			    	afterUploadThenShareFunction(xhr.response.id, filename);
 				}
 			}else{
-				console.log(xhr.result);
+				if (xhr.result) {
+					console.log(xhr.result);
+				}else if (xhr.response) {
+					console.log(xhr.response);
+				}else{
+					console.log(xhr);
+				}
 			}
 		};
 		xhr.send(form);
