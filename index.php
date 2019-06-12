@@ -38,14 +38,14 @@ if (window.location.hostname.match('pondahai.github.io')) {
 <div style="background-color:#220000;padding:10px;height:100%;background-repeat:repeat-x">
    
    <!-- function buttons -->
-    <span style="float:left;margin:20px;">
+    <span class="radio-group" style="float:left;margin:20px;">
         <!--Add buttons to initiate auth sequence and sign out-->
         <button id="authorize_button" class="example_b" style="display: none;">Google Account Authorize</button>
         <button id="signout_button" class="example_b" style="display: none;">Sign Out</button>
 
         
 
-        <button id="savefile_button" class="example_b" onclick="downloadFileFromCurrentDocument();"><font size="5">&#x21D2; &#128190;</font></button>
+        <button id="savefile_button" class="example_b" onclick="downloadFileFromCurrentDocument();"><label><font size="5">&#x21D2; &#128190;</font></label></button>
         <button id="loadfile_button" class="example_b" onclick="uploadFileToCurrentDocument();"><font size="5">&#128190; &#x21D2;</font></button>
 
         <!--
@@ -68,7 +68,7 @@ if (window.location.hostname.match('pondahai.github.io')) {
     <span style="float:middle;">
         <!-- <form > -->
         <div  class="radio-group">
-            <input type="radio" id="option-one" name="paperstyleselector" onclick="changePaperStyle(1);"><label for="option-one">口</label><input type="radio" id="option-two" name="paperstyleselector" checked="checked" onclick="changePaperStyle(2);"><label for="option-two">三</label><input type="radio" id="option-three" name="paperstyleselector" onclick="changePaperStyle(3);"><label for="option-three">回</label>
+            <input type="radio" id="option-one" name="paperstyleselector" onclick="changePaperStyle(1);"><label for="option-one"><font size="5">口</font></label><input type="radio" id="option-two" name="paperstyleselector" checked="checked" onclick="changePaperStyle(2);"><label for="option-two">三</label><input type="radio" id="option-three" name="paperstyleselector" onclick="changePaperStyle(3);"><label for="option-three">回</label>
         </div>
         <!-- </form> -->
     </span>
