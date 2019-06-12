@@ -38,28 +38,21 @@ if (window.location.hostname.match('pondahai.github.io')) {
 <div style="background-color:#220000;padding:10px;height:100%;background-repeat:repeat-x">
    
    <!-- function buttons -->
-    <span class="radio-group" style="float:left;margin:20px;">
+    <span style="float:left;">
+        <div class="radio-group" >
         <!--Add buttons to initiate auth sequence and sign out-->
-        <button id="authorize_button" class="example_b" style="display: none;">Google Account Authorize</button>
-        <button id="signout_button" class="example_b" style="display: none;">Sign Out</button>
+        <button id="authorize_button" class="" style="display: none;"><label>Google Account Authorize</label></button>
+        <button id="signout_button" class="" style="display: none;"><label>Sign Out</label></button>
 
         
 
-        <button id="savefile_button" class="example_b" onclick="downloadFileFromCurrentDocument();"><label><font size="5">&#x21D2; &#128190;</font></label></button>
-        <button id="loadfile_button" class="example_b" onclick="uploadFileToCurrentDocument();"><font size="5">&#128190; &#x21D2;</font></button>
-
-        <!--
-        <button id="loadcloudfile_button" class="example_b" onclick="downloadFromCloud();"><font size="5">&#9729; &#x21D2;</font></button>
-    -->
-        <button id="savecloudfile_button" class="example_b" onclick="uploadToCloud();"><font size="5">&#x21D2; &#9729;</font></button>
-
-        <button id="sharefile_button" class="example_b" onclick="uploadToCloudAndShare();"><font size="5">分</font></button>
+        <button id="savefile_button" class="" onclick="downloadFileFromCurrentDocument();"><label><font size="5">&#x21D2; &#128190;</font></label></button><button id="loadfile_button" class="" onclick="uploadFileToCurrentDocument();"><label><font size="5">&#128190; &#x21D2;</font></label></button><button id="savecloudfile_button" class="" onclick="uploadToCloud();"><label><font size="5">&#x21D2; &#9729;</font></label></button><button id="sharefile_button" class="" onclick="uploadToCloudAndShare();"><label><font size="5">分</font></label></button>
         
         <!-- 
             fb share button
         -->
         	<span id="fbsharebuttonposition"></span>
-
+        </div>
     </span>
 
 
@@ -68,7 +61,7 @@ if (window.location.hostname.match('pondahai.github.io')) {
     <span style="float:middle;">
         <!-- <form > -->
         <div  class="radio-group">
-            <input type="radio" id="option-one" name="paperstyleselector" onclick="changePaperStyle(1);"><label for="option-one"><font size="5">口</font></label><input type="radio" id="option-two" name="paperstyleselector" checked="checked" onclick="changePaperStyle(2);"><label for="option-two">三</label><input type="radio" id="option-three" name="paperstyleselector" onclick="changePaperStyle(3);"><label for="option-three">回</label>
+            <input type="radio" id="option-one" name="paperstyleselector" onclick="changePaperStyle(1);"><label for="option-one"><font size="5">口</font></label><input type="radio" id="option-two" name="paperstyleselector" checked="checked" onclick="changePaperStyle(2);"><label for="option-two"><font size="5">三</font></label><input type="radio" id="option-three" name="paperstyleselector" onclick="changePaperStyle(3);"><label for="option-three"><font size="5">回</font></label>
         </div>
         <!-- </form> -->
     </span>
