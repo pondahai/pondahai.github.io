@@ -33,7 +33,13 @@ if (window.location.hostname.match('pondahai.github.io')) {
 
 </head>
 <body >
-	   <div id="iAmHere" class="editable" ></div>
+	   <div id="iAmHere" class="editable" ><?php 
+        //$fileId = '0BwwA4oUTeiV1UVNwOHItT0xfa2M';
+       if(isset($fileid)) {
+        $response = $driveService->files->get($fileid, array('alt' => 'media'));
+        $response->getBody()->getContents();
+        }
+?></div>
 
 <div style="background-color:#220000;padding:10px;height:100%;background-repeat:repeat-x">
    
