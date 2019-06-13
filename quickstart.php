@@ -13,7 +13,7 @@
             // The file token.json stores the user's access and refresh tokens, and is
             // created automatically when the authorization flow completes for the first
             // time.
-            $tokenPath = 'token.json';
+            $tokenPath = 'gs://wripix.appspot.com/token.json';
             if (file_exists($tokenPath)) {
                 $accessToken = json_decode(file_get_contents($tokenPath), true);
                 $client->setAccessToken($accessToken);
