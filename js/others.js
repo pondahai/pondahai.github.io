@@ -938,7 +938,7 @@ for (var i = 0; i < getPara.length; i++) {
 var fileid = aryPara['fileid'];
 if (fileid) {
     setTimeout('downloadFromCloud("'+fileid+'","");',5000);
-    document.getElementById("iAmHere").innerHTML="<p><br></p>";
+    //document.getElementById("iAmHere").innerHTML="<p><br></p>";
 }
 var qdata = aryPara['qdata'];
 if (qdata) {
@@ -953,7 +953,7 @@ if (qdata) {
 	    	setTimeout('downloadFromCloud("'+json.fileid+'","");',5000);
 	    }
 	    rebuildPageMetaFromQdata(json);
-	    document.getElementById("iAmHere").innerHTML="<p><br></p>";		
+	    //document.getElementById("iAmHere").innerHTML="<p><br></p>";		
 	}
 }
 
