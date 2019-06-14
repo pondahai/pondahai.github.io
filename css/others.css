@@ -193,16 +193,17 @@ blockquote {
   z-index: -1;
 }
 .printer-paper::before {
-  left: -2em;
+  left: 100%;
   border-right: 1px dashed rgba(210, 230, 240, 0.7);
   border-top-left-radius: 2px;
   border-bottom-left-radius: 2px;
 }
 .printer-paper::after {
-  right: -2em;
+  left: -2em;
   border-left: 1px dashed rgba(210, 230, 240, 0.7);
   border-top-right-radius: 2px;
   border-bottom-right-radius: 2px;
+  padding: initial;
 }
 
 /*radio button for paper style switch*/
