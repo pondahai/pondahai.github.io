@@ -688,11 +688,12 @@
 			    	afterUploadThenShareFunction(xhr.response.id, filename);
 				}else{
 				// 
+				var id = xhr.response.id;
 				var addWripixShare = function () {
 					gapi.client.request({
-						'path': 'https://www.googleapis.com/drive/v3/files/'+xhr.response.id+'/permissions',
+						'path': 'https://www.googleapis.com/drive/v3/files/'+ id +'/permissions',
 						'method': 'POST',
-						'params': '{"fileId": '+xhr.response.id+'}',
+						'params': '{"fileId": '+ id +'}',
 						'body': '{"role":"reader","type":"user","emailAddress":"wripix@gmail.com"}'
 					}).then(function(response) {
 					  // Handle response
