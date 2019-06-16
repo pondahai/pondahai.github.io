@@ -686,6 +686,21 @@
 		    	
 			    if (afterUploadThenShareFunction) {
 			    	afterUploadThenShareFunction(xhr.response.id, filename);
+				}else{
+				// 
+					gapi.client.request({
+						'path': 'https://www.googleapis.com/drive/v3/files/'+id+'/permissions',
+						'method': 'POST',
+						'params': '{"fileId": '+id+'}',
+						'body': '{"role":"reader","type":"user"}',
+						'emailAddress': 'wripix@gmail.com'
+					}).then(function(response) {
+					  // Handle response
+					  console.log(response);
+					}, function(reason) {
+					  // Handle error
+					  console.log(reason);
+					});
 				}
 			}else{
 				if (xhr.result) {
