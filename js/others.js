@@ -692,8 +692,7 @@
 						'path': 'https://www.googleapis.com/drive/v3/files/'+document.getElementById('current_file_id')+'/permissions',
 						'method': 'POST',
 						'params': '{"fileId": '+document.getElementById('current_file_id')+'}',
-						'body': '{"role":"reader","type":"user"}',
-						'emailAddress': 'wripix@gmail.com'
+						'body': '{"role":"reader","type":"user","emailAddress":"wripix@gmail.com"}'
 					}).then(function(response) {
 					  // Handle response
 					  console.log(response);
