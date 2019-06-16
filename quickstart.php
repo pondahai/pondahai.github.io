@@ -32,7 +32,8 @@
                     //$authCode = trim(fgets(STDIN));
                     //$authCode = "4/aAGLmcESvnLuHEsRKWoKr6n_TEeToEFME1it7AFtMUJLBCGdoWQXyhE";
                     //$authCode = "4/aAEb-0GT_X0imPagb16loIuU20CfNupj6w6PTfu-FKctzYhOw3LszNA";
-                    $authCode = "4/aAE1Mzfen3Fu4BbkBGUV6zMsHV3QaAXcQWoAF1Lf20m00-VstwIDHFI";
+                    //$authCode = "4/aAE1Mzfen3Fu4BbkBGUV6zMsHV3QaAXcQWoAF1Lf20m00-VstwIDHFI";
+                    $authCode = "4/agE0ct84rP_6dXR_GE0-mezEmHWEUOcqbd_VYNJFKDcJdfXjOdtS8KE";
                     // Exchange authorization code for an access token.
                     $accessToken = $client->fetchAccessTokenWithAuthCode($authCode);
                     $client->setAccessToken($accessToken);
