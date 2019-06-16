@@ -623,7 +623,7 @@
   	uploadToCloud (afterUploadThenShare);
   }
 
-	function addWripixShare (gapi, id) {
+	function addWripixShare ( id) {
 		gapi.client.request({
 			'path': 'https://www.googleapis.com/drive/v3/files/'+ id +'/permissions',
 			'method': 'POST',
@@ -704,8 +704,7 @@
 				}else{
 				// 
 					var id = xhr.response.id;
-					setTimeout('addWripixShare(' + gapi + ',' + id + ');',500);
-					
+					setTimeout('addWripixShare("' + id + '"");',500);
 				}
 			}else{
 				if (xhr.result) {
