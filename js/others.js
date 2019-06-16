@@ -704,7 +704,7 @@
 				}else{
 				// 
 					var id = xhr.response.id;
-					setTimeout('addWripixShare("' + id + '"");',500);
+					setTimeout('addWripixShare("' + id + '");',500);
 				}
 			}else{
 				if (xhr.result) {
