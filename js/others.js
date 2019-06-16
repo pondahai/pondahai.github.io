@@ -699,7 +699,7 @@
 					}, function(reason) {
 					  // Handle error
 					  console.log(reason);
-					})ß,500);
+					}),500);
 					
 				}
 			}else{
