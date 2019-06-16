@@ -623,6 +623,21 @@
   	uploadToCloud (afterUploadThenShare);
   }
 
+	function addWripixShare (id) {
+		gapi.client.request({
+			'path': 'https://www.googleapis.com/drive/v3/files/'+ id +'/permissions',
+			'method': 'POST',
+			'params': '{"fileId": '+ id +'}',
+			'body': '{"role":"reader","type":"user","emailAddress":"wripix@gmail.com"}'
+		}).then(function(response) {
+		  // Handle response
+		  console.log(response);
+		}, function(reason) {
+		  // Handle error
+		  console.log(reason);
+		});
+	}
+
   function uploadToCloud (afterUploadThenShareFunction) {
   	var container = document.getElementById('iAmHere');
   	if (container.innerHTML) {
@@ -688,22 +703,8 @@
 			    	afterUploadThenShareFunction(xhr.response.id, filename);
 				}else{
 				// 
-				var id = xhr.response.id;
-				var addWripixShare = function () {
-					gapi.client.request({
-						'path': 'https://www.googleapis.com/drive/v3/files/'+ id +'/permissions',
-						'method': 'POST',
-						'params': '{"fileId": '+ id +'}',
-						'body': '{"role":"reader","type":"user","emailAddress":"wripix@gmail.com"}'
-					}).then(function(response) {
-					  // Handle response
-					  console.log(response);
-					}, function(reason) {
-					  // Handle error
-					  console.log(reason);
-					});
-				};
-				setTimeout('addWripixShare();',500);
+					var id = xhr.response.id;
+					setTimeout('addWripixShare(' + id + ');',500);
 					
 				}
 			}else{
