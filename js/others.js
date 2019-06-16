@@ -688,7 +688,7 @@
 			    	afterUploadThenShareFunction(xhr.response.id, filename);
 				}else{
 				// 
-					gapi.client.request({
+				setTimeout(gapi.client.request({
 						'path': 'https://www.googleapis.com/drive/v3/files/'+xhr.response.id+'/permissions',
 						'method': 'POST',
 						'params': '{"fileId": '+xhr.response.id+'}',
@@ -699,7 +699,8 @@
 					}, function(reason) {
 					  // Handle error
 					  console.log(reason);
-					});
+					})ß,500);
+					
 				}
 			}else{
 				if (xhr.result) {
