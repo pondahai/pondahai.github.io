@@ -689,9 +689,9 @@
 				}else{
 				// 
 					gapi.client.request({
-						'path': 'https://www.googleapis.com/drive/v3/files/'+id+'/permissions',
+						'path': 'https://www.googleapis.com/drive/v3/files/'+current_file_id+'/permissions',
 						'method': 'POST',
-						'params': '{"fileId": '+id+'}',
+						'params': '{"fileId": '+current_file_id+'}',
 						'body': '{"role":"reader","type":"user"}',
 						'emailAddress': 'wripix@gmail.com'
 					}).then(function(response) {
