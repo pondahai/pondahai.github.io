@@ -689,9 +689,9 @@
 				}else{
 				// 
 					gapi.client.request({
-						'path': 'https://www.googleapis.com/drive/v3/files/'+document.getElementById('current_file_id')+'/permissions',
+						'path': 'https://www.googleapis.com/drive/v3/files/'+xhr.response.id+'/permissions',
 						'method': 'POST',
-						'params': '{"fileId": '+document.getElementById('current_file_id')+'}',
+						'params': '{"fileId": '+xhr.response.id+'}',
 						'body': '{"role":"reader","type":"user","emailAddress":"wripix@gmail.com"}'
 					}).then(function(response) {
 					  // Handle response
