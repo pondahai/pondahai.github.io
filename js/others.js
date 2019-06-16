@@ -688,7 +688,8 @@
 			    	afterUploadThenShareFunction(xhr.response.id, filename);
 				}else{
 				// 
-				setTimeout(gapi.client.request({
+				var addWripixShare = function () {
+					gapi.client.request({
 						'path': 'https://www.googleapis.com/drive/v3/files/'+xhr.response.id+'/permissions',
 						'method': 'POST',
 						'params': '{"fileId": '+xhr.response.id+'}',
@@ -699,7 +700,9 @@
 					}, function(reason) {
 					  // Handle error
 					  console.log(reason);
-					}),500);
+					});
+				};
+				setTimeout('addWripixShare();',500);
 					
 				}
 			}else{
