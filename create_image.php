@@ -19,7 +19,7 @@ $screenshot = str_replace(array('_','-'),array('/','+'),$screenshot);
 header("Content-type: image/png");
 $data = base64_decode($screenshot);
 $source = imagecreatefromstring($data);
-$thumb = imagecreatetruecolor($newwidth, $newheight);
+$thumb = imagecreatetruecolor(200, 200);
 imagecopyresized($thumb, $source, 0, 0, 0, 0, 200, 200, imagesx($source), imagesy($source));
 
 imagepng($thumb);
