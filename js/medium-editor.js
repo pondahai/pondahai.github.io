@@ -7182,7 +7182,7 @@ if (!istravelSelMeetSVG) {
                 sel.addRange(range);
                 //sel.deleteFromDocument();
                 document.execCommand('delete', null, false);
-                if (sel.anchorOffset === 0 && node.nodeName === "text") {
+                if ( node.nodeName === "text" && node.textLength === 0) {
                   // execCommand undo manager doesnt handle node like <div> or <text> inside svg
                   // empty text doesnt delete itself
                   // but if i dont help to removeChild, it is left empty <text>
