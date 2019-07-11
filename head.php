@@ -30,7 +30,7 @@
 	}	
 	if (isset($fileid)) {
 		echo '<meta property="fileid" content="'.$fileid.'" />';
-		echo '<meta property="og:image" content="https://'.$host_name.'/create_image.php?url=https://wripix.xyz?fileid='.$fileid.'&ext=.png" />';
+		echo '<meta property="og:image" content="https://'.$host_name.'/create_image.php?url=https://wripix.xyz?fileid='.$fileid.'&amp;ext=.png" />';
 		echo '<meta property="og:image:width" content="400">';
 		echo '<meta property="og:image:height" content="400">';
 	}
