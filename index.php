@@ -30,7 +30,7 @@ if (window.location.hostname.match('pondahai.github.io')) {
 <link rel="stylesheet" href="css/medium-editor.css"> <!-- Core -->
 <link rel="stylesheet" href="css/themes/dahai.css"> <!-- or any other theme -->
 <link rel="stylesheet" href="css/others.css"> <!-- or any other theme -->
-<meta property="og:image"      content="icon01.png" />
+<!-- <meta property="og:image"      content="create_image.php?url=https://wripix.xyz?fileid=" /> -->
 </head>
 <body >
 	   <div id="iAmHere" class="editable" ><?php include("quickstart.php"); ?></div>
