@@ -18,8 +18,13 @@ $screenshot = str_replace(array('_','-'),array('/','+'),$screenshot);
 //echo "<img src=\"data:image/jpeg;base64,".$screenshot."\" />";
 header("Content-type: image/png");
 $data = base64_decode($screenshot);
-$im = imagecreatefromstring($data);
-imagepng($im);
-imagedestroy($im);
+$source = imagecreatefromstring($data);
+$thumb = imagecreatetruecolor($newwidth, $newheight);
+imagecopyresized($thumb, $source, 0, 0, 0, 0, 200, 200, imagesx($source), imagesy($source));
+
+imagepng($thumb);
+
+imagedestroy($source);
+imagedestroy($thumb);
 
 ?>
