@@ -26,6 +26,7 @@ foreach( $searchNode as $searchNode )
     $screenshot = $searchNode->getAttribute( "xlink:href" ); 
     break;
 }
+$screenshot = str_replace('data:image/png;base64,','',$screenshot);
 $screenshot = str_replace(array('_','-'),array('/','+'),$screenshot); 
 
 //display screenshot image
