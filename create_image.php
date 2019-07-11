@@ -15,5 +15,11 @@ $screenshot = $googlePagespeedData['screenshot']['data'];
 $screenshot = str_replace(array('_','-'),array('/','+'),$screenshot); 
 
 //display screenshot image
-echo "<img src=\"data:image/jpeg;base64,".$screenshot."\" />";
+//echo "<img src=\"data:image/jpeg;base64,".$screenshot."\" />";
+header("Content-type: image/png");
+$data = base64_decode($screenshot);
+$im = imagecreatefromstring($data);
+imagepng($im);
+imagedestroy($im);
+
 ?>
