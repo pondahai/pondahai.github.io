@@ -222,21 +222,21 @@
 			document.getElementsByTagName('head')[0].appendChild(meta);
 		}
 
-		meta = document.createElement('meta');
-		meta.setAttribute('property', 'og:image');
-		var imageElm = document.getElementsByTagNameNS("http://www.w3.org/2000/svg",'image');
-		if (imageElm && imageElm[0]) {
-			meta.content = imageElm[0].href.baseVal;
-		}else{
-			meta.content = "";
-		}
-		if (document.querySelector("[property='og:image']")) {
-			if (document.querySelector("[property='og:image']").content !== meta.content) {
-				document.querySelector("[property='og:image']").content = meta.content;
-			}
-		}else{
-			document.getElementsByTagName('head')[0].appendChild(meta);
-		}
+		// meta = document.createElement('meta');
+		// meta.setAttribute('property', 'og:image');
+		// var imageElm = document.getElementsByTagNameNS("http://www.w3.org/2000/svg",'image');
+		// if (imageElm && imageElm[0]) {
+		// 	meta.content = imageElm[0].href.baseVal;
+		// }else{
+		// 	meta.content = "";
+		// }
+		// if (document.querySelector("[property='og:image']")) {
+		// 	if (document.querySelector("[property='og:image']").content !== meta.content) {
+		// 		document.querySelector("[property='og:image']").content = meta.content;
+		// 	}
+		// }else{
+		// 	document.getElementsByTagName('head')[0].appendChild(meta);
+		// }
 		
 		buildMetaUrl();
 
