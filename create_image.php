@@ -19,11 +19,10 @@ $siteURL = $url;
 
 
 $dom = new DOMDocument();
-$dom->loadHTML(file_get_contents($siteURL));
+@$dom->loadHTML(file_get_contents($siteURL));
 $searchNode = $dom->getElementsByTagName( "image" ); 
 foreach( $searchNode as $searchNode ) 
 {
-	echo $searchNode;
     $screenshot = $searchNode->getAttribute( "xlink:href" ); 
     break;
 }
