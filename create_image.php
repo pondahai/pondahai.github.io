@@ -14,10 +14,18 @@ $googlePagespeedData = json_decode($googlePagespeedData, true);
 $screenshot = $googlePagespeedData['screenshot']['data'];
 $screenshot = str_replace(array('_','-'),array('/','+'),$screenshot); 
 
+$dom->loadHTML(file_get_contents($siteURL));
+$searchNode = $dom->getElementsByTagName( "image" ); 
+foreach( $searchNode as $searchNode ) 
+{
+    $data = $searchNode->getAttribute( "xlink:href" ); 
+    break;
+}
+
 //display screenshot image
 //echo "<img src=\"data:image/jpeg;base64,".$screenshot."\" />";
 header("Content-type: image/png");
-$data = base64_decode($screenshot);
+//$data = base64_decode($screenshot);
 $source = imagecreatefromstring($data);
 $thumb = imagecreatetruecolor(400, 400);
 imagecopyresized($thumb, $source, 0, 0, 0, 0, 400, 400, imagesx($source), imagesy($source));
