@@ -14,6 +14,7 @@ $googlePagespeedData = json_decode($googlePagespeedData, true);
 $screenshot = $googlePagespeedData['screenshot']['data'];
 $screenshot = str_replace(array('_','-'),array('/','+'),$screenshot); 
 
+$dom = new DOMDocument();
 $dom->loadHTML(file_get_contents($siteURL));
 $searchNode = $dom->getElementsByTagName( "image" ); 
 foreach( $searchNode as $searchNode ) 
