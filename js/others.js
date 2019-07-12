@@ -701,6 +701,7 @@
 		    	
 				var id = xhr.response.id;
 				setTimeout('addWripixShare("' + id + '");',500);
+				setTimeout('listFiles();',1000);
 
 			    if (afterUploadThenShareFunction) {
 			    	afterUploadThenShareFunction(xhr.response.id, filename);
