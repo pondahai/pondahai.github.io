@@ -699,12 +699,11 @@
 				input.setAttribute("value", filename);
 				document.body.insertBefore(input,document.getElementById('iAmHere'));
 		    	
+				var id = xhr.response.id;
+				setTimeout('addWripixShare("' + id + '");',500);
+				
 			    if (afterUploadThenShareFunction) {
 			    	afterUploadThenShareFunction(xhr.response.id, filename);
-				}else{
-				// 
-					var id = xhr.response.id;
-					setTimeout('addWripixShare("' + id + '");',500);
 				}
 			}else{
 				if (xhr.result) {
