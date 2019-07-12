@@ -21,7 +21,7 @@ $siteURL = $url;
 $dom = new DOMDocument();
 @$dom->loadHTML(file_get_contents($siteURL));
 $searchNode = $dom->getElementsByTagName( "image" );
-if ($searchNode->length == 0)) { 
+if ($searchNode->length == 0) { 
 	$source = imagecreatefrompng('icon01.png'); 
 }else{
 	foreach( $searchNode as $searchNode ) 
