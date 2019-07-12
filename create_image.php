@@ -34,7 +34,6 @@ if ($searchNode->length == 0) {
 
 	//display screenshot image
 	//echo "<img src=\"data:image/jpeg;base64,".$screenshot."\" />";
-	header("Content-type: image/png");
 	$data = base64_decode($screenshot);
 	$source = imagecreatefromstring($data);
 }
@@ -60,6 +59,7 @@ else {
 
 $endSize = 400;
 
+header("Content-type: image/png");
 $thumb = imagecreatetruecolor($endSize , $endSize);
 imagecopyresized($thumb, $source, 0, 0, $offsetX, $offsetY, $endSize, $endSize, $square, $square);
 
