@@ -865,7 +865,7 @@
         gapi.client.drive.files.list({
           'pageSize': 999,
           //'q': "fileExtension='html'",
-          'q': "'wripix@gmail.com' in writers",
+          'q': "'wripix@gmail.com' in readers",
           'fields': "nextPageToken, files(id, name, fileExtension, mimeType, createdTime, trashed)"
         }).then(function(response) {
           //appendPre('Files:');
