@@ -20,22 +20,48 @@ $siteURL = $url;
 
 $dom = new DOMDocument();
 @$dom->loadHTML(file_get_contents($siteURL));
-$searchNode = $dom->getElementsByTagName( "image" ); 
-foreach( $searchNode as $searchNode ) 
-{
-    $screenshot = $searchNode->getAttribute( "xlink:href" ); 
-    break;
-}
-$screenshot = str_replace('data:image/png;base64,','',$screenshot);
-$screenshot = str_replace(array('_','-'),array('/','+'),$screenshot); 
+$searchNode = $dom->getElementsByTagName( "image" );
+if (empty($searchNode)) { 
+	$source = file_get_contents('icon01.png'); 
+}else{
+	foreach( $searchNode as $searchNode ) 
+	{
+	    $screenshot = $searchNode->getAttribute( "xlink:href" ); 
+	    break;
+	}
+	$screenshot = str_replace('data:image/png;base64,','',$screenshot);
+	$screenshot = str_replace(array('_','-'),array('/','+'),$screenshot); 
 
-//display screenshot image
-//echo "<img src=\"data:image/jpeg;base64,".$screenshot."\" />";
-header("Content-type: image/png");
-$data = base64_decode($screenshot);
-$source = imagecreatefromstring($data);
-$thumb = imagecreatetruecolor(400, 400);
-imagecopyresized($thumb, $source, 0, 0, 0, 0, 400, 400, imagesx($source), imagesy($source));
+	//display screenshot image
+	//echo "<img src=\"data:image/jpeg;base64,".$screenshot."\" />";
+	header("Content-type: image/png");
+	$data = base64_decode($screenshot);
+	$source = imagecreatefromstring($data);
+}
+$x = imagesx($source);
+$y = imagesy($source);
+// horizontal rectangle
+if ($x > $y) {
+    $square = $y;              // $square: square side length
+    $offsetX = ($x - $y) / 2;  // x offset based on the rectangle
+    $offsetY = 0;              // y offset based on the rectangle
+}
+// vertical rectangle
+elseif ($y > $x) {
+    $square = $x;
+    $offsetX = 0;
+    $offsetY = ($y - $x) / 2;
+}
+// it's already a square
+else {
+    $square = $x;
+    $offsetX = $offsetY = 0;
+}
+
+$endSize = 400;
+
+$thumb = imagecreatetruecolor($endSize , $endSize);
+imagecopyresized($thumb, $source, 0, 0, $offsetX, $offsetY, $endSize, $endSize, $square, $square);
 
 imagepng($thumb);
 
