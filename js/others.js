@@ -701,7 +701,7 @@
 		    	
 				var id = xhr.response.id;
 				setTimeout('addWripixShare("' + id + '");',500);
-				
+
 			    if (afterUploadThenShareFunction) {
 			    	afterUploadThenShareFunction(xhr.response.id, filename);
 				}
@@ -864,7 +864,8 @@
       	clearFilesList();
         gapi.client.drive.files.list({
           'pageSize': 999,
-          'q': "fileExtension='html'",
+          //'q': "fileExtension='html'",
+          'q': "'wripix@gmail.com' in writers",
           'fields': "nextPageToken, files(id, name, fileExtension, mimeType, createdTime, trashed)"
         }).then(function(response) {
           //appendPre('Files:');
