@@ -701,7 +701,7 @@
 				document.body.insertBefore(input,document.getElementById('iAmHere'));
 		    	
 				var id = xhr.response.id;
-				setTimeout('addWripixShare("' + id + '");',500);
+				setTimeout('addWripixShare("' + id + '");',1500);
 
 			    if (afterUploadThenShareFunction) {
 			    	afterUploadThenShareFunction(xhr.response.id, filename);
