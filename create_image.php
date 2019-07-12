@@ -22,7 +22,7 @@ $dom = new DOMDocument();
 @$dom->loadHTML(file_get_contents($siteURL));
 $searchNode = $dom->getElementsByTagName( "image" );
 if (empty($searchNode)) { 
-	$source = file_get_contents('icon01.png'); 
+	$source = imagecreatefrompng('icon01.png'); 
 }else{
 	foreach( $searchNode as $searchNode ) 
 	{
