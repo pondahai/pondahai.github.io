@@ -632,6 +632,7 @@
 		}).then(function(response) {
 		  // Handle response
 		  console.log(response);
+		  listFiles();
 		}, function(reason) {
 		  // Handle error
 		  console.log(reason);
@@ -701,7 +702,6 @@
 		    	
 				var id = xhr.response.id;
 				setTimeout('addWripixShare("' + id + '");',500);
-				setTimeout('listFiles();',1000);
 
 			    if (afterUploadThenShareFunction) {
 			    	afterUploadThenShareFunction(xhr.response.id, filename);
