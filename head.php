@@ -77,8 +77,14 @@
         $content = $response->getBody()->getContents();
         $html = str_get_html($content);
         if(isset($html)) {
-        	$title = strtok($html->find('*',0)->innertext, "\n");
-        	$description = strtok($html->find('*',1)->innertext, "\n");
+        	$find_first_element = $html->find('*',0);
+        	if(isset($find_first_element)){
+        		$title = strtok($find_first_element->innertext, "\n");
+        	}
+        	$find_secend_element = $html->find('*',1);
+        	if(isset($find_secend_element)){
+        		$description = strtok($find_secend_element->innertext, "\n");
+        	}
     	}
 	}
 	    
