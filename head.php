@@ -78,12 +78,12 @@
         $html = str_get_html($content);
         if(isset($html) and is_object($html)) {
         	$find_first_element = $html->find('*',0);
-        	if(isset($find_first_element)){
-        		$title = strtok($find_first_element->innertext, "\n");
+        	if(is_object($find_first_element)){
+        		$title = substr(strtok($find_first_element->innertext, "\n"),0,100);
         	}
         	$find_secend_element = $html->find('*',1);
-        	if(isset($find_secend_element)){
-        		$description = strtok($find_secend_element->innertext, "\n");
+        	if(is_object($find_secend_element)){
+        		$description = substr(strtok($find_secend_element->innertext, "\n"),0,100);
         	}
     	}
 	}
