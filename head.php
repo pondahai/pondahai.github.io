@@ -76,7 +76,7 @@
         $response = $driveService->files->get($fileid, array('alt' => 'media'));
         $content = $response->getBody()->getContents();
         $html = str_get_html($content);
-        if(isset($html)) {
+        if(isset($html) and is_object($html)) {
         	$find_first_element = $html->find('*',0);
         	if(isset($find_first_element)){
         		$title = strtok($find_first_element->innertext, "\n");
