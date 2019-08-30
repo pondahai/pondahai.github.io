@@ -76,8 +76,10 @@
         $response = $driveService->files->get($fileid, array('alt' => 'media'));
         $content = $response->getBody()->getContents();
         $html = str_get_html($content);
-        $title = strtok($html->find('*',0)->innertext, "\n");
-        $description = strtok($html->find('*',1)->innertext, "\n");
+        if(isset($html)) {
+        	$title = strtok($html->find('*',0)->innertext, "\n");
+        	$description = strtok($html->find('*',1)->innertext, "\n");
+    	}
 	}
 	    
 	if (isset($title)) {
