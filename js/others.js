@@ -618,7 +618,7 @@
 	    buildPageMeta(id);
 
 	    rebuildShareButton(id, name);
-	 };
+	 }; // afterUploadThenShare
 
   	uploadToCloud (afterUploadThenShare);
   }
