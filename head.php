@@ -1,4 +1,5 @@
 <?php
+	include_once('simple_html_dom.php');
    require __DIR__ . '/vendor/autoload.php';
    function getClient()
     {
