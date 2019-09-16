@@ -77,7 +77,7 @@
         // $response = $driveService->files->get($fileid, array('alt' => 'media'));
          $response = $http->request(
 	        'GET',
-	        sprintf('/drive/v3/files/%s', $fileId),
+	        sprintf('/drive/v3/files/%s', $fileid),
 	        [
 	            'query' => ['alt' => 'media'],
 	            'headers' => [
