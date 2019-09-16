@@ -19,7 +19,7 @@ $siteURL = $url;
 
 
 $dom = new DOMDocument();
-@$dom->loadHTML(file_get_contents($siteURL), FALSE, NULL, -1, 1000000);
+@$dom->loadHTML(file_get_contents($siteURL));//, FALSE, NULL, -1, 1000000);
 $searchNode = $dom->getElementsByTagName( "image" );
 if ($searchNode->length == 0) { 
 	$source = imagecreatefrompng('icon01.png'); 
