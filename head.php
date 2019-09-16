@@ -75,6 +75,7 @@
     $client = getClient();
     $http = $client->authorize();
     $driveService = new Google_Service_Drive($client);
+    $content = '';
    	if(isset($fileid) and isset($driveService)) {
    		do {
    			$chunkEnd = $chunkStart + $chunkSizeBytes;
