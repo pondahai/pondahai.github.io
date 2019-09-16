@@ -73,7 +73,17 @@
     $client = getClient();
     $driveService = new Google_Service_Drive($client);
    	if(isset($fileid) and isset($driveService)) {
-        $response = $driveService->files->get($fileid, array('alt' => 'media'));
+        // $response = $driveService->files->get($fileid, array('alt' => 'media'));
+         $response = $http->request(
+	        'GET',
+	        sprintf('/drive/v3/files/%s', $fileId),
+	        [
+	            'query' => ['alt' => 'media'],
+	            'headers' => [
+	                'Range' => 'bytes=0-1000000'
+	            ]
+	        ]
+	    );
         $content = $response->getBody()->read(1000000);
         $html = str_get_html($content);
         if(isset($html) and is_object($html)) {
