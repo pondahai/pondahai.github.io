@@ -85,7 +85,7 @@
 		        [
 		            'query' => ['alt' => 'media'],
 		            'headers' => [
-		                'Range' => 'bytes=%s-%s', $chunkStart, $chunkEnd)
+		                'Range' => sprintf('bytes=%s-%s', $chunkStart, $chunkEnd)
 		            ]
 		        ]
 		    );
