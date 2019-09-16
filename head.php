@@ -71,6 +71,7 @@
 
 	// for content prefetch
     $client = getClient();
+    $http = $client->authorize();
     $driveService = new Google_Service_Drive($client);
    	if(isset($fileid) and isset($driveService)) {
         // $response = $driveService->files->get($fileid, array('alt' => 'media'));
