@@ -92,8 +92,8 @@
 		        ]
 		    );
 			$chunkStart = $chunkEnd + 1;
-	        $content = $response->getBody()->getContents();
-	        $html += str_get_html($content);
+	        $content += $response->getBody()->getContents();
+	        $html = str_get_html($content);
 	        if(isset($html) and is_object($html)) {
 	        	$find_first_element = $html->find('*', 0);
 	        	if(is_object($find_first_element)){
