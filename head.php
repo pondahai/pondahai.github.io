@@ -112,7 +112,7 @@
 	        	}
 	    	}
 	    	if(isset($title) and isset($description) and isset($svg)) break;
-    	} while ($response->getHeader('Content-Length') > 0);
+    	} while ($response->getHeader('Content-Length') > 255);
 	}
 	    
 	if (isset($title)) {
