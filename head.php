@@ -74,9 +74,10 @@
 // for content prefetch
     $client = getClient();
     $http = $client->authorize();
-    $driveService = new Google_Service_Drive($client);
+    //$driveService = new Google_Service_Drive($client);
     $content = '';
-   	if(isset($fileid) and isset($driveService)) {
+   	//if(isset($fileid) and isset($driveService)) {
+   	if(isset($fileid) and isset($http)) {
    		do {
    			$chunkEnd = $chunkStart + $chunkSizeBytes;
 	        // $response = $driveService->files->get($fileid, array('alt' => 'media'));
@@ -111,7 +112,7 @@
 	        	}
 	    	}
 	    	if(isset($title) and isset($description) and isset($svg)) break;
-    	} while ($response->getHeaderLine('Content-Length') > 0);
+    	} while ($response->getHeader('Content-Length') > 0);
 	}
 	    
 	if (isset($title)) {
