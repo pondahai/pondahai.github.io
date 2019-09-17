@@ -78,7 +78,7 @@
     $content = '';
    	//if(isset($fileid) and isset($driveService)) {
    	if(isset($fileid) and isset($http)) {
-   		do {
+   		// do {
    			$chunkEnd = $chunkStart + $chunkSizeBytes;
 	        // $response = $driveService->files->get($fileid, array('alt' => 'media'));
 	         $response = $http->request(
@@ -98,21 +98,21 @@
 	        	$find_first_element = $html->find('*', 0);
 	        	if(is_object($find_first_element)){
 	        		$title = substr(strtok($find_first_element->innertext, "\n"),0,100);
-	        		print $title;
+	        		// print $title;
 	        	}
 	        	$find_secend_element = $html->find('*', 1);
 	        	if(is_object($find_secend_element)){
 	        		$description = substr(strtok($find_secend_element->innertext, "\n"),0,100);
-	        		print $description;
+	        		// print $description;
 	        	}
-	        	$find_first_svg_element = $html->find('svg', 0);
-	        	if(is_object($find_first_svg_element)){
-	        		$svg = $find_first_svg_element;
-	        		print $svg;
-	        	}
+	        	// $find_first_svg_element = $html->find('svg', 0);
+	        	// if(is_object($find_first_svg_element)){
+	        	// 	$svg = $find_first_svg_element;
+	        	// 	// print $svg;
+	        	// }
 	    	}
-	    	if(isset($title) and isset($description) and isset($svg)) break;
-    	} while ($response->getHeader('Content-Length') > 255);
+	    	// if(isset($title) and isset($description) and isset($svg)) break;
+    	// } while ($response->getHeader('Content-Length') > 0);
 	}
 	    
 	if (isset($title)) {
