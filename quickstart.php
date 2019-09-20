@@ -1,7 +1,7 @@
 <?php 
 
         //$fileId = '0BwwA4oUTeiV1UVNwOHItT0xfa2M';
-        if(isset($content)) {
+        if(isset($content) and isset($html) and is_object($html)) {
             // print $content;
                 $find_first_element = $html->find('*', 0);
                 if(is_object($find_first_element)){
