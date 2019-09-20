@@ -16,7 +16,7 @@
             //     print $find_third_element;
             // }
             // print the prefetch
-            echo $html;
+            echo $content;
             // print the remain
             do {
                 $chunkEnd = $chunkStart + $chunkSizeBytes;
@@ -34,8 +34,8 @@
                 $chunkStart = $chunkEnd + 1;
                 $content = $response->getBody()->getContents();
                 $html = str_get_html($content);
-                if (isset($html) and is_object($html)) {
-                    echo $html;
+                if (isset($content) and is_object($content)) {
+                    echo $content;
                 }
                 
             } while ($chunkStart < $filesize);         

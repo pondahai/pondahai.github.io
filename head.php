@@ -89,41 +89,39 @@
     	}
 	}    
    	if(isset($fileid) and isset($http)) {
-   		// do {
-   			$chunkEnd = $chunkStart + $chunkSizeBytes;
-	        // $response = $driveService->files->get($fileid, array('alt' => 'media'));
-	         $response = $http->request(
-		        'GET',
-		        sprintf('/drive/v3/files/%s', $fileid),
-		        [
-		            'query' => ['alt' => 'media'],
-		            'headers' => [
-		                'Range' => sprintf('bytes=%s-%s', $chunkStart, $chunkEnd)
-		            ]
-		        ]
-		    );
-			$chunkStart = $chunkEnd + 1;
-	        $content .= $response->getBody()->getContents();
-	        $html = str_get_html($content);
-	        if(isset($html) and is_object($html)) {
-	        	$find_first_element = $html->find('*', 0);
-	        	if(is_object($find_first_element)){
-	        		$title = substr(strtok($find_first_element->innertext, "\n"),0,100);
-	        		// print $title;
-	        	}
-	        	$find_secend_element = $html->find('*', 1);
-	        	if(is_object($find_secend_element)){
-	        		$description = substr(strtok($find_secend_element->innertext, "\n"),0,100);
-	        		// print $description;
-	        	}
-	        	// $find_first_svg_element = $html->find('svg', 0);
-	        	// if(is_object($find_first_svg_element)){
-	        	// 	$svg = $find_first_svg_element;
-	        	// 	// print $svg;
-	        	// }
-	    	}
-	    	// if(isset($title) and isset($description) and isset($svg)) break;
-    	// } while ($response->getHeader('Content-Length') > 0);
+		$chunkEnd = $chunkStart + $chunkSizeBytes;
+        // $response = $driveService->files->get($fileid, array('alt' => 'media'));
+        $response = $http->request(
+	        'GET',
+	        sprintf('/drive/v3/files/%s', $fileid),
+	        [
+	            'query' => ['alt' => 'media'],
+	            'headers' => [
+	                'Range' => sprintf('bytes=%s-%s', $chunkStart, $chunkEnd)
+	            ]
+	        ]
+	    );
+		$chunkStart = $chunkEnd + 1;
+        $content .= $response->getBody()->getContents();
+        $html = str_get_html($content);
+        if(isset($html) and is_object($html)) {
+        	$find_first_element = $html->find('*', 0);
+        	if(is_object($find_first_element)){
+        		$title = substr(strtok($find_first_element->innertext, "\n"),0,100);
+        		// print $title;
+        	}
+        	$find_secend_element = $html->find('*', 1);
+        	if(is_object($find_secend_element)){
+        		$description = substr(strtok($find_secend_element->innertext, "\n"),0,100);
+        		// print $description;
+        	}
+        	// $find_first_svg_element = $html->find('svg', 0);
+        	// if(is_object($find_first_svg_element)){
+        	// 	$svg = $find_first_svg_element;
+        	// 	// print $svg;
+        	// }
+    	}
+    	// if(isset($title) and isset($description) and isset($svg)) break;
 	}
 	    
 	if (isset($title)) {
