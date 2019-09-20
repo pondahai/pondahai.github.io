@@ -76,13 +76,17 @@
     $http = $client->authorize();
     //$driveService = new Google_Service_Drive($client);
     $content = '';
+    $filesize = 0;
    	//if(isset($fileid) and isset($driveService)) {
    	if(isset($fileid) and isset($http)) {
-	         $response = $http->request(
-		        'GET',
-		        sprintf('/drive/v3/files/%s?fields=size', $fileid)		        
-		    );
-	        print str_get_html($response->getBody()->getContents());
+         $response = $http->request(
+	        'GET',
+	        sprintf('/drive/v3/files/%s?fields=size', $fileid)		        
+	    );
+        $data = json_decode(str_get_html($response->getBody()->getContents()));
+        if (isset($data)) {
+        	$filesize = $data->size;
+    	}
 	}    
    	if(isset($fileid) and isset($http)) {
    		// do {

@@ -38,6 +38,6 @@
                     print $html;
                 }
                 
-            } while ($response->getStatusCode() == 0);         
+            } while ($chunkStart < $filesize);         
         }
 ?>
