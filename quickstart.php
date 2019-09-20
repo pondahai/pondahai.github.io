@@ -18,7 +18,7 @@
             // print the prefetch
             echo $content;
             // print the remain
-            do {
+            while ($chunkStart < $filesize) {
                 $chunkEnd = $chunkStart + $chunkSizeBytes;
                 // $response = $driveService->files->get($fileid, array('alt' => 'media'));
                  $response = $http->request(
@@ -38,6 +38,6 @@
                     echo $content;
                 }
                 
-            } while ($chunkStart < $filesize);         
+            }          
         }
 ?>
