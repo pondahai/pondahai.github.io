@@ -37,6 +37,6 @@
                 if (isset($html) and is_object($html)) {
                     print $html;
                 }
-            } while ($response->getHeader('Content-Length') != -1);         
+            } while (isset($html));         
         }
 ?>
