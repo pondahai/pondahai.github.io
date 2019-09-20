@@ -37,6 +37,6 @@
                 if (isset($html) and is_object($html)) {
                     print $html;
                 }
-            } while (strlen($html) > 0);         
+            } while (!array_key_exists('error', $response));         
         }
 ?>
