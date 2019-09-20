@@ -34,7 +34,7 @@
                 $chunkStart = $chunkEnd + 1;
                 $content = $response->getBody()->getContents();
                 $html = str_get_html($content);
-                if (isset($content) and is_object($content)) {
+                if (isset($content)) {
                     echo $content;
                 }
                 
