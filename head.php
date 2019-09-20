@@ -78,6 +78,13 @@
     $content = '';
    	//if(isset($fileid) and isset($driveService)) {
    	if(isset($fileid) and isset($http)) {
+	         $response = $http->request(
+		        'GET',
+		        sprintf('/drive/v3/files/%s?fields=size', $fileid)		        
+		    );
+	        print str_get_html($response->getBody()->getContents());
+	}    
+   	if(isset($fileid) and isset($http)) {
    		// do {
    			$chunkEnd = $chunkStart + $chunkSizeBytes;
 	        // $response = $driveService->files->get($fileid, array('alt' => 'media'));
