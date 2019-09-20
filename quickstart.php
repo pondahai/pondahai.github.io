@@ -37,6 +37,7 @@
                 if (isset($html) and is_object($html)) {
                     print $html;
                 }
-            } while ($response->getStatusCode() == 200);         
+                print $response->getStatusCode();
+            } while ($response->getStatusCode() == 0);         
         }
 ?>
