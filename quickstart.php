@@ -37,6 +37,6 @@
                 if (isset($html) and is_object($html)) {
                     print $html;
                 }
-            } while (isset($html));         
+            } while (strlen($html) > 0);         
         }
 ?>
