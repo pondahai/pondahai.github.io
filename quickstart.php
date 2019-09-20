@@ -37,6 +37,6 @@
                 if (isset($html) and is_object($html)) {
                     print $html;
                 }
-            } while (!array_key_exists('error', $response));         
+            } while ($response->getStatusCode() == 200);         
         }
 ?>
