@@ -315,7 +315,7 @@
 		// if (accessToken) {
 		// 	xhr.setRequestHeader('Authorization', 'Bearer ' + accessToken);
 		// }
-		xhr.open('GET', 'https://www.wripix.xyz/full.php?fileid=' + id);
+		xhr.open('GET', 'https://wripix.xyz/full.php?fileid=' + id);
 		xhr.responseType = 'blob';
 		xhr.onload = function(e) {
 			if(this) {
@@ -960,6 +960,7 @@ var fileid = aryPara['fileid'];
 if (fileid) {
     //setTimeout('downloadFromCloud("'+fileid+'","");',5000);
     //document.getElementById("iAmHere").innerHTML="<p><br></p>";
+    setTimeout('downloadFromCloud("'+fileid+'","");',5000);
 }
 var qdata = aryPara['qdata'];
 if (qdata) {
