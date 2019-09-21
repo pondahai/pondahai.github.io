@@ -317,6 +317,11 @@
 		// }
 		xhr.open('GET', 'https://wripix.xyz/full.php?fileid=' + id);
 		xhr.responseType = 'blob';
+		xhr.progress = function(e) {
+			if (e.lengthComputable) {
+    			console.log(e.loaded / e.total);
+    		}
+		}
 		xhr.onload = function(e) {
 			if(this) {
 				if (this.status === 200) {
