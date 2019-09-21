@@ -297,6 +297,12 @@
 		//document.title = getFirstLine();
   }
 
+function updateProgress (e) {
+	if (e.lengthComputable) {
+		console.log(e.loaded / e.total);
+	}
+}
+
   function downloadFromCloud (id,name) {
   	// hide fb share button
 	var fbShareButton = document.getElementById('idFBshareButton');
@@ -315,11 +321,7 @@
 		// if (accessToken) {
 		// 	xhr.setRequestHeader('Authorization', 'Bearer ' + accessToken);
 		// }
-		xhr.progress = function(e) {
-			if (e.lengthComputable) {
-    			console.log(e.loaded / e.total);
-    		}
-		}
+		xhr.addEventListener("progress", updateProgress);
 		xhr.open('GET', 'https://wripix.xyz/full.php?fileid=' + id);
 		xhr.responseType = 'blob';
 		xhr.onload = function(e) {
