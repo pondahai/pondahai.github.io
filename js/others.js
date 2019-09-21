@@ -311,10 +311,11 @@
 			accessToken = gapi.auth.getToken().access_token; // Here gapi is used for retrieving the access token.
 		}
 		var xhr = new XMLHttpRequest();
-		xhr.open('GET', 'https://www.googleapis.com/drive/v3/files/' + id + '?alt=media');
-		if (accessToken) {
-			xhr.setRequestHeader('Authorization', 'Bearer ' + accessToken);
-		}
+		// xhr.open('GET', 'https://www.googleapis.com/drive/v3/files/' + id + '?alt=media');
+		// if (accessToken) {
+		// 	xhr.setRequestHeader('Authorization', 'Bearer ' + accessToken);
+		// }
+		xhr.open('GET', 'https://www.wripix.xyz/?fileid' + id);
 		xhr.responseType = 'blob';
 		xhr.onload = function(e) {
 			if(this) {
