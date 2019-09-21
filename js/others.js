@@ -315,13 +315,13 @@
 		// if (accessToken) {
 		// 	xhr.setRequestHeader('Authorization', 'Bearer ' + accessToken);
 		// }
-		xhr.open('GET', 'https://wripix.xyz/full.php?fileid=' + id);
-		xhr.responseType = 'blob';
 		xhr.progress = function(e) {
 			if (e.lengthComputable) {
     			console.log(e.loaded / e.total);
     		}
 		}
+		xhr.open('GET', 'https://wripix.xyz/full.php?fileid=' + id);
+		xhr.responseType = 'blob';
 		xhr.onload = function(e) {
 			if(this) {
 				if (this.status === 200) {
