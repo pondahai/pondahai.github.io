@@ -315,7 +315,7 @@
 		// if (accessToken) {
 		// 	xhr.setRequestHeader('Authorization', 'Bearer ' + accessToken);
 		// }
-		xhr.open('GET', 'https://www.wripix.xyz/?fileid' + id);
+		xhr.open('GET', 'https://www.wripix.xyz/?fileid=' + id);
 		xhr.responseType = 'blob';
 		xhr.onload = function(e) {
 			if(this) {
