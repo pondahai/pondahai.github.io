@@ -87,7 +87,8 @@
         if (isset($data)) {
         	$filesize = $data->size;
     	}
-	}    
+	}
+	header('Content-Length: '.$filesize);
    	if(isset($fileid) and isset($http)) {
         while ($chunkStart < $filesize) {
             $chunkEnd = $chunkStart + $chunkSizeBytes;
