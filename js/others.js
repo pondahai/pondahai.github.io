@@ -310,12 +310,12 @@ function updateProgress (e) {
 			fbShareButton.parentNode.removeChild(fbShareButton);
 	}
   	//console.log(id);
-  	if (gapi) {
-  		// dahai: accss_token is necessary for file download, but i dont believe, There must be a solution in the world.
-  		var accessToken;
-  		if (gapi.auth2.getAuthInstance().isSignedIn.get()) {
-			accessToken = gapi.auth.getToken().access_token; // Here gapi is used for retrieving the access token.
-		}
+  // 	if (gapi) {
+  // 		// dahai: accss_token is necessary for file download, but i dont believe, There must be a solution in the world.
+  // 		var accessToken;
+  // 		if (gapi.auth2.getAuthInstance().isSignedIn.get()) {
+		// 	accessToken = gapi.auth.getToken().access_token; // Here gapi is used for retrieving the access token.
+		// }
 		var xhr = new XMLHttpRequest();
 		// xhr.open('GET', 'https://www.googleapis.com/drive/v3/files/' + id + '?alt=media');
 		// if (accessToken) {
@@ -414,7 +414,7 @@ function updateProgress (e) {
 			}
 		};
 		xhr.send();
-	}
+	// }
   }
   function rebuildShareButton (id, name) {
 		// remove button if it is exist
