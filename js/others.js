@@ -321,7 +321,7 @@ function updateProgress (e) {
 		// if (accessToken) {
 		// 	xhr.setRequestHeader('Authorization', 'Bearer ' + accessToken);
 		// }
-		xhr.addEventListener("progress", updateProgress);
+		xhr.onprogress = updateProgress;
 		xhr.open('GET', 'https://wripix.xyz/full.php?fileid=' + id);
 		xhr.responseType = 'blob';
 		xhr.onload = function(e) {
