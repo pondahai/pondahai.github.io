@@ -338,7 +338,7 @@
 					var reader = new FileReader();
 					reader.onload = function() {
 						//alert(reader.result);
-				     	document.getElementById("iAmHere").innerHTML=checkAndFindMyContent(stripScripts(reader.result));
+				     	document.getElementById("iAmHere").innerHTML = checkAndFindMyContent(stripScripts(reader.result));
 				     	document.getElementById("iAmHere").dispatchEvent(new MouseEvent('click'));
 				     	$('html, body').animate({ scrollTop: 0 }, 'fast');
 				     	document.title = getFirstLine();
