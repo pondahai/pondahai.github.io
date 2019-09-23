@@ -66,50 +66,79 @@
 	    $description = $var["description"];
 	    $fileid = $var["fileid"];
 	}
+	if (isset($_GET['part'])) {
+		$part = $_GET['part'];
+	}else{
+		$part = 0;
+	}
 
     $host_name = $_SERVER['HTTP_HOST'];
 
 	$chunkSizeBytes = 1 * 1024 * 1024;
-	$chunkStart = 0;
+	$chunkStart =  $part * 1024 * 1024;
 // for content prefetch
     $client = getClient();
     $http = $client->authorize();
     //$driveService = new Google_Service_Drive($client);
     $content = '';
     $filesize = 0;
-   	//if(isset($fileid) and isset($driveService)) {
-   	if(isset($fileid) and isset($http)) {
+
+  	if(isset($fileid) and isset($http)) {
+        $chunkEnd = $chunkStart + $chunkSizeBytes;
+        // $response = $driveService->files->get($fileid, array('alt' => 'media'));
          $response = $http->request(
-	        'GET',
-	        sprintf('/drive/v3/files/%s?fields=size', $fileid)		        
-	    );
-        $data = json_decode(str_get_html($response->getBody()->getContents()));
-        if (isset($data)) {
-        	$filesize = $data->size;
-    	}
-	}
-	header('Content-Length: '.$filesize);
-   	if(isset($fileid) and isset($http)) {
-        while ($chunkStart < $filesize) {
-            $chunkEnd = $chunkStart + $chunkSizeBytes;
-            // $response = $driveService->files->get($fileid, array('alt' => 'media'));
-             $response = $http->request(
-                'GET',
-                sprintf('/drive/v3/files/%s', $fileid),
-                [
-                    'query' => ['alt' => 'media'],
-                    'headers' => [
-                        'Range' => sprintf('bytes=%s-%s', $chunkStart, $chunkEnd)
-                    ]
+            'GET',
+            sprintf('/drive/v3/files/%s', $fileid),
+            [
+                'query' => ['alt' => 'media'],
+                'headers' => [
+                    'Range' => sprintf('bytes=%s-%s', $chunkStart, $chunkEnd)
                 ]
-            );
-            $chunkStart = $chunkEnd + 1;
-            $content = $response->getBody()->getContents();
-            //$html = str_get_html($content);
-            if (isset($content)) {
-                echo $content;
-            }
-            
+            ]
+        );
+        $chunkStart = $chunkEnd + 1;
+        $content = $response->getBody()->getContents();
+        //$html = str_get_html($content);
+        if (isset($content)) {
+            echo $content;
         }
 	}
+
+   	//if(isset($fileid) and isset($driveService)) {
+ //   	if(isset($fileid) and isset($http)) {
+ //         $response = $http->request(
+	//         'GET',
+	//         sprintf('/drive/v3/files/%s?fields=size', $fileid)		        
+	//     );
+ //        $data = json_decode(str_get_html($response->getBody()->getContents()));
+ //        if (isset($data)) {
+ //        	$filesize = $data->size;
+ //    	}
+	// }
+	// header('Content-Length: '.$filesize);
+ //   	if(isset($fileid) and isset($http)) {
+ //        while ($chunkStart < $filesize) {
+ //            $chunkEnd = $chunkStart + $chunkSizeBytes;
+ //            // $response = $driveService->files->get($fileid, array('alt' => 'media'));
+ //             $response = $http->request(
+ //                'GET',
+ //                sprintf('/drive/v3/files/%s', $fileid),
+ //                [
+ //                    'query' => ['alt' => 'media'],
+ //                    'headers' => [
+ //                        'Range' => sprintf('bytes=%s-%s', $chunkStart, $chunkEnd)
+ //                    ]
+ //                ]
+ //            );
+ //            $chunkStart = $chunkEnd + 1;
+ //            $content = $response->getBody()->getContents();
+ //            //$html = str_get_html($content);
+ //            if (isset($content)) {
+ //                echo $content;
+ //            }
+            
+ //        }
+	// }
+
+
 ?>
