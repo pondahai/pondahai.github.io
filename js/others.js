@@ -328,7 +328,7 @@ function downloadFromCloudNext (id,name,part) {
 				var reader = new FileReader();
 				reader.onload = function() {
 					document.getElementById("iAmHere").innerHTML += reader.result;
-					if (reader.result.length > 0) {
+					if (reader.result.length > (1024 * 1023) {
 						downloadFromCloudNext(id,name,part+1);
 					}
 				};
