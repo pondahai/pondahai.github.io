@@ -310,7 +310,7 @@
 // }
 
 function downloadFromCloud (id,name) {
-	downloadFromCloudNext(id,name,1);
+	downloadFromCloudNext(id,name,0);
 }
 function downloadFromCloudNext (id,name,part) {
   	// hide fb share button
@@ -327,7 +327,11 @@ function downloadFromCloudNext (id,name,part) {
 				var blob = this.response;
 				var reader = new FileReader();
 				reader.onload = function() {
-					document.getElementById("iAmHere").innerHTML += reader.result;
+					if (part == 0) {
+						document.getElementById("iAmHere").innerHTML = reader.result;
+					}else{
+						document.getElementById("iAmHere").innerHTML += reader.result;
+					}
 					if (reader.result.length > (1024 * 1023)) {
 						downloadFromCloudNext(id,name,part+1);
 					}
