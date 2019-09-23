@@ -3,16 +3,8 @@
         //$fileId = '0BwwA4oUTeiV1UVNwOHItT0xfa2M';
         if(isset($fileid) and isset($http) and isset($content) and isset($html) and is_object($html)) {
         // print $content;
-            $count = 0;
-            while (1){
-                $founded_element = $html->find('*', $count);
-                if(isset($founded_element)) {
-                    echo $founded_element;
-                }else{
-                    break;
-                }
-                $count++;
-            }
+            foreach($html->find('*') as $element)
+                echo $element
 
             // $find_first_element = $html->find('*', 0);
             // if(is_object($find_first_element)){
