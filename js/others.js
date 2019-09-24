@@ -319,7 +319,7 @@ var temp_content;
 function validateAndExtractionHTML() {
 	var length = temp_content.length;
 	var index = length;
-	while (!checkHTML(temp_content.slice(0,--index)){
+	while (!checkHTML(temp_content.slice(0,--index))){
 
 	}
 	temp_content = temp_content.slice(index,length);
