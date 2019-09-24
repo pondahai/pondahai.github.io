@@ -347,12 +347,14 @@ function downloadFromCloudNext (id,name,part) {
 				var reader = new FileReader();
 				reader.onload = function() {
 					//
-					temp_content += reader.result;
+					//temp_content += reader.result;
 					if (part == 0) {
 						// document.getElementById("iAmBefore").innerHTML = validateAndExtractionHTML();
 						// document.getElementById("iAmHere").innerHTML = "";
+						document.getElementById("iAmHere").textContent = reader.result;
 					}else{
 						// document.getElementById("iAmBefore").innerHTML += validateAndExtractionHTML();
+						document.getElementById("iAmHere").textContent += reader.result;
 					}
 					//
 					if (reader.result.length > (1024 * 1023)) {
@@ -361,7 +363,7 @@ function downloadFromCloudNext (id,name,part) {
 						// document.getElementById("iAmBefore").setAttribute("class","editable");
 						// document.getElementById("iAmBefore").setAttribute("id","iAmHere");
 						// document.getElementById("iAmHere").innerHTML = document.getElementById("iAmBefore").innerHTML;
-						document.getElementById("iAmHere").innerHTML = temp_content;
+						//document.getElementById("iAmHere").innerHTML = temp_content;
 						document.body.removeChild(document.getElementById("iAmBefore"));
 					}
 				};
