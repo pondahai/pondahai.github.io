@@ -315,10 +315,10 @@
 //   doc.innerHTML = html;
 //   return ( doc.innerHTML === html );
 // }
-// var temp_content = "";
+var temp_content = "";
 // function validateAndExtractionHTML() {
 // 	var length = temp_content.length;
-// 	var index = length;
+	// var index = length;
 // 	while (!checkHTML(temp_content.slice(0,--index))){
 
 // 	}
