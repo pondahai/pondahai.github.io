@@ -329,8 +329,6 @@ function downloadFromCloud (id,name) {
 	var newNode = document.createElement("div");
 	newNode.setAttribute("id","iAmBefore");
 	document.body.insertBefore(newNode,document.getElementById("iAmHere"));
-	newNode.setAttribute("id","iAmAfter");
-	
 	downloadFromCloudNext(id,name,0);	
 }
 function downloadFromCloudNext (id,name,part) {
@@ -349,6 +347,9 @@ function downloadFromCloudNext (id,name,part) {
 				var reader = new FileReader();
 				reader.onload = function() {
 					//
+					var newNode = document.createElement("div");
+					newNode.setAttribute("id","iAmAfter");
+					document.body.insertBefore(newNode,document.getElementById("iAmHere").nextSibling);
 					temp_content += reader.result;
 					if (part == 0) {
 						// document.getElementById("iAmBefore").innerHTML = validateAndExtractionHTML();
