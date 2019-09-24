@@ -313,9 +313,7 @@ function downloadFromCloud (id,name) {
 	var newNode = document.createElement("div");
 	newNode.setAttribute("id","iAmBefore");
 	document.body.insertBefore(newNode,document.getElementById("iAmHere"));
-	downloadFromCloudNext(id,name,0);
-	//document.body.removeChild(document.getElementById("iAmHere"));
-	document.getElementById("iAmHere").innerHTML = "";
+	downloadFromCloudNext(id,name,0);	
 }
 function downloadFromCloudNext (id,name,part) {
   	// hide fb share button
@@ -335,6 +333,7 @@ function downloadFromCloudNext (id,name,part) {
 					//
 					if (part == 0) {
 						document.getElementById("iAmBefore").innerHTML = reader.result;
+						document.getElementById("iAmHere").innerHTML = "";
 					}else{
 						document.getElementById("iAmBefore").innerHTML += reader.result;
 					}
@@ -344,7 +343,7 @@ function downloadFromCloudNext (id,name,part) {
 					}else{
 						// document.getElementById("iAmBefore").setAttribute("class","editable");
 						// document.getElementById("iAmBefore").setAttribute("id","iAmHere");
-						document.getElementById("iAmBefore").innerHTML = document.getElementById("iAmBefore").innerHTML;
+						document.getElementById("iAmHere").innerHTML = document.getElementById("iAmBefore").innerHTML;
 						document.body.removeChild(document.getElementById("iAmBefore"));
 					}
 				};
