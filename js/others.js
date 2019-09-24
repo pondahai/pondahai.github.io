@@ -310,7 +310,8 @@
 // }
 
 function downloadFromCloud (id,name) {
-	document.insertBefore("iAmBefore",document.getElementById("iAmHere"));
+	var newNode = document.createElement("iAmBefore");
+	document.insertBefore(newNode,document.getElementById("iAmHere"));
 	downloadFromCloudNext(id,name,0);
 }
 function downloadFromCloudNext (id,name,part) {
