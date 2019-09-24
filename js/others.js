@@ -325,6 +325,11 @@ var temp_content = "";
 // 	temp_content = temp_content.slice(index,length);
 // 	return temp_content.slice(0,index);
 // }
+function fixHtml(html){
+  var div = document.createElement('div');
+  div.innerHTML=html
+  return (div.innerHTML);
+}
 function downloadFromCloud (id,name) {
 	var newNode = document.createElement("div");
 	newNode.setAttribute("id","iAmBefore");
@@ -354,10 +359,10 @@ function downloadFromCloudNext (id,name,part) {
 					if (part == 0) {
 						// document.getElementById("iAmBefore").innerHTML = validateAndExtractionHTML();
 						// document.getElementById("iAmHere").innerHTML = "";
-						document.getElementById("iAmHere").innerHTML = temp_content;
+						document.getElementById("iAmHere").innerHTML = fixHtml(temp_content);
 					}else{
 						// document.getElementById("iAmBefore").innerHTML += validateAndExtractionHTML();
-						document.getElementById("iAmHere").innerHTML = temp_content;
+						document.getElementById("iAmHere").innerHTML = fixHtml(temp_content);
 					}
 					//
 					if (reader.result.length > (1024 * 1023)) {
