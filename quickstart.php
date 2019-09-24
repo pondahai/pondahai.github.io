@@ -3,8 +3,13 @@
         //$fileId = '0BwwA4oUTeiV1UVNwOHItT0xfa2M';
         if(isset($fileid) and isset($http) and isset($content) and isset($html) and is_object($html)) {
         // print $content;
+            $dom = new DOMDocument;
             foreach($html->find('*') as $element)
-                echo $element;
+                $dom->loadHTML($element);
+                if ($dom->validate()) {
+                    echo $element;
+                }
+                
 
             // $find_first_element = $html->find('*', 0);
             // if(is_object($find_first_element)){
