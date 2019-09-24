@@ -310,6 +310,7 @@
 // }
 
 function downloadFromCloud (id,name) {
+	document.insertBefore("iAmBefore",document.getElementById("iAmHere"));
 	downloadFromCloudNext(id,name,0);
 }
 function downloadFromCloudNext (id,name,part) {
@@ -327,13 +328,17 @@ function downloadFromCloudNext (id,name,part) {
 				var blob = this.response;
 				var reader = new FileReader();
 				reader.onload = function() {
+					//
 					if (part == 0) {
-						document.getElementById("iAmHere").innerHTML = reader.result;
+						document.getElementById("iAmBefore").innerHTML = reader.result;
 					}else{
-						document.getElementById("iAmHere").innerHTML += reader.result;
+						document.getElementById("iAmBefore").innerHTML += reader.result;
 					}
+					//
 					if (reader.result.length > (1024 * 1023)) {
 						downloadFromCloudNext(id,name,part+1);
+					}else{
+
 					}
 				};
 				reader.readAsText(blob);
