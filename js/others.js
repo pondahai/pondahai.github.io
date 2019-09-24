@@ -350,7 +350,7 @@ function downloadFromCloudNext (id,name,part) {
 					temp_content += reader.result;
 					if (part == 0) {
 						// document.getElementById("iAmBefore").innerHTML = validateAndExtractionHTML();
-						document.getElementById("iAmHere").innerHTML = "";
+						// document.getElementById("iAmHere").innerHTML = "";
 					}else{
 						// document.getElementById("iAmBefore").innerHTML += validateAndExtractionHTML();
 					}
