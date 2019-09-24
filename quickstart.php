@@ -1,5 +1,6 @@
 <?php 
 
+// https://stackoverflow.com/questions/3810230/close-open-html-tags-in-a-string
 function truncateHTML($html, $length)
 {
     $truncatedText = substr($html, $length);
