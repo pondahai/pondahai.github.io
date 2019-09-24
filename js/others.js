@@ -319,17 +319,16 @@ var temp_content;
 function validateAndExtractionHTML() {
 	var length = temp_content.length;
 	var index = length;
-	while (!checkHTML(temp_content.slice(0,--index));
+	while (!checkHTML(temp_content.slice(0,--index)){
 
+	}
 	temp_content = temp_content.slice(index,length);
 	return temp_content.slice(0,index);
 }
 function downloadFromCloud (id,name) {
 	var newNode = document.createElement("div");
 	newNode.setAttribute("id","iAmBefore");
-	document.body.insertBefore(newNode,document.getElementById("iAmHere")){
-		
-	}
+	document.body.insertBefore(newNode,document.getElementById("iAmHere"));
 	downloadFromCloudNext(id,name,0);	
 }
 function downloadFromCloudNext (id,name,part) {
