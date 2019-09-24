@@ -309,6 +309,21 @@
 // 	  }
 // }
 
+// https://stackoverflow.com/questions/10026626/check-if-html-snippet-is-valid-with-javascript
+var checkHTML = function(html) {
+  var doc = document.createElement('div');
+  doc.innerHTML = html;
+  return ( doc.innerHTML === html );
+}
+var temp_content;
+function validateAndExtractionHTML() {
+	var length = temp_content.length;
+	var index = length;
+	while (!checkHTML(temp_content.slice(0,--index));
+
+	temp_content = temp_content.slice(index,length);
+	return temp_content.slice(0,index);
+}
 function downloadFromCloud (id,name) {
 	var newNode = document.createElement("div");
 	newNode.setAttribute("id","iAmBefore");
@@ -331,11 +346,12 @@ function downloadFromCloudNext (id,name,part) {
 				var reader = new FileReader();
 				reader.onload = function() {
 					//
+					temp_content += reader.result;
 					if (part == 0) {
-						document.getElementById("iAmBefore").innerHTML = reader.result;
+						document.getElementById("iAmBefore").innerHTML = validateAndExtractionHTML();
 						document.getElementById("iAmHere").innerHTML = "";
 					}else{
-						document.getElementById("iAmBefore").innerHTML += reader.result;
+						document.getElementById("iAmBefore").innerHTML += validateAndExtractionHTML();
 					}
 					//
 					if (reader.result.length > (1024 * 1023)) {
