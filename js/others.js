@@ -347,14 +347,14 @@ function downloadFromCloudNext (id,name,part) {
 				var reader = new FileReader();
 				reader.onload = function() {
 					//
-					//temp_content += reader.result;
+					temp_content += reader.result;
 					if (part == 0) {
 						// document.getElementById("iAmBefore").innerHTML = validateAndExtractionHTML();
 						// document.getElementById("iAmHere").innerHTML = "";
-						document.getElementById("iAmHere").textContent = reader.result;
+						document.getElementById("iAmHere").innerHTML = temp_content;
 					}else{
 						// document.getElementById("iAmBefore").innerHTML += validateAndExtractionHTML();
-						document.getElementById("iAmHere").textContent += reader.result;
+						document.getElementById("iAmHere").innerHTML = temp_content;
 					}
 					//
 					if (reader.result.length > (1024 * 1023)) {
