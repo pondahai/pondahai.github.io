@@ -327,7 +327,9 @@ function validateAndExtractionHTML() {
 function downloadFromCloud (id,name) {
 	var newNode = document.createElement("div");
 	newNode.setAttribute("id","iAmBefore");
-	document.body.insertBefore(newNode,document.getElementById("iAmHere"));
+	document.body.insertBefore(newNode,document.getElementById("iAmHere")){
+		
+	}
 	downloadFromCloudNext(id,name,0);	
 }
 function downloadFromCloudNext (id,name,part) {
