@@ -75,7 +75,7 @@
     $host_name = $_SERVER['HTTP_HOST'];
 
 	$chunkSizeBytes = 1 * 1024 * 1024;
-	$chunkStart =  $part * 1024 * 1024;
+	$chunkStart =  ($part * 1024 * 1024) + 1;
 // for content prefetch
     $client = getClient();
     $http = $client->authorize();

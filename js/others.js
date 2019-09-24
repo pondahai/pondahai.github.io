@@ -315,7 +315,7 @@ var checkHTML = function(html) {
   doc.innerHTML = html;
   return ( doc.innerHTML === html );
 }
-var temp_content;
+var temp_content = "";
 function validateAndExtractionHTML() {
 	var length = temp_content.length;
 	var index = length;
