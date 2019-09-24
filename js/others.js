@@ -349,10 +349,10 @@ function downloadFromCloudNext (id,name,part) {
 					//
 					temp_content += reader.result;
 					if (part == 0) {
-						document.getElementById("iAmBefore").innerHTML = validateAndExtractionHTML();
+						// document.getElementById("iAmBefore").innerHTML = validateAndExtractionHTML();
 						document.getElementById("iAmHere").innerHTML = "";
 					}else{
-						document.getElementById("iAmBefore").innerHTML += validateAndExtractionHTML();
+						// document.getElementById("iAmBefore").innerHTML += validateAndExtractionHTML();
 					}
 					//
 					if (reader.result.length > (1024 * 1023)) {
@@ -360,7 +360,8 @@ function downloadFromCloudNext (id,name,part) {
 					}else{
 						// document.getElementById("iAmBefore").setAttribute("class","editable");
 						// document.getElementById("iAmBefore").setAttribute("id","iAmHere");
-						document.getElementById("iAmHere").innerHTML = document.getElementById("iAmBefore").innerHTML;
+						// document.getElementById("iAmHere").innerHTML = document.getElementById("iAmBefore").innerHTML;
+						document.getElementById("iAmHere").innerHTML = temp_content;
 						document.body.removeChild(document.getElementById("iAmBefore"));
 					}
 				};
