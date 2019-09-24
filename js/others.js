@@ -325,6 +325,7 @@ var temp_content = "";
 // 	temp_content = temp_content.slice(index,length);
 // 	return temp_content.slice(0,index);
 // }
+// https://stackoverflow.com/questions/14749078/javascript-close-open-html-tags-in-a-string
 function fixHtml(html){
   var div = document.createElement('div');
   div.innerHTML=html
