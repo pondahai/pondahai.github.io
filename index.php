@@ -34,7 +34,7 @@ if (window.location.hostname.match('pondahai.github.io')) {
 </head>
 <body >
 	   <div id="iAmHere" class="editable" ><?php include("quickstart.php"); ?></div>
-
+<div id="iAmAfter"></div>
 <div style="background-color:#220000;padding:10px;height:100%;background-repeat:repeat-x">
    
    <!-- function buttons -->
