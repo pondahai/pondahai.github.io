@@ -1,14 +1,29 @@
 <?php 
 
+    function closetags($html) {
+    preg_match_all('#<(?!meta|img|br|hr|input\b)\b([a-z]+)(?: .*)?(?<![/|/ ])>#iU', $html, $result);
+    $openedtags = $result[1];
+    preg_match_all('#</([a-z]+)>#iU', $html, $result);
+    $closedtags = $result[1];
+    $len_opened = count($openedtags);
+    if (count($closedtags) == $len_opened) {
+        return $html;
+    }
+    $openedtags = array_reverse($openedtags);
+    for ($i=0; $i < $len_opened; $i++) {
+        if (!in_array($openedtags[$i], $closedtags)) {
+            $html .= '</'.$openedtags[$i].'>';
+        } else {
+            unset($closedtags[array_search($openedtags[$i], $closedtags)]);
+        }
+    }
+    return $html;
+} 
         //$fileId = '0BwwA4oUTeiV1UVNwOHItT0xfa2M';
         if(isset($fileid) and isset($http) and isset($content) and isset($html) and is_object($html)) {
         // print $content;
-            $dom = new DOMDocument;
             foreach($html->find('*') as $element)
-                $dom->loadHTML($element);
-                if ($dom->validate()) {
-                    echo $element;
-                }
+                echo closetags($element);
                 
 
             // $find_first_element = $html->find('*', 0);
