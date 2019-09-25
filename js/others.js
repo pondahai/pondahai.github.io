@@ -403,6 +403,7 @@ function downloadFromCloudNext (id,name,part) {
 					}
 					//
 					if (content_size < source_file_size) {
+						// 20190925, the size of the received data does not match the size of the API telling me
 						downloadFromCloudNext(id,name,part+1);
 					}else{
 						// document.getElementById("iAmBefore").setAttribute("class","editable");
