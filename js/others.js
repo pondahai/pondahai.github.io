@@ -392,6 +392,7 @@ function downloadFromCloudNext (id,name,part) {
 					document.body.insertBefore(newNode,document.getElementById("iAmHere").nextSibling);
 					temp_content += reader.result;
 					content_size += reader.result.length;
+					console.log(source_file_size, content_size);
 					if (part == 0) {
 						// document.getElementById("iAmBefore").innerHTML = validateAndExtractionHTML();
 						// document.getElementById("iAmHere").innerHTML = "";
