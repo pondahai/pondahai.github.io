@@ -374,6 +374,7 @@ function downloadFromCloudNext (id,name,part) {
 						// document.getElementById("iAmHere").innerHTML = document.getElementById("iAmBefore").innerHTML;
 						//document.getElementById("iAmHere").innerHTML = temp_content;
 						document.body.removeChild(document.getElementById("iAmBefore"));
+						temp_content = "";
 					}
 				};
 				reader.readAsText(blob);
@@ -934,7 +935,7 @@ function downloadFromCloud_old (id,name) {
       // }
       // function appendPre2(name,ctime,id) {
       //   var pre = document.getElementById('content');
-      //   var textContent = document.createTextNode('<button id="listfile_button" class="example_b" onclick="downloadFromCloud("' + id + '",' + name + ');">' + name + " " + ctime + '</button>');
+      //   var textContent = document.createTextNode('<button id="listfile_button" class="example_b" onclick="download FromCloud("' + id + '",' + name + ');">' + name + " " + ctime + '</button>');
       //   pre.appendChild(textContent);
       // }
       function appendFilesList(message) {
@@ -944,7 +945,7 @@ function downloadFromCloud_old (id,name) {
       }
       function appendFilesList2(name,ctime,id) {
         var div = document.getElementById('fileslist');
-        //var textContent = document.createTextNode('<button id="listfile_button" class="" onclick="downloadFromCloud("'+ id +'");">' + name + " " + ctime + '</button>');
+        //var textContent = document.createTextNode('<button id="listfile_button" class="" onclick="download FromCloud("'+ id +'");">' + name + " " + ctime + '</button>');
          var btn = document.createElement("BUTTON"); 
          btn.innerHTML = name + " " + ctime; 
          btn.id = id;
@@ -1060,7 +1061,7 @@ for (var i = 0; i < getPara.length; i++) {
 // for share file download from url qurey string
 var fileid = aryPara['fileid'];
 if (fileid) {
-    //setTimeout('downloadFromCloud("'+fileid+'","");',5000);
+    //setTimeout('download FromCloud("'+fileid+'","");',5000);
     //document.getElementById("iAmHere").innerHTML="<p><br></p>";
     setTimeout('downloadFromCloud("'+fileid+'","");',5000);
 }
