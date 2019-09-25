@@ -108,7 +108,7 @@
         $chunkStart = $chunkEnd + 1;
         $content = $response->getBody()->getContents();
         //$html = str_get_html($content);
-        if ($response->getStatusCode() != 200) {
+        if ($response->getStatusCode() != 200 or $response->getStatusCode() != 204 or $response->getStatusCode() != 206) {
             http_response_code($response->getStatusCode());
         }else{ 
             if (isset($content)) {
