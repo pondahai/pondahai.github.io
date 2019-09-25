@@ -890,7 +890,7 @@ function downloadFromCloud_old (id,name) {
           savecloudfileButton.style.display = '';
           shareFileButton.style.display = '';
           listFiles();
-          tryToReloadFile();
+          //tryToReloadFile();
   // var profile = gapi.auth2.currentUser.get().getBasicProfile();
   // console.log('ID: ' + profile.getId());
   // console.log('Full Name: ' + profile.getName());
