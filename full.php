@@ -108,9 +108,12 @@
         $chunkStart = $chunkEnd + 1;
         $content = $response->getBody()->getContents();
         //$html = str_get_html($content);
-        if (isset($content)) {
-            echo $content;
-        }
+        if ($response->getStatusCode() != 200) {
+            http_response_code($response->getStatusCode());
+        }else{ 
+            if (isset($content)) {
+                echo $content;
+        }}
 	}
 
    	// if(isset($fileid) and isset($driveService)) {

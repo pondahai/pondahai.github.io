@@ -418,6 +418,10 @@ function downloadFromCloudNext (id,name,part) {
 				reader.readAsText(blob);
 			}
 		}else{
+			document.body.removeChild(document.getElementById("iAmBefore"));
+			temp_content = "";
+			content_size = 0;
+			source_file_size = 0;
 			//console.log(this.response);
 			if (this.response.type === "application/json") {
 				var blob = this.response;
