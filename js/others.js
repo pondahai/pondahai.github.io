@@ -334,7 +334,7 @@ function fixHtml(html){
   return (div.innerHTML);
 }
 function downloadFromCloud (id,name) {
-		var xhr = new XMLHttpRequest();
+	var xhr = new XMLHttpRequest();
 	xhr.open('GET', 'https://wripix.xyz/full.php?reqsize=1&fileid=' + id);
 	xhr.responseType = 'blob';
 	xhr.onload = function(e) {
