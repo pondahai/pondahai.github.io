@@ -316,6 +316,8 @@
 //   return ( doc.innerHTML === html );
 // }
 var temp_content = "";
+var content_size = 0;
+var source_file_size = 0;
 // function validateAndExtractionHTML() {
 // 	var length = temp_content.length;
 	// var index = length;
@@ -332,10 +334,42 @@ function fixHtml(html){
   return (div.innerHTML);
 }
 function downloadFromCloud (id,name) {
-	var newNode = document.createElement("div");
-	newNode.setAttribute("id","iAmBefore");
-	document.body.insertBefore(newNode,document.getElementById("iAmHere"));
-	downloadFromCloudNext(id,name,0);	
+		var xhr = new XMLHttpRequest();
+	xhr.open('GET', 'https://wripix.xyz/full.php?reqsize=1&fileid=' + id);
+	xhr.responseType = 'blob';
+	xhr.onload = function(e) {
+		if(this) {
+			if (this.status === 200) {
+				var blob = this.response;
+				var reader = new FileReader();
+				reader.onload = function() {
+					//
+					source_file_size = parseInt(reader.result,10);
+					var newNode = document.createElement("div");
+					newNode.setAttribute("id","iAmBefore");
+					document.body.insertBefore(newNode,document.getElementById("iAmHere"));
+					downloadFromCloudNext(id,name,0);		
+				};
+				reader.readAsText(blob);
+			}
+		}else{
+			//console.log(this.response);
+			if (this.response.type === "application/json") {
+				var blob = this.response;
+				var reader = new FileReader();
+				reader.onload = function() {
+					var res = reader.result;
+					console.log(res);
+					if (res.match("requires signup")) {
+						// "requires signup"
+						authorizeButton.click();
+					}							
+				};
+				reader.readAsText(blob);
+			}
+		}
+	};
+	xhr.send();
 }
 function downloadFromCloudNext (id,name,part) {
   	// hide fb share button
@@ -357,6 +391,7 @@ function downloadFromCloudNext (id,name,part) {
 					newNode.setAttribute("id","iAmAfter");
 					document.body.insertBefore(newNode,document.getElementById("iAmHere").nextSibling);
 					temp_content += reader.result;
+					content_size += reader.result.length;
 					if (part == 0) {
 						// document.getElementById("iAmBefore").innerHTML = validateAndExtractionHTML();
 						// document.getElementById("iAmHere").innerHTML = "";
@@ -366,7 +401,7 @@ function downloadFromCloudNext (id,name,part) {
 						document.getElementById("iAmHere").innerHTML = fixHtml(temp_content);
 					}
 					//
-					if (reader.result.length > (1024 * 1023)) {
+					if (content_size < source_file_size) {
 						downloadFromCloudNext(id,name,part+1);
 					}else{
 						// document.getElementById("iAmBefore").setAttribute("class","editable");
@@ -375,6 +410,8 @@ function downloadFromCloudNext (id,name,part) {
 						//document.getElementById("iAmHere").innerHTML = temp_content;
 						document.body.removeChild(document.getElementById("iAmBefore"));
 						temp_content = "";
+						content_size = 0;
+						source_file_size = 0;
 					}
 				};
 				reader.readAsText(blob);

@@ -67,10 +67,19 @@
 	    $fileid = $var["fileid"];
 	}
 	if (isset($_GET['part'])) {
+        $parameter_part = true;
 		$part = $_GET['part'];
 	}else{
+        $parameter_part = false;
 		$part = 0;
 	}
+    if (isset($_GET['reqsize'])) {
+        $parameter_reqsize = true;
+        $reqsize = $_GET['reqsize'];
+    }else{
+        $parameter_reqsize = false;
+        $reqsize = 0;
+    }
 
     $host_name = $_SERVER['HTTP_HOST'];
 
@@ -83,7 +92,7 @@
     $content = '';
     $filesize = 0;
 
-  	if(isset($fileid) and isset($http)) {
+  	if($parameter_part and isset($fileid) and isset($http)) {
         $chunkEnd = $chunkStart + $chunkSizeBytes;
         // $response = $driveService->files->get($fileid, array('alt' => 'media'));
          $response = $http->request(
@@ -104,17 +113,18 @@
         }
 	}
 
-   	//if(isset($fileid) and isset($driveService)) {
- //   	if(isset($fileid) and isset($http)) {
- //         $response = $http->request(
-	//         'GET',
-	//         sprintf('/drive/v3/files/%s?fields=size', $fileid)		        
-	//     );
- //        $data = json_decode(str_get_html($response->getBody()->getContents()));
- //        if (isset($data)) {
- //        	$filesize = $data->size;
- //    	}
-	// }
+   	// if(isset($fileid) and isset($driveService)) {
+   	if($parameter_reqsize and isset($fileid) and isset($http)) {
+         $response = $http->request(
+	        'GET',
+	        sprintf('/drive/v3/files/%s?fields=size', $fileid)		        
+	    );
+        $data = json_decode(str_get_html($response->getBody()->getContents()));
+        if (isset($data)) {
+        	$filesize = $data->size;
+            echo $filesize;
+    	}
+	}
 	// header('Content-Length: '.$filesize);
  //   	if(isset($fileid) and isset($http)) {
  //        while ($chunkStart < $filesize) {
