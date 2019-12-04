@@ -24,9 +24,9 @@ if (window.location.hostname.match('pondahai.github.io')) {
     <meta name="google-signin-scope" content="profile email">
     <meta name="google-signin-client_id" content="797948848378-0po451kj7nqm08atu85jha2vckrn9pgh.apps.googleusercontent.com">
 
-<link rel="stylesheet" ng-href="css/medium-editor.css"> <!-- Core -->
-<link rel="stylesheet" ng-href="css/themes/dahai.css"> <!-- or any other theme -->
-<link rel="stylesheet" ng-href="css/others.css"> <!-- or any other theme -->
+<link rel="stylesheet" href="css/medium-editor.css"> <!-- Core -->
+<link rel="stylesheet" href="css/themes/dahai.css"> <!-- or any other theme -->
+<link rel="stylesheet" href="css/others.css"> <!-- or any other theme -->
 
 <script src="js/jquery-3.4.1.min.js"></script>
 <script src="js/medium-editor.js"></script>
