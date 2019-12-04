@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html >
 <head>
-	<base href="/">
+	<!-- <base href="/"> -->
 <link rel="stylesheet" href="css/medium-editor.css" /> <!-- Core -->
 <link rel="stylesheet" href="css/themes/dahai.css" /> <!-- or any other theme -->
 <link rel="stylesheet" href="css/others.css" /> <!-- or any other theme -->
