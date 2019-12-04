@@ -26,7 +26,7 @@ if (window.location.hostname.match('pondahai.github.io')) {
 <script src="js/medium-editor.js"></script>
 <script src="js/svg.js"></script>
 <script src="js/svg.draw.js"></script>
-	<script src="https://apis.google.com/js/platform.js" async defer></script>
+	<!-- <script src="https://apis.google.com/js/platform.js" async defer></script> -->
 <link rel="stylesheet" href="css/medium-editor.css"> <!-- Core -->
 <link rel="stylesheet" href="css/themes/dahai.css"> <!-- or any other theme -->
 <link rel="stylesheet" href="css/others.css"> <!-- or any other theme -->
