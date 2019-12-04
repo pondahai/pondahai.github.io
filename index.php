@@ -1,9 +1,9 @@
 <html >
 <head>
 	<base href="/">
-<link href="css/medium-editor.css" /> <!-- Core -->
-<link href="css/themes/dahai.css" /> <!-- or any other theme -->
-<link href="css/others.css" /> <!-- or any other theme -->
+<link rel="stylesheet" src="css/medium-editor.css" /> <!-- Core -->
+<link rel="stylesheet" src="css/themes/dahai.css" /> <!-- or any other theme -->
+<link rel="stylesheet" src="css/others.css" /> <!-- or any other theme -->
 
     <?php include("head.php"); ?>
 
