@@ -32,6 +32,7 @@ if (window.location.hostname.match('pondahai.github.io')) {
 <link rel="stylesheet" href="css/others.css"> <!-- or any other theme -->
 <!-- <meta property="og:image"      content="create_image.php?url=https://wripix.xyz?fileid=" /> -->
 <script>
+	// https://github.com/GoogleChromeLabs/samesite-examples/blob/master/javascript.md
 	document.cookie = 'same-site-cookie=foo; SameSite=Lax';
 document.cookie = 'cross-site-cookie=bar; SameSite=None; Secure';
 	</script>
