@@ -20,13 +20,13 @@ if (window.location.hostname.match('pondahai.github.io')) {
 }
 </script>
 
-<meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
-    <meta name="google-signin-scope" content="profile email">
-    <meta name="google-signin-client_id" content="797948848378-0po451kj7nqm08atu85jha2vckrn9pgh.apps.googleusercontent.com">
+<meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+    <meta name="google-signin-scope" content="profile email" />
+    <meta name="google-signin-client_id" content="797948848378-0po451kj7nqm08atu85jha2vckrn9pgh.apps.googleusercontent.com" />
 
-<link rel="stylesheet" type="text/css" href="css/medium-editor.css"> <!-- Core -->
-<link rel="stylesheet" type="text/css" href="css/themes/dahai.css"> <!-- or any other theme -->
-<link rel="stylesheet" type="text/css" href="css/others.css"> <!-- or any other theme -->
+<link rel="stylesheet" type="text/css" href="css/medium-editor.css" /> <!-- Core -->
+<link rel="stylesheet" type="text/css" href="css/themes/dahai.css" /> <!-- or any other theme -->
+<link rel="stylesheet" type="text/css" href="css/others.css" /> <!-- or any other theme -->
 
 <script src="js/jquery-3.4.1.min.js"></script>
 <script src="js/medium-editor.js"></script>
@@ -37,8 +37,8 @@ if (window.location.hostname.match('pondahai.github.io')) {
 <!-- <meta property="og:image"      content="create_image.php?url=https://wripix.xyz?fileid=" /> -->
 <script>
 	// https://github.com/GoogleChromeLabs/samesite-examples/blob/master/javascript.md
-	document.cookie = 'same-site-cookie=foo; SameSite=Lax';
-document.cookie = 'cross-site-cookie=bar; SameSite=None; Secure';
+// 	document.cookie = 'same-site-cookie=foo; SameSite=Lax';
+// document.cookie = 'cross-site-cookie=bar; SameSite=None; Secure';
 	</script>
 </head>
 <body >
