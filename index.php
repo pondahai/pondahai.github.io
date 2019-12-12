@@ -198,10 +198,10 @@ if (window.location.hostname.match('pondahai.github.io')) {
     }
 });
 </script>
+<script src="js/others.js"></script>
 <script async defer src="https://apis.google.com/js/api.js"
   onload="this.onload=function(){};handleClientLoad()"
   onreadystatechange="if (this.readyState === 'complete') this.onload()">
 </script>
-<script src="js/others.js"></script>
 </body>
 </html>
