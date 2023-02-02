@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      #myCanvas {
+        border: 1px solid black;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="myCanvas" width="500" height="500"></canvas>
+<button id="saveBtn">Save Image</button>
+
+<script>
+  const saveBtn = document.getElementById('saveBtn');
+  saveBtn.addEventListener('click', () => {
+    const link = document.createElement('a');
+    link.download = 'image.png';
+    link.href = canvas.toDataURL();
+    link.click();
+  });
+</script>
+
+    <script>
+      const canvas = document.getElementById("myCanvas");
+      const ctx = canvas.getContext("2d");
+
+      canvas.addEventListener("drop", function(event) {
+        event.preventDefault();
+        const image = new Image();
+        image.src = URL.createObjectURL(event.dataTransfer.files[0]);
+        image.onload = function() {
+          canvas.width = image.width;
+          canvas.height = image.height;
+          ctx.drawImage(image, 0, 0);
+        };
+      });
+
+      canvas.addEventListener("dragover", function(event) {
+        event.preventDefault();
+      });
+
+      canvas.addEventListener("click", function(event) {
+        const x = event.clientX - canvas.offsetLeft;
+        const y = event.clientY - canvas.offsetTop;
+        const text = prompt("Enter text: ");
+        if (text) {
+          ctx.fillStyle = "red";
+          ctx.font = "24px Arial";
+          ctx.fillText(text, x, y);
+        }
+      });
+    </script>
+  </body>
+</html>
