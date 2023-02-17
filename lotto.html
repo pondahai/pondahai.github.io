@@ -1,67 +1,89 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>彩票號碼產生器</title>
 	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>彩券選號器</title>
 	<style>
 		body {
+			background-color: #F7F7F7;
+			font-size: 16px;
 			margin: 0;
 			padding: 0;
-			font-size: 1cm;
-			font-family: Arial, sans-serif;
-			text-align: center;
 		}
 
 		h1 {
-			font-size: 2cm;
-			margin: 0.5cm 0;
+			font-size: 2em;
+			margin: 20px 0;
+			text-align: center;
 		}
 
-		.button-container {
+		.container {
 			display: flex;
-			flex-direction: row;
-			justify-content: space-between;
-			padding: 2cm 2cm 1cm 2cm;
-			margin: 0;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			height: 100vh;
 		}
 
 		button {
-			width: 50%;
-			height: 2cm;
-			font-size: 1cm;
-			border: none;
-			border-radius: 0.5cm;
-			color: white;
 			background-color: #4CAF50;
+			border: none;
+			color: white;
+			padding: 1rem;
+			text-align: center;
+			text-decoration: none;
+			display: inline-block;
+			font-size: 1rem;
+			margin: 10px;
 			cursor: pointer;
+			width: 50%;
+			max-width: 200px;
+			height: 2rem;
+			border-radius: 0.25rem;
+			box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1), 0 2px 10px 0 rgba(0, 0, 0, 0.08);
 		}
 
-		#lotto-result {
-			margin: 1cm 0;
-			font-size: 1cm;
+		#lotto649 {
+			background-color: #FFC107;
 		}
 
-		#lotto-result::before {
-			content: "結果：";
+		#powerLotto {
+			background-color: #FF5722;
+		}
+
+		.result {
+			font-size: 1rem;
+			margin: 20px 0;
+			text-align: center;
 		}
 	</style>
 </head>
 <body>
-	<h1>彩票號碼產生器</h1>
-	<div class="button-container">
-		<button id="lotto649" onclick="generateNumbers(1, 49, 6)">大樂透</button>
-		<button id="powerLotto" onclick="generateNumbers(1, 38, 6)">威力彩</button>
+	<div class="container">
+		<h1>彩券選號器</h1>
+		<button id="lotto649" onclick="generateNumbers(1, 49, 6)">產生大樂透號碼</button>
+		<button id="powerLotto" onclick="generateNumbers(1, 38, 6)">產生威力彩號碼</button>
+		<div class="result" id="result"></div>
 	</div>
-	<div id="lotto-result"></div>
+
 	<script>
 		function generateNumbers(min, max, count) {
-			var numbers = new Set();
-			while (numbers.size < count) {
-				var randomNum = Math.floor(Math.random() * (max - min + 1)) + min;
-				numbers.add(randomNum);
+			var numbers = [];
+			while (numbers.length < count) {
+				var num = Math.floor(Math.random() * (max - min + 1)) + min;
+				if (numbers.indexOf(num) === -1) {
+					numbers.push(num);
+				}
 			}
-			document.getElementById("lotto-result").innerHTML = Array.from(numbers).sort((a, b) => a - b).join(", ");
+			numbers.sort(function(a, b) {
+				return a - b;
+			});
+			var result = numbers.join(', ');
+			if (count === 6) {
+				document.getElementById('result').innerHTML = '大樂透號碼：' + result;
+			} else {
+				document.getElementById('result').innerHTML = '威力彩號碼：' + result;
+			}
 		}
 	</script>
 </body>
