@@ -4,34 +4,36 @@
 <head>
 	<title>彩券隨機選號</title>
 	<style>
-		body {
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-			font-size: 24px;
-		}
-		button {
-			padding: 20px;
-			font-size: 24px;
-			margin: 20px;
-			flex-grow: 1;
-			max-width: 50%;
-		}
-		#result {
-			margin-top: 20px;
-			font-size: 30px;
-			text-align: center;
-		}
-		@media only screen and (max-width: 600px) {
-			button {
-				padding: 10px;
-				font-size: 16px;
-				max-width: 100%;
-			}
-			#result {
-				font-size: 24px;
-			}
-		}		
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 24px;
+}
+
+button {
+  flex-grow: 1;
+  height: 50px;
+  border: none;
+  background-color: #007bff;
+  color: #fff;
+  font-size: 24px;
+  margin: 10px;
+  box-shadow: 2px 2px 2px #888888;
+}
+
+button:focus {
+  outline: none;
+}
+
+@media only screen and (max-width: 600px) {
+  button {
+    height: 40px;
+    font-size: 16px;
+    margin: 5px;
+  }
+}
+	
 	</style>
 </head>
 <body>
