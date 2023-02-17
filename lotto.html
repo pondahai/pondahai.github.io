@@ -59,32 +59,46 @@
 	</style>
 </head>
 <body>
-	<div class="container">
-		<h1>彩券選號器</h1>
-		<button id="lotto649" onclick="generateNumbers(1, 49, 6)">產生大樂透號碼</button>
-		<button id="powerLotto" onclick="generateNumbers(1, 38, 6)">產生威力彩號碼</button>
-		<div class="result" id="result"></div>
-	</div>
+    <div class="wrapper">
+        <h1 class="title">彩票號碼產生器</h1>
+        <div class="button-container">
+            <button id="lotto-btn" class="lotto-btn">大樂透</button>
+            <button id="power-btn" class="power-btn">威力彩</button>
+        </div>
+        <div class="result-container">
+            <div class="result-title">結果：</div>
+            <div id="result" class="result"></div>
+        </div>
+    </div>
+    <script>
+        const lottoBtn = document.getElementById("lotto-btn");
+        const powerBtn = document.getElementById("power-btn");
+        const result = document.getElementById("result");
 
-	<script>
-		function generateNumbers(min, max, count) {
-			var numbers = [];
-			while (numbers.length < count) {
-				var num = Math.floor(Math.random() * (max - min + 1)) + min;
-				if (numbers.indexOf(num) === -1) {
-					numbers.push(num);
-				}
-			}
-			numbers.sort(function(a, b) {
-				return a - b;
-			});
-			var result = numbers.join(', ');
-			if (count === 6) {
-				document.getElementById('result').innerHTML = '大樂透號碼：' + result;
-			} else {
-				document.getElementById('result').innerHTML = '威力彩號碼：' + result;
-			}
-		}
-	</script>
+        function getRandomNumbers(min, max, count) {
+            const nums = [];
+            while (nums.length < count) {
+                const num = Math.floor(Math.random() * (max - min + 1) + min);
+                if (!nums.includes(num)) {
+                    nums.push(num);
+                }
+            }
+            return nums;
+        }
+
+        function generateLottoNumbers() {
+            const numbers = getRandomNumbers(1, 49, 6);
+            result.innerText = `大樂透：${numbers.sort((a, b) => a - b).join(", ")}`;
+        }
+
+        function generatePowerNumbers() {
+            const numbers = getRandomNumbers(1, 38, 6);
+            result.innerText = `威力彩：${numbers.sort((a, b) => a - b).join(", ")}`;
+        }
+
+        lottoBtn.addEventListener("click", generateLottoNumbers);
+        powerBtn.addEventListener("click", generatePowerNumbers);
+    </script>
 </body>
+
 </html>
