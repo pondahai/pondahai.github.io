@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<html>
+<head>
+	<title>彩券隨機選號</title>
+	<style>
+		button {
+			padding: 10px 20px;
+			font-size: 20px;
+			margin: 20px;
+		}
+	</style>
+</head>
+<body>
+	<h1>彩券隨機選號</h1>
+	<button onclick="generateLotto()">大樂透</button>
+	<button onclick="generatePowerLotto()">威力彩</button>
+	<div id="result"></div>
+	<script>
+		function generateLotto() {
+			var numbers = [];
+			while (numbers.length < 6) {
+				var num = Math.floor(Math.random() * 49) + 1;
+				if (numbers.indexOf(num) === -1) {
+					numbers.push(num);
+				}
+			}
+			document.getElementById("result").innerHTML = "大樂透： " + numbers.join(" ");
+		}
+
+		function generatePowerLotto() {
+			var numbers = [];
+			while (numbers.length < 6) {
+				var num = Math.floor(Math.random() * 38) + 1;
+				if (numbers.indexOf(num) === -1) {
+					numbers.push(num);
+				}
+			}
+			document.getElementById("result").innerHTML = "威力彩： " + numbers.join(" ");
+		}
+	</script>
+</body>
+</html>
