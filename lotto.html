@@ -3,44 +3,87 @@
 <head>
 	<meta charset="UTF-8">
 	<title>樂透號碼產生器</title>
-	<style>
+	<style type="text/css">
 		body {
-			background-color: #f2f2f2;
 			font-size: 1cm;
-			text-align: center;
 			margin: 0;
 			padding: 0;
+			background-color: #f2f2f2;
+			color: #333;
+		}
+
+		.container {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			height: 100vh;
 		}
 
 		h1 {
-			margin: 0;
-			padding: 1cm 0;
-			color: #0099ff;
+			font-size: 2.5cm;
+			margin-bottom: 0.2cm;
 		}
 
-		#lotto-buttons {
+		.btn-container {
 			display: flex;
 			flex-direction: row;
-			justify-content: space-around;
-			padding: 2cm 0;
+			align-items: center;
+			justify-content: center;
+			margin-bottom: 1cm;
 		}
 
-		.lotto-button {
-			display: inline-block;
+		.btn {
+			display: flex;
+			align-items: center;
+			justify-content: center;
 			width: 50%;
-			background-color: #0099ff;
+			height: 2cm;
+			margin: 0.2cm;
+			padding: 0.5cm;
+			border: none;
+			border-radius: 5px;
 			color: white;
-			border-radius: 0.5cm;
-			padding: 1cm;
-			margin: 0.5cm;
 			font-size: 1cm;
-			box-shadow: 2px 2px 3px rgba(0,0,0,0.3);
+			background-color: #0099cc;
+			cursor: pointer;
+			transition: background-color 0.3s;
 		}
 
-		.lotto-numbers {
+		.btn:hover {
+			background-color: #0077b3;
+		}
+
+		.result {
 			font-size: 1cm;
+			margin-bottom: 0.2cm;
+		}
+
+		.result-label {
+			font-size: 0.8cm;
 			color: #666;
-			margin: 2cm 0;
+		}
+
+		@media only screen and (max-width: 480px) {
+			h1 {
+				font-size: 2cm;
+			}
+
+			.btn {
+				width: 80%;
+				height: 2.5cm;
+				margin: 0.2cm;
+				padding: 0.5cm;
+				font-size: 0.8cm;
+			}
+
+			.result {
+				font-size: 0.8cm;
+			}
+
+			.result-label {
+				font-size: 0.6cm;
+			}
 		}
 	</style>
 </head>
