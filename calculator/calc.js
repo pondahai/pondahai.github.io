@@ -105,7 +105,7 @@ sqrt.addEventListener("click", () => {
 });
 
 percent.addEventListener("click", () => {
-  input = parseFloat(input) * (parseFloat(result.value) / 100);
+  input = parseFloat(input) * 1 / 100);
   input = input.toString();
   updateResult(input);
 //   operator = "%";
