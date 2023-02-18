@@ -4,7 +4,8 @@ body {
 }
 
 #calculator {
-  width: 300px;
+  width: 80wh;
+  height: 100vh;
   margin: 0 auto;
   background-color: #fff;
   border: 1px solid #ccc;
