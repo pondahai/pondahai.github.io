@@ -75,12 +75,12 @@ function calculate() {
     case "/":
       input = parseFloat((parseFloat(operand1) / parseFloat(input)).toFixed(7));
       break;
-    case "sqrt":
-      input = Math.sqrt(parseFloat(input));
-      break;
-    case "%":
-      input = parseFloat(input) * (parseFloat(result.value) / 100);
-      break;
+//     case "sqrt":
+//       input = Math.sqrt(parseFloat(input));
+//       break;
+//     case "%":
+//       input = parseFloat(input) * (parseFloat(result.value) / 100);
+//       break;
     default:
       break;
   }
@@ -97,13 +97,19 @@ clear.addEventListener("click", () => {
 });
 
 sqrt.addEventListener("click", () => {
-  operator = "sqrt";
-  calculate();
+  input = Math.sqrt(parseFloat(input));
+  input = input.toString();
+  updateResult(input);
+//   operator = "sqrt";
+//   calculate();
 });
 
 percent.addEventListener("click", () => {
-  operator = "%";
-  isOperatorClicked = true;
+  input = parseFloat(input) * (parseFloat(result.value) / 100);
+  input = input.toString();
+  updateResult(input);
+//   operator = "%";
+//   isOperatorClicked = true;
 });
 
 divide.addEventListener("click", () => {
