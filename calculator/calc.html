@@ -228,7 +228,7 @@ percent.addEventListener("click", () => {
 });
 
 divide.addEventListener("click", () => {
-  if(isOperatorClicked){
+  if(operand1 != ""){
     calculate();
   }
   operator = "/";
@@ -250,8 +250,11 @@ nine.addEventListener("click", () => {
 });
 
 multiply.addEventListener("click", () => {
+  if(operand1 != ""){
+    calculate();
+  }
   operator = "*";
-operand1 = input;
+  operand1 = input;
   isOperatorClicked = true;
 });
 
@@ -268,8 +271,11 @@ six.addEventListener("click", () => {
 });
 
 subtract.addEventListener("click", () => {
+  if(operand1 != ""){
+    calculate();
+  }
   operator = "-";
-operand1 = input;
+  operand1 = input;
   isOperatorClicked = true;
 });
 
@@ -286,11 +292,11 @@ three.addEventListener("click", () => {
 });
 
 add.addEventListener("click", () => {
-  operator = "+";
-  operand1 = input;
-  if(isOperatorClicked){
+  if(operand1 != ""){
     calculate();
   }
+  operator = "+";
+  operand1 = input;
   isOperatorClicked = true;
 });
 
