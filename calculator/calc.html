@@ -286,11 +286,11 @@ three.addEventListener("click", () => {
 });
 
 add.addEventListener("click", () => {
+  operator = "+";
+  operand1 = input;
   if(isOperatorClicked){
     calculate();
   }
-  operator = "+";
-operand1 = input;
   isOperatorClicked = true;
 });
 
