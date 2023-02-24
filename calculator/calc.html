@@ -155,6 +155,7 @@ function addInput(newInput) {
   }
 
   if (input === "0" || isOperatorClicked || Finish) {
+    operand1 = input;
     input = newInput;
     Finish = false;
   } else {
