@@ -203,7 +203,7 @@ function calculate() {
   input = input.toString();
   operator = "";
   updateResult(input);
-  Finish = true;
+  
 }
 
 // 綁定事件
@@ -312,6 +312,7 @@ decimal.addEventListener("click", () => {
 
 equals.addEventListener("click", () => {
   calculate();
+  Finish = true;
 });
 
 // 監聽鍵盤事件
