@@ -155,8 +155,6 @@ function addInput(newInput) {
   }
 
   if (input === "0" || isOperatorClicked || Finish) {
-    operand1 = input;
-    calculate();
     input = newInput;
     Finish = false;
   } else {
@@ -230,6 +228,9 @@ percent.addEventListener("click", () => {
 });
 
 divide.addEventListener("click", () => {
+  if(isOperatorClicked){
+    calculate();
+  }
   operator = "/";
   operand1 = input;
   isOperatorClicked = true;
@@ -285,6 +286,9 @@ three.addEventListener("click", () => {
 });
 
 add.addEventListener("click", () => {
+  if(isOperatorClicked){
+    calculate();
+  }
   operator = "+";
 operand1 = input;
   isOperatorClicked = true;
