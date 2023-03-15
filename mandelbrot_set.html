@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Mandelbrot Set</title>
+    <style>
+      canvas {
+        border: 1px solid black;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="canvas" width="600" height="400"></canvas>
+    <script>
+      const canvas = document.getElementById('canvas');
+      const ctx = canvas.getContext('2d');
+      
+      let MAX_ITERATIONS = 100;
+      let ZOOM_FACTOR = 2;
+      let CENTER_X = -0.5;
+      let CENTER_Y = 0;
+      let SCALE = 200;
+
+      function mandelbrot(x, y) {
+        let real = x;
+        let imaginary = y;
+        let i = 0;
+        while (i < MAX_ITERATIONS) {
+          const real2 = real * real;
+          const imaginary2 = imaginary * imaginary;
+          if (real2 + imaginary2 > 4) {
+            return i;
+          }
+          imaginary = 2 * real * imaginary + y;
+          real = real2 - imaginary2 + x;
+          i++;
+        }
+        return -1;
+      }
+
+      function draw() {
+        for (let x = 0; x < canvas.width; x++) {
+          for (let y = 0; y < canvas.height; y++) {
+            const zx = (x - canvas.width / 2) / SCALE * ZOOM_FACTOR + CENTER_X;
+            const zy = (y - canvas.height / 2) / SCALE * ZOOM_FACTOR + CENTER_Y;
+            const iteration = mandelbrot(zx, zy);
+            if (iteration === -1) {
+              ctx.fillStyle = 'black';
+              ctx.fillRect(x, y, 1, 1);
+            } else {
+              const color = (iteration / MAX_ITERATIONS) * 255;
+              ctx.fillStyle = `rgb(${color}, ${color}, ${color})`;
+              ctx.fillRect(x, y, 1, 1);
+            }
+          }
+        }
+      }
+
+      function handleKeyDown(event) {
+        const code = event.code;
+        switch (code) {
+          case 'KeyW':
+            CENTER_Y -= 0.1 / ZOOM_FACTOR/10;
+            break;
+          case 'KeyA':
+            CENTER_X -= 0.1 / ZOOM_FACTOR/10;
+            break;
+          case 'KeyS':
+            CENTER_Y += 0.1 / ZOOM_FACTOR/10;
+            break;
+          case 'KeyD':
+            CENTER_X += 0.1 / ZOOM_FACTOR/10;
+            break;
+          case 'KeyQ':
+            ZOOM_FACTOR /= 1.1;
+            break;
+          case 'KeyE':
+            ZOOM_FACTOR *= 1.1;
+            break;
+          case 'KeyZ':
+            MAX_ITERATIONS -= 10;
+            break;
+          case 'KeyX':
+            MAX_ITERATIONS += 10;
+            break;
+          case 'KeyC':
+            SCALE -= 10;
+            break;
+          case 'KeyV':
+            SCALE += 10;
+            break;
+          default:
+            break;
+        }
+        draw();
+      }
+
+      window.addEventListener('keydown', handleKeyDown);
+      draw();
+    </script>
+  </body>
+</html>
