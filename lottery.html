@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>隨機彩卷號碼生成器</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/seedrandom/3.0.5/seedrandom.min.js"></script>
+
+</head>
+<body>
+    <h1>隨機彩卷號碼生成器</h1>
+    <button onclick="generateLotteryNumbers()">生成彩卷號碼</button>
+    <p id="lotteryNumbers"></p>
+
+    <script>
+        function generateLotteryNumbers() {
+            // 使用當下時間作為亂數種子
+            const seed = new Date().getTime();
+            Math.seedrandom(seed);
+
+            // 生成第1區的6個號碼
+            const zone1Numbers = generateNumbers(1, 38, 6);
+
+            // 生成第2區的1個號碼
+            const zone2Number = generateNumbers(1, 8, 1)[0];
+
+            // 顯示生成的彩卷號碼
+            const lotteryNumbers = document.getElementById('lotteryNumbers');
+            lotteryNumbers.textContent = `第1區: ${zone1Numbers.join(', ')}，第2區: ${zone2Number}`;
+        }
+
+        function generateNumbers(min, max, count) {
+            const numbers = [];
+            while (numbers.length < count) {
+                const randomNum = Math.floor(Math.random() * (max - min + 1)) + min;
+                if (!numbers.includes(randomNum)) {
+                    numbers.push(randomNum);
+                }
+            }
+            return numbers;
+        }
+    </script>
+</body>
+</html>
