@@ -76,6 +76,9 @@
         const result = document.getElementById("result");
 
         function getRandomNumbers(min, max, count) {
+            // 使用當下時間作為亂數種子
+            const seed = new Date().getTime();
+            Math.seedrandom(seed);
             const nums = [];
             while (nums.length < count) {
                 const num = Math.floor(Math.random() * (max - min + 1) + min);
