@@ -1,0 +1,72 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=big5">
+<title>大海系統大事記1999年</title>
+<meta name="GENERATOR" content="Microsoft FrontPage 3.0">
+</head>
+
+<body bgcolor="#008000">
+
+<p><font color="#FF8000" size="5" face="華康儷粗黑"><strong>大海系統大事記1999年</strong></font></p>
+
+<hr>
+
+<p><font color="#FF0000" size="4">1999.9.11</font></p>
+
+<p><font color="#FFFFFF" size="3">今天完成 INT 1cH 中段服務常式的重新導向,成功的導向我編寫的常式</font></p>
+
+<p><font color="#FFFFFF" size="3">將來計畫將它利用來作排程器(Scheduler)</font></p>
+
+<p><font color="#FFFFFF" size="3">但我不想稱它作排程器,應該稱切換器(Switcher)</font></p>
+
+<p><font color="#FFFFFF" size="3">因為它的任務是將每一個排程中的程式依序切換</font></p>
+
+<p><font color="#FFFFFF" size="3">排程的事情應由再高階一點的程式負責</font></p>
+
+<p><font color="#FF0000" size="4">1999.9.4</font></p>
+
+<p><font color="#FFFFFF" size="3">今天大海完成了一個工具程式(test00.cpp)</font></p>
+
+<p><font color="#FFFFFF" size="3">有兩個功能,一個用來觀看軟碟上的磁區資料</font></p>
+
+<p><font color="#FFFFFF" size="3">一個用來將檔案依指定的磁區位置依序寫入</font></p>
+
+<p><font color="#FFFFFF" size="3">這樣一來就可以將發展好的程式寫入軟碟了</font></p>
+
+<p><font color="#FF0000" size="4">1999.9.2</font></p>
+
+<pre><font color="#FFFFFF" size="4">今天大海終於完成了大海系統的第三號測試程式(<a
+href="test3.htm">test3.asm</a>)
+這個程式的目地是為了將一段程式塞入軟碟中(0軌)
+並且能使軟碟可開機(bootable)
+今天(1999-9-2 10:32pm)終於組譯成功
+並在稍後測試成功
+在電腦的開機畫面上顯示:
+Hello the world. This is DaHai system demo.
+DaHai test.
+等字
+第一行的字是由第一個磁區的程式所顯示的
+第二行的字是由第二個磁區的程式所顯示的
+但電腦的IPL(initial program loader)只會載入0軌的第一個磁區
+所以磁片上的第二個磁區是由被IPL載入的第一個磁區的程式所載入並執行的
+(有點饒舌:p)
+所以大功告成
+不過這只是初期的一個小小的勝利
+往後大海還有更長的路要走
+
+現在大海計畫的下一步是:
+1.撰寫一個文書編輯器
+2.撰寫一個486指令的組譯器
+3.撰寫一個C編譯器
+4.撰寫一個磁碟作業系統
+
+上述完成後,對於大海系統就又邁進一大步了</font></pre>
+
+<p><font color="#FFFFFF" size="4">　</font></p>
+
+<hr>
+
+<p><a href="index.htm"><font color="#0000FF"><big><big><big>回首頁</big></big></big></font></a></p>
+</body>
+</html>
