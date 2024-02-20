@@ -6,6 +6,24 @@
   <title>使用網頁程式連接 USB 相機拍照</title>
 </head>
 <body>
+  <script>
+        // TTS
+      function speak  ()  {
+      
+        // const synthesis = window.speechSynthesis;
+        if ( 'speechSynthesis' in window ) {
+          speechSynthesis.cancel();
+          speechSynthesis.getVoices();
+
+        }
+        const utterance = new SpeechSynthesisUtterance();
+        utterance.text = document.getElementById('response').innerHTML;
+        speechSynthesis.speak(utterance);
+      }
+      function fire_trigger() {
+        $('#trigger_me').trigger('click');
+      }
+</script>
     <script type="importmap">
       {
         "imports": {
@@ -50,10 +68,7 @@
         const text = response.text();
         console.log(text);
         document.getElementById('response').innerHTML = text;
-        // TTS
-        const synthesis = window.speechSynthesis;
-        const utterance = new SpeechSynthesisUtterance(text);
-        synthesis.speak(utterance);      
+        document.getElementById('trigger_me').click();    
       }
 
       const btn = document.getElementById('take-photo');
@@ -117,6 +132,7 @@
   <canvas id="canvas" width="320" height="240"></canvas>
   <p>回應：</p>
   <div id="response"></div>
+  <button id="trigger_me" onclick="speak();">speak</button>
 
 
 
