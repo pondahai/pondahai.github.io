@@ -1,6 +1,8 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>使用網頁程式連接 USB 相機拍照</title>
 </head>
 <body>
@@ -108,7 +110,7 @@
   <h1>使用網頁程式連接 USB 相機拍照</h1>
 
   <p>拍攝 USB 相機照片：</p>
-  <video id="video" width="320" height="240"></video>
+  <video id="video" width="320" height="240" autoPlay={true} playsInline={true} muted={true}></video>
   <button id="take-photo">拍攝照片</button>
 
   <p>顯示照片：</p>
@@ -122,7 +124,14 @@
 
 
     // 載入 USB 相機
-    navigator.mediaDevices.getUserMedia({ video: true }).then((stream) => {
+    const constraints = {
+      video: {
+        facingMode: {
+          ideal: "environment"
+        }
+      }
+    };
+    navigator.mediaDevices.getUserMedia(constraints).then((stream) => {
       video.srcObject = stream;
       video.autoplay = true;
     });      
