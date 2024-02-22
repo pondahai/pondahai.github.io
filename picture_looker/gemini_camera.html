@@ -33,9 +33,16 @@
     </script>
     <script type="module">
       import { GoogleGenerativeAI } from "@google/generative-ai";
+      const apiKey = getCookie('dahai-app-ai-apiKey');
+
+      if (apiKey === null) {
+        // API key 不存在
+      } else {
+        // API key 存在
+      }
 
       // Access your API key (see "Set up your API key" above)
-      const genAI = new GoogleGenerativeAI("AIzaSyDM9m0nlv_yU8ydfgy6Vc2VsSl0rYinJTA");
+      const genAI = new GoogleGenerativeAI(apiKey);
 
       // Converts a File object to a GoogleGenerativeAI.Part object.
       async function fileToGenerativePart(file) {
@@ -123,7 +130,21 @@
     </script>
 
   <h1>使用網頁程式連接 USB 相機拍照</h1>
+  <div id="hint">
+    <h1 >使用 Google AI API</h1>
 
+    <p >歡迎使用我們的 AI 程式。您需要先取得自己的 Google AI API key，才能使用我們的程式。</p>
+
+    <p >請前往以下網址取得您的 API key：</p>
+
+    <a href="https://aistudio.google.com/app/apikey">https://aistudio.google.com/app/apikey</a>
+
+    <p >請將您的 API key 貼上以下文字框：</p>
+
+    <input type="text" id="api-key"  />
+
+    <button id="submit-button">提交</button>
+  </div>
   <p>拍攝 USB 相機照片：</p>
   <video id="video" width="320" height="240" autoPlay={true} playsInline={true} muted={true}></video>
   <button id="take-photo">拍攝照片</button>
@@ -134,7 +155,54 @@
   <div id="response"></div>
   <button id="trigger_me" onclick="speak();">speak</button>
 
+  <script>
+  function getCookie(cname) {
+    const name = cname + "=";
+    const decodedCookie = decodeURIComponent(document.cookie);
+    const ca = decodedCookie.split(';');
+    for (let i = 0; i < ca.length; i++) {
+      let c = ca[i];
+      while (c.charAt(0) === ' ') {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) === 0) {
+        return c.substring(name.length, c.length);
+      }
+    }
+    return null;
+  }
+  function setCookie(cname, cvalue, exdays) {
+    const d = new Date();
+    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+    const expires = "expires=" + d.toUTCString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+  }  
+  // 判斷 API key 是否存在。
+  const apiKey = getCookie('dahai-app-ai-apiKey');
 
+  if (apiKey === null) {
+    // API key 不存在
+    document.getElementById('hint').style.display = 'block';
+  } else {
+    // API key 存在
+    document.getElementById('hint').style.display = 'none';
+    // 使用 API key 存取 Google AI API。
+  }
+
+  // 提交按鈕的事件處理常式。
+  document.getElementById('submit-button').addEventListener('click', function() {
+    const apiKey = document.getElementById('api-key').value;
+
+    // 將 API key 儲存在 cookie 中。
+    setCookie('dahai-app-ai-apiKey', apiKey);
+
+    //
+    document.getElementById('hint').style.display = 'none';
+
+    // 使用 API key 存取 Google AI API。
+    location.reload();
+  });
+  </script>
 
   <script>
 
