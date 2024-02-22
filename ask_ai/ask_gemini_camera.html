@@ -179,8 +179,24 @@
         document.getElementById("results").style.display = "none"
       }
     });
+    button.addEventListener("mousedown", (event) => {
+      event.preventDefault();
+      if (!isRecognizing) {
+        recognition.start();
+        isRecognizing = true;
+        document.getElementById("results").style.display = "none"
+      }
+    });
 
     button.addEventListener("touchend", () => {
+      if (isRecognizing) {
+        recognition.stop();
+        isRecognizing = false;
+        document.getElementById("results").style.display = "block"
+        document.getElementById('take-photo').click();
+      }
+    });
+    button.addEventListener("mouseup", () => {
       if (isRecognizing) {
         recognition.stop();
         isRecognizing = false;
