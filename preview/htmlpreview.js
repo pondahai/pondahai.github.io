@@ -62,13 +62,13 @@
 	var loadHTML = function (data) {
 		if (data) {
 			data = data.replace(/<head([^>]*)>/i, '<head$1><base href="' + url + '">').replace(/<script(\s*src=["'][^"']*["'])?(\s*type=["'](text|application)\/javascript["'])?/gi, '<script type="text/htmlpreview"$1'); //Add <base> just after <head> and replace <script type="text/javascript"> with <script type="text/htmlpreview">
-			document.body.innerHTML = data;
 			setTimeout(function () {
 				document.open();
 				document.write(data);
 				document.close();
 				replaceAssets();
 			}, 10); //Delay updating document to have it cleared before
+			document.body.innerHTML = data;
 		}
 	};
 
