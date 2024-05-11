@@ -68,7 +68,7 @@
 				document.close();
 				replaceAssets();
 			}, 10); //Delay updating document to have it cleared before
-			//document.body.innerHTML = data;
+			document.body.innerHTML = data;
 		}
 	};
 
