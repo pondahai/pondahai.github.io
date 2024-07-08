@@ -372,7 +372,7 @@ const DBModule = (function() {
 
   function exportToCSV() {
     return getAllData().then(data => {
-      let csvContent = 'timestamp,value1,value2,value3,value4,value5,value6,value7,value8,value9,value10\n';
+      let csvContent = 'timestamp,pressure1,pressure2,pressure3,differential,last5pointAvg,prev5pointAvg,state,onoff_event,predict_Pose,Pose_event\n';
       
       data.forEach(item => {
         const row = [item.timestamp, ...item.values].join(',');
@@ -644,7 +644,8 @@ function isValidData7(inputString) {
 // P指令回傳: 三組壓力值的浮點數 分別代表: 監測 頸部 頭部
 // I指令回傳: 七組內部變數值 分別代表:
 //         differential, state, onoff_event, last5pointAvg, prev5pointAvg, predict_Pose, Pose_event
-//
+// 資料庫欄位:
+//         pressure1, pressure2, pressure3, differential, last5pointAvg, prev5pointAvg, state, onoff_event, predict_Pose, Pose_event
 let pressure1, pressure2, pressure3, differential, state, onoff_event, last5pointAvg, prev5pointAvg, predict_Pose, Pose_event;
 
 function serial_message(msg, colour) {
