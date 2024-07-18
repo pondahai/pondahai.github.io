@@ -34,82 +34,126 @@ https://fustyles.github.io/webduino/WebSerial.html
 <div id="title">台科大林上智教授團隊智慧枕墊資料收集系統</div>
 
 <table>
+	<tr>
+		<td style="vertical-align:top"> 
+			<table>
+				<tr>
+					<td>Baud Rate
+                        <select id="serial_baud">
+                            <option value="115200">115200</option>
+                            <option value="9600">9600</option>
+                            <option value="300">300</option>
+                            <option value="1200">1200</option>
+                            <option value="2400">2400</option>
+                            <option value="4800">4800</option>
+                            <option value="19200">19200</option>
+                            <option value="38400">38400</option>
+                            <option value="57600">57600</option>
+                            <option value="74880">74880</option>
+                            <option value="230400">230400</option>
+                            <option value="250000">250000</option>
+                            <option value="500000">500000</option>
+                            <option value="1000000">1000000</option>	
+                            <option value="2000000">2000000</option>		
+                        </select>
+					</td>
+					<td>
+                        <button id="serial_close_port">Close Port</button>										<button id="serial_request_port">Select Port</button>
+        			</td>
 
-<td style="vertical-align:top"> 
+				</tr>
 
-<table>
-
-<tr>
-<td>Baud Rate
-<select id="serial_baud">
-    <option value="115200">115200</option>
-    <option value="9600">9600</option>
-    <option value="300">300</option>
-    <option value="1200">1200</option>
-    <option value="2400">2400</option>
-    <option value="4800">4800</option>
-    <option value="19200">19200</option>
-    <option value="38400">38400</option>
-    <option value="57600">57600</option>
-    <option value="74880">74880</option>
-    <option value="230400">230400</option>
-    <option value="250000">250000</option>
-    <option value="500000">500000</option>
-    <option value="1000000">1000000</option>	
-    <option value="2000000">2000000</option>		
-</select>
-</td>
-<td><button id="serial_close_port">Close Port</button><button id="serial_request_port">Select Port</button></td>
-	
-	
-	
-	
-</tr>
-
-<tr>
-<td><input type="text" id="serial_text">
-<select id="serial_newline">
-    <option value=""></option>
-    <option value="\r">\r</option>	
-    <option value="\n">\n</option>	
-    <option value="\r\n">\r\n</option>		
-</select>
-</td>
-<td><button id="serial_sendText">Send Text</button></td>
-</tr>
-
-<tr>
-<td><input type="text" id="serial_uint8" value="">
-</td>
-<td><button id="serial_sendUint8">Send Uint8Array</button></td>
-</tr>
-
-<td><button id="syncTime">Sync UTC Time</button></td>
-<td><button id="exportData">Export Data</button></td>
-<tr>
-<td colspan="2"><div id="serial_status" style="width:400px;height:400px;border:2px black solid;overflow: auto;"></div></td>
-</tr>
-<tr>
-<td>
-</td>
-<td align="right">
-<button id="serial_clearText">Clear Text</button>
-</td>
-</tr>
+				<tr>
+					<td>
+                        <input type="text" id="serial_text">
+                        <select id="serial_newline">
+                            <option value=""></option>
+                            <option value="\r">\r</option>	
+                            <option value="\n">\n</option>	
+                            <option value="\r\n">\r\n</option>		
+                        </select>
+					</td>
+					<td>
+        				<button id="serial_sendText">Send Text</button>
+        			</td>
+				</tr>
+				<tr>
+					<td>
+        				<input type="text" id="serial_uint8" value="">
+					</td>
+					<td>
+        				<button id="serial_sendUint8">Send Uint8Array</button>
+        			</td>
+				</tr>
+				<tr>
+        			<td>
+                    	<button id="syncTime">Sync UTC Time</button>
+                    </td>
+        			<td>
+                    	<button id="exportData">Export Data</button>
+                    </td>
+				</tr>
+				<tr>
+    				<td colspan="2">
+						<hr>
+        			</td>
+				</tr>
+				<tr>
+                    <td colspan="2">
+                        <form id="userForm">
+                            <div class="form-group">
+                                <label>生理性别：</label>
+                                <input type="radio" name="gender" value="female" id="female" required>
+                                <label for="female">女</label>
+                                <input type="radio" name="gender" value="male" id="male" required>
+                                <label for="male">男</label>
+                            </div>
+                            <div class="form-group">
+                                <label for="age">年龄：</label>
+                                <input type="number" id="age" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="height">身高（公分）：</label>
+                                <input type="number" id="height" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="weight">体重（公斤）：</label>
+                                <input type="number" id="weight" required>
+                            </div>
+                            <button type="button" id="userSet">設定</button>
+                        </form>
+        			</td>
+				</tr>
+                <tr>
+                    <td colspan="2">
+                        <div id="serial_status" style="width:400px;height:400px;border:2px black solid;overflow: auto;"></div>
+                    </td>
+                </tr>
+				<tr>
+                    <td>
+                    </td>
+                    <td align="right">
+                        <button id="serial_clearText">Clear Text</button>
+                    </td>
+				</tr>
+			</table>
+		</td>
+        <td  style="vertical-align:top">
+            
+             <div  style="height: 200px">
+             	<canvas id="pressureChart"></canvas>
+                <canvas id="averChart"></canvas>
+                <canvas id="diffChart"></canvas>
+                <canvas id="prev5Chart"></canvas>
+                <canvas id="stateChart"></canvas>
+                <canvas id="onoffChart"></canvas>
+                <canvas id="pPoseChart"></canvas>
+                <canvas id="poseChart"></canvas>	
+             </div>            
+        </td>
+	</tr>
 </table>
-</td>
 
-<td  style="vertical-align:top">
-<div  style="height: 200px"><canvas id="pressureChart"></canvas>
-<canvas id="averChart"></canvas>
-<canvas id="diffChart"></canvas>
-<canvas id="prev5Chart"></canvas>
-<canvas id="stateChart"></canvas>
-<canvas id="onoffChart"></canvas>
-<canvas id="pPoseChart"></canvas>
-<canvas id="poseChart"></canvas>	</div>
-</td>
-</table>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
@@ -126,6 +170,7 @@ let serial_clearText = document.getElementById('serial_clearText');
 let serial_newline = document.getElementById('serial_newline');
 let serial_syncTime = document.getElementById('syncTime');
 let db_exportData = document.getElementById('exportData');
+let serial_userSet = document.getElementById('userSet');
 
 let serial_port = null;
 let serial_textEncoder = {};
@@ -590,6 +635,36 @@ serial_syncTime.addEventListener('click', async () => {
 	if (serial_port&&serial_writer) {
 		try {
 			var msg = "synctime," + utcString  + serial_newline.value;
+			serial_message(msg,"orange");
+			serial_text.value = "";
+			
+			if (!serial_textEncoder[serial_selProductId])
+				serial_textEncoder[serial_selProductId] = new TextEncoderStream();
+			if (!serial_writableStreamClosed[serial_selProductId])
+				serial_writableStreamClosed[serial_selProductId] = serial_textEncoder[serial_selProductId].readable.pipeTo(serial_port.writable);
+				
+			serial_writer[serial_selProductId] = serial_textEncoder[serial_selProductId].writable.getWriter();
+			await serial_writer[serial_selProductId].write(msg).then(function() {
+				serial_writer[serial_selProductId].releaseLock();
+			});
+		} catch (error) {
+			serial_message(error.message,"red");
+		}
+	}
+});
+
+serial_userSet.addEventListener('click', async () => {
+            const now = Math.floor(Date.now() / 1000); // 生成UNIX時間戳
+            const utcString = now;//now.toISOString(); // 生成UTC時間字串
+	if (serial_port&&serial_writer) {
+		try {
+            let gender = document.querySelector('input[name="gender"]:checked').value === 'female' ? '0' : '1';
+            let age = document.getElementById('age').value;
+            let height = document.getElementById('height').value;
+            let weight = document.getElementById('weight').value;
+            let infoString = `${gender},${age},${height},${weight}`;
+			
+			var msg = "user," + infoString;
 			serial_message(msg,"orange");
 			serial_text.value = "";
 			
