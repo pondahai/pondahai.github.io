@@ -278,11 +278,12 @@ https://fustyles.github.io/webduino/WebSerial.html
                         <button id="serial_clearText">Clear Text</button>
                     </td>
 				</tr>
+				<tr style="height:150px"></tr>
 			</table>
 		</td>
         <td  style="vertical-align:top">
             
-             <div  style="height: 200px">
+             <div  style="height: 250px">
              	<canvas id="pressureChart"></canvas>
                 <canvas id="averChart"></canvas>
                 <canvas id="diffChart"></canvas>
@@ -372,7 +373,8 @@ let serial_ready = false;
 						ticks: { 
 							font: { 
 								size: 8, // 設定 x 軸標籤的字體大小
-							} 
+							},
+							autoSkip: false,
 						} 
 					}, 
 					xAxes: [{
@@ -431,7 +433,8 @@ let serial_ready = false;
 						ticks: { 
 							font: { 
 								size: 8, // 設定 x 軸標籤的字體大小
-							} 
+							},
+							autoSkip: false,
 						} 
 					}, 
 					xAxes: [{
@@ -474,7 +477,8 @@ let serial_ready = false;
 						ticks: { 
 							font: { 
 								size: 8, // 設定 x 軸標籤的字體大小
-							} 
+							},
+							autoSkip: false,
 						} 
 					}, 
 					xAxes: [{
