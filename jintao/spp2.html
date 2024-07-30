@@ -1107,61 +1107,62 @@ document.addEventListener('DOMContentLoaded', function() {
 
     closeBtn.addEventListener('click', function() {
         modal.style.display = 'none';
+		sendCommand("SET,OK,");
     });
 
     increaseBtn1.addEventListener('click', function() {
         if (numberInput1.value < 20) {
             numberInput1.value = parseInt(numberInput1.value) + 1;
-			sendCommand("SET,NORM,"+selectedCondition+",S,HEAD,"+numberInput1.value);
+			sendCommand("SET,NORM,"+selectedCondition+",S,HEAD,"+numberInput1.value+",");
         }
     });
 
     decreaseBtn1.addEventListener('click', function() {
         if (numberInput1.value > 5) {
             numberInput1.value = parseInt(numberInput1.value) - 1;
-			sendCommand("SET,NORM,"+selectedCondition+",S,HEAD,"+numberInput1.value);
+			sendCommand("SET,NORM,"+selectedCondition+",S,HEAD,"+numberInput1.value+",");
         }
     });
 
     increaseBtn2.addEventListener('click', function() {
         if (numberInput2.value < 20) {
             numberInput2.value = parseInt(numberInput2.value) + 1;
-			sendCommand("SET,NORM,"+selectedCondition+",S,NECK,"+numberInput2.value);
+			sendCommand("SET,NORM,"+selectedCondition+",S,NECK,"+numberInput2.value+",");
         }
     });
 
     decreaseBtn2.addEventListener('click', function() {
         if (numberInput2.value > 5) {
             numberInput2.value = parseInt(numberInput2.value) - 1;
-			sendCommand("SET,NORM,"+selectedCondition+",S,NECK,"+numberInput2.value);
+			sendCommand("SET,NORM,"+selectedCondition+",S,NECK,"+numberInput2.value+",");
         }
     });
 
     increaseBtn3.addEventListener('click', function() {
         if (numberInput3.value < 20) {
             numberInput3.value = parseInt(numberInput3.value) + 1;
-			sendCommand("SET,NORM,"+selectedCondition+",L,HEAD,"+numberInput3.value);
+			sendCommand("SET,NORM,"+selectedCondition+",L,HEAD,"+numberInput3.value+",");
         }
     });
 
     decreaseBtn3.addEventListener('click', function() {
         if (numberInput3.value > 5) {
             numberInput3.value = parseInt(numberInput3.value) - 1;
-			sendCommand("SET,NORM,"+selectedCondition+",L,HEAD,"+numberInput3.value);
+			sendCommand("SET,NORM,"+selectedCondition+",L,HEAD,"+numberInput3.value+",");
         }
     });
 
     increaseBtn4.addEventListener('click', function() {
         if (numberInput4.value < 20) {
             numberInput4.value = parseInt(numberInput4.value) + 1;
-			sendCommand("SET,NORM,"+selectedCondition+",L,NECK,"+numberInput4.value);
+			sendCommand("SET,NORM,"+selectedCondition+",L,NECK,"+numberInput4.value+",");
         }
     });
 
     decreaseBtn4.addEventListener('click', function() {
         if (numberInput4.value > 5) {
             numberInput4.value = parseInt(numberInput4.value) - 1;
-			sendCommand("SET,NORM,"+selectedCondition+",L,NECK,"+numberInput4.value);
+			sendCommand("SET,NORM,"+selectedCondition+",L,NECK,"+numberInput4.value+",");
         }
     });
 	
