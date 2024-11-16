@@ -1,0 +1,3 @@
+[submodule "chatbot"]
+	path = chatbot
+	url = https://github.com/pondahai/chat_openaiapi_qwen2_5.git
