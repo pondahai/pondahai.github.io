@@ -1,3 +1,6 @@
 [submodule "chatbot"]
 	path = chatbot
 	url = https://github.com/pondahai/chat_openaiapi_qwen2_5.git
+[submodule "Tetris"]
+	path = Tetris
+	url = https://github.com/pondahai/Tetris_from_Qwen2_5_Coder_Artifacts.git
