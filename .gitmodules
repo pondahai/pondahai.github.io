@@ -4,3 +4,6 @@
 [submodule "Tetris"]
 	path = Tetris
 	url = https://github.com/pondahai/Tetris_from_Qwen2_5_Coder_Artifacts.git
+[submodule "4x4_puzzle"]
+	path = 4x4_puzzle
+	url = https://github.com/pondahai/4x4_puzzle.git
