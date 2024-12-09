@@ -7,3 +7,6 @@
 [submodule "4x4_puzzle"]
 	path = 4x4_puzzle
 	url = https://github.com/pondahai/4x4_puzzle.git
+[submodule "3d_push_coin"]
+	path = 3d_push_coin
+	url = https://github.com/pondahai/3d_push_coin
