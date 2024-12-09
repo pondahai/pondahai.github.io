@@ -10,3 +10,6 @@
 [submodule "3d_push_coin"]
 	path = 3d_push_coin
 	url = https://github.com/pondahai/3d_push_coin
+[submodule "synth_watermelon"]
+	path = synth_watermelon
+	url = https://github.com/pondahai/synth_watermelon
