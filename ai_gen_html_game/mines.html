@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>踩地雷遊戲</title>
+<style>
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(4, 50px);
+    grid-template-rows: repeat(4, 50px);
+    gap: 1px;
+  }
+  .cell {
+    width: 50px;
+    height: 50px;
+    border: 1px solid #000;
+    text-align: center;
+    line-height: 50px;
+    cursor: pointer;
+  }
+  .mine {
+    background-color: red;
+  }
+  .number {
+    background-color: lightgreen;
+  }
+  .unrevealed {
+    background-color: lightgrey;
+  }
+</style>
+</head>
+<body>
+<div class="grid" id="minefield"></div>
+
+<script>
+const rows = 4;
+const cols = 4;
+const mineCount = 2;
+const minefield = document.getElementById('minefield');
+
+// 初始化地雷陣列
+let mineArray = Array(rows).fill().map(() => Array(cols).fill(false));
+let numberArray = Array(rows).fill().map(() => Array(cols).fill(0));
+placeMines();
+calculateNumbers();
+
+// 隨機放置地雷
+function placeMines() {
+  for (let i = 0; i < mineCount; i++) {
+    while (true) {
+      const row = Math.floor(Math.random() * rows);
+      const col = Math.floor(Math.random() * cols);
+      if (!mineArray[row][col]) {
+        mineArray[row][col] = true;
+        break;
+      }
+    }
+  }
+}
+
+// 計算每個格子周围的地雷數量
+function calculateNumbers() {
+  for (let row = 0; row < rows; row++) {
+    for (let col = 0; col < cols; col++) {
+      if (mineArray[row][col]) continue;
+      let count = 0;
+      for (let i = -1; i <= 1; i++) {
+        for (let j = -1; j <= 1; j++) {
+          const newRow = row + i;
+          const newCol = col + j;
+          if (newRow >= 0 && newRow < rows && newCol >= 0 && newCol < cols && mineArray[newRow][newCol]) {
+            count++;
+          }
+        }
+      }
+      numberArray[row][col] = count;
+    }
+  }
+}
+
+// 創建地雷陣列
+for (let row = 0; row < rows; row++) {
+  for (let col = 0; col < cols; col++) {
+    const cell = document.createElement('div');
+    cell.classList.add('cell', 'unrevealed'); // 添加unrevealed樣式
+    cell.dataset.row = row;
+    cell.dataset.col = col;
+    cell.addEventListener('click', revealCell);
+    minefield.appendChild(cell);
+  }
+}
+
+// 顯示格子
+function revealCell(event) {
+  const cell = event.target;
+  const row = parseInt(cell.dataset.row);
+  const col = parseInt(cell.dataset.col);
+  if (mineArray[row][col]) {
+    cell.classList.add('mine');
+    alert('你踩到了地雷！遊戲結束。');
+  } else {
+    if (numberArray[row][col] > 0) {
+      cell.classList.add('number');
+      cell.textContent = numberArray[row][col];
+    } else {
+      cell.classList.add('cell', 'revealed');
+      revealAdjacentCells(row, col);
+    }
+    cell.classList.remove('unrevealed');
+  }
+}
+
+// 顯示周圍的格子
+function revealAdjacentCells(row, col) {
+  for (let i = -1; i <= 1; i++) {
+    for (let j = -1; j <= 1; j++) {
+      const newRow = row + i;
+      const newCol = col + j;
+      if (newRow >= 0 && newRow < rows && newCol >= 0 && newCol < cols && !mineArray[newRow][newCol]) {
+        const cell = minefield.querySelector(`[data-row="${newRow}"][data-col="${newCol}"]`);
+        if (!cell.classList.contains('revealed')) {
+          revealCell({ target: cell });
+        }
+      }
+    }
+  }
+}
+</script>
+</body>
+</html>
