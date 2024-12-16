@@ -13,3 +13,6 @@
 [submodule "synth_watermelon"]
 	path = synth_watermelon
 	url = https://github.com/pondahai/synth_watermelon
+[submodule "tars"]
+	path = tars
+	url = https://github.com/pondahai/dahai_de_TARS.git
