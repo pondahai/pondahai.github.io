@@ -573,18 +573,34 @@ const DBModule = (function() {
         const row = [item.timestamp, ...item.values].join(',');
         csvContent += row + '\n';
       });
+	  
+      // const txtContent = serial_status.innerHTML.replace(/<[^>]*>/g, ''); // Remove HTML tags
+	  const txtContent = serial_status.innerHTML
+    .replace(/<br\s*\/?>/gi, '\n') // 將 <br> 和 <br/> 轉換成換行符號
+    .replace(/<[^>]*>/g, ''); // 移除剩餘的 HTML 標籤
 
       const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      const txtBlob = new Blob([txtContent], { type: 'text/plain;charset=utf-8;' });
+	  
       const url = URL.createObjectURL(blob);
+      const txtUrl = URL.createObjectURL(txtBlob);
       
       const link = document.createElement('a');
       link.setAttribute('href', url);
       link.setAttribute('download', `data_export_${dbName}.csv`);
       link.style.visibility = 'hidden';
+
+      const txtLink = document.createElement('a');
+      txtLink.setAttribute('href', txtUrl);
+      txtLink.setAttribute('download', `data_export_${dbName}.txt`);
+      txtLink.style.visibility = 'hidden';
       
       document.body.appendChild(link);
+      document.body.appendChild(txtLink);
       link.click();
+      txtLink.click();
       document.body.removeChild(link);
+      document.body.removeChild(txtLink);
     });
   }
 
