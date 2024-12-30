@@ -16,3 +16,6 @@
 [submodule "tars"]
 	path = tars
 	url = https://github.com/pondahai/dahai_de_TARS.git
+[submodule "postit-chat"]
+	path = postit-chat
+	url = https://github.com/pondahai/postit-chat.git
