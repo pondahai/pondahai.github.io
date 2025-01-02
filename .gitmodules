@@ -19,3 +19,6 @@
 [submodule "postit-chat"]
 	path = postit-chat
 	url = https://github.com/pondahai/postit-chat.git
+[submodule "mermaid_to_svg"]
+	path = mermaid_to_svg
+	url = https://github.com/pondahai/mermaid_to_svg.git
