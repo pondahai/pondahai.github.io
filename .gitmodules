@@ -22,3 +22,6 @@
 [submodule "mermaid_to_svg"]
 	path = mermaid_to_svg
 	url = https://github.com/pondahai/mermaid_to_svg.git
+[submodule "summy"]
+	path = summy
+	url = https://github.com/pondahai/summy.git
