@@ -102,6 +102,20 @@ https://fustyles.github.io/webduino/WebSerial.html
 	<tr>
 		<td style="vertical-align:top"> 
 			<table>
+		                <tr>
+		                    <td>
+		                        <label for="yAxisMax">Y軸最大值:</label>
+		                        <input type="number" id="yAxisMax" value="4000000">
+		                    </td>
+		                    <td>
+		                        <label for="yAxisMin">Y軸最小值:</label>
+		                        <input type="number" id="yAxisMin" value="80000">
+		                    </td>
+		                    <td>
+		                        <button id="updateChart">更新圖表</button>
+		                    </td>
+		                </tr>
+				
 				<tr>
 					<td>Baud Rate
                         <select id="serial_baud">
@@ -365,7 +379,7 @@ let serial_ready = false;
 				maintainAspectRatio: false,
                 scales: {
 					y: {
-						max: 16000000,
+						max: 4000000,
 						min: 80000,
 					},
                     yAxes: [{
@@ -397,6 +411,15 @@ let serial_ready = false;
                 }
             }
         });
+	// Function to update chart scales
+	document.getElementById('updateChart').addEventListener('click', () => {
+	    const yAxisMax = document.getElementById('yAxisMax').value;
+	    const yAxisMin = document.getElementById('yAxisMin').value;
+	    
+	    chart.options.scales.y.max = yAxisMax ? parseFloat(yAxisMax) : chart.options.scales.y.max;
+	    chart.options.scales.y.min = yAxisMin ? parseFloat(yAxisMin) : chart.options.scales.y.min;
+	    chart.update();
+	});
 
         const ctx2 = document.getElementById('averChart').getContext('2d');
         const chart2 = new Chart(ctx2, {
