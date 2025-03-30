@@ -1181,12 +1181,16 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     switchScreenBtn2.addEventListener('click', function() {
-        screen1.style.display = 'none';
-        screen2.style.display = 'none';
-        screen3.style.display = 'block';
 		sendCommand("INIT,NORM,L,");
-        if (parsedData.HLF) numberInput3.value = parsedData.HLF;
-        if (parsedData.N1LF) numberInput4.value = parsedData.N1LF;
+	        setTimeout(() => {
+
+		        screen1.style.display = 'none';
+		        screen2.style.display = 'none';
+		        screen3.style.display = 'block';
+		        if (parsedData.HLF) numberInput3.value = parsedData.HLF;
+		        if (parsedData.N1LF) numberInput4.value = parsedData.N1LF;
+	    }, 1000); // 等待1秒钟
+
     });
 
     backBtn1.addEventListener('click', function() {
