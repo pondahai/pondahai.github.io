@@ -25,3 +25,6 @@
 [submodule "summy"]
 	path = summy
 	url = https://github.com/pondahai/summy.git
+[submodule "barbara-pwa"]
+	path = barbara-pwa
+	url = https://github.com/pondahai/barbara-pwa
