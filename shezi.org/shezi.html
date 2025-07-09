@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>財團法人台北市社子文教基金會 | 深耕在地，共育未來</title>
+    <style>
+        /* --- 全域與基本設定 --- */
+        :root {
+            --primary-color: #5D4037; /* 溫暖深棕色 */
+            --secondary-color: #A1887F; /* 柔和淺棕 */
+            --bg-color: #F5F5F5;      /* 淺灰背景 */
+            --card-bg: #FFFFFF;       /* 卡片背景 */
+            --text-color: #333333;    /* 主要文字顏色 */
+            --light-text-color: #FFFFFF; /* 淺色文字 */
+            --accent-color: #00796B;   /* 強調色 (沉穩綠) */
+            --border-color: #E0E0E0;   /* 邊框顏色 */
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Noto Sans TC', '微軟正黑體', 'Microsoft JhengHei', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.7;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        section {
+            padding: 60px 0;
+        }
+
+        h1, h2, h3 {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 2.2em;
+            margin-bottom: 40px;
+            position: relative;
+        }
+        
+        h2::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background-color: var(--accent-color);
+            margin: 10px auto 0;
+            border-radius: 2px;
+        }
+
+        /* --- 頁首與導覽列 --- */
+        header {
+            background-color: var(--card-bg);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .nav-links a {
+            color: var(--primary-color);
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+
+        /* --- 主視覺橫幅 (Hero) --- */
+        .hero {
+            background-color: #333; /* Fallback */
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1531545514256-b1400bc00f31?q=80&w=1974&auto=format&fit=crop'); /* 使用授權圖片 */
+            background-size: cover;
+            background-position: center;
+            color: var(--light-text-color);
+            text-align: center;
+            padding: 120px 20px;
+        }
+
+        .hero h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            color: var(--light-text-color);
+        }
+
+        .hero p {
+            font-size: 1.2em;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* --- 按鈕樣式 --- */
+        .btn {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: var(--light-text-color);
+            padding: 12px 25px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn:hover {
+            background-color: #004D40; /* 深一點的綠色 */
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background: none;
+            border: 2px solid var(--accent-color);
+            color: var(--accent-color);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--accent-color);
+            color: var(--light-text-color);
+        }
+
+        /* --- 卡片式佈局 --- */
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            padding: 30px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+        }
+
+        .card .icon {
+            font-size: 3em;
+            color: var(--accent-color);
+            margin-bottom: 15px;
+        }
+
+        .card h3 {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        /* --- 各區塊特定樣式 --- */
+        #about .about-content {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+        }
+
+        #about .about-text {
+            flex: 1;
+        }
+        
+        #about .about-image {
+            flex: 1;
+            max-width: 450px;
+        }
+
+        #about img {
+            width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        #news .news-item {
+            background-color: var(--card-bg);
+            padding: 20px;
+            border-left: 5px solid var(--accent-color);
+            margin-bottom: 20px;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        #news .news-item h4 {
+            margin: 0 0 5px 0;
+            color: var(--primary-color);
+        }
+        
+        #news .news-item .date {
+            font-size: 0.9em;
+            color: var(--secondary-color);
+        }
+
+        /* --- 頁尾 --- */
+        footer {
+            background-color: var(--primary-color);
+            color: var(--light-text-color);
+            padding: 40px 0;
+            text-align: center;
+        }
+        
+        footer a {
+            color: var(--light-text-color);
+            text-decoration: none;
+        }
+        
+        footer .footer-contact p {
+            margin: 5px 0;
+        }
+
+        /* --- 彈出式章程視窗 (Modal) --- */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.6);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 30px 40px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 800px;
+            border-radius: 10px;
+            position: relative;
+        }
+        
+        .modal-body {
+            max-height: 70vh;
+            overflow-y: auto;
+            text-align: left;
+            white-space: pre-wrap; /* 保持章程的換行 */
+            font-family: 'KaiTi', '標楷體', serif;
+            line-height: 2;
+        }
+
+        .close-btn {
+            color: #aaa;
+            position: absolute;
+            top: 15px;
+            right: 25px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close-btn:hover,
+        .close-btn:focus {
+            color: black;
+        }
+
+        /* --- RWD 響應式設計 --- */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+            }
+            .nav-links {
+                margin-top: 15px;
+            }
+            .nav-links a {
+                margin: 0 8px;
+            }
+            .hero h1 {
+                font-size: 2.2em;
+            }
+            .hero p {
+                font-size: 1em;
+            }
+            #about .about-content {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ---------- 頁首與導覽列 ---------- -->
+    <header>
+        <div class="container navbar">
+            <a href="#" class="logo">社子文教基金會</a>
+            <nav class="nav-links">
+                <a href="#about">關於我們</a>
+                <a href="#services">主要業務</a>
+                <a href="#news">最新消息</a>
+                <a href="#support">支持我們</a>
+                <a href="#contact">聯絡我們</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- ---------- 主視覺區塊 ---------- -->
+        <section class="hero">
+            <div class="hero-content">
+                <h1>深耕在地，共育未來</h1>
+                <p>自民國八十二年起，我們秉持「響應社會公益，回饋鄉里」的初衷，致力於社子地區的文化與教育發展。</p>
+            </div>
+        </section>
+
+        <!-- ---------- 關於我們 ---------- -->
+        <section id="about">
+            <div class="container">
+                <h2>關於我們</h2>
+                <div class="about-content">
+                    <div class="about-text">
+                        <h3>成立宗旨</h3>
+                        <p>財團法人台北市社子文教基金會，由宋廷惠、宋勝海、宋勝泰、宋勝楠等在地鄉親賢達共同捐助成立。我們的使命是透過辦理獎學金、設立圖書館、舉辦文藝活動及發行社區刊物，全面性地提升社子地區的文教品質，促進文化交流，凝聚社區意識。</p>
+                        <p>我們相信，教育是改變的根基，文化是社區的靈魂。每一份支持，都是灌溉這片土地的養分。</p>
+                        <br>
+                        <button class="btn" id="openModalBtn">檢視捐助章程</button>
+                    </div>
+                    <div class="about-image">
+                        <!-- 建議放一張在地圖書館或社區活動的溫馨照片 -->
+                        <img src="https://images.unsplash.com/photo-1543269865-cbf427effbad?q=80&w=2070&auto=format&fit=crop" alt="社區居民在圖書館閱讀">
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- ---------- 主要業務 ---------- -->
+        <section id="services" style="background-color: #FFFFFF;">
+            <div class="container">
+                <h2>主要業務</h2>
+                <div class="card-container">
+                    <div class="card">
+                        <div class="icon">🎓</div>
+                        <h3>獎學金與幼教</h3>
+                        <p>定期發放獎學金，鼓勵在地學子奮發向學。同時提供優質的幼教服務，為下一代奠定良好基礎。</p>
+                    </div>
+                    <div class="card">
+                        <div class="icon">📚</div>
+                        <h3>成立圖書館</h3>
+                        <p>設立社區圖書館，提供豐富的圖書資源與舒適的閱讀環境，成為社區的知識中心。</p>
+                    </div>
+                    <div class="card">
+                        <div class="icon">🎨</div>
+                        <h3>文藝活動</h3>
+                        <p>舉辦多元的文藝活動、講座與課程，豐富居民的文化生活，並推廣在地藝術創作。</p>
+                    </div>
+                    <div class="card">
+                        <div class="icon">📰</div>
+                        <h3>社區刊物</h3>
+                        <p>發行社區雜誌與相關文教刊物，報導在地故事，傳遞社區訊息，促進居民交流與認同。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ---------- 最新消息 ---------- -->
+        <section id="news">
+            <div class="container">
+                <h2>最新消息</h2>
+                <div class="news-item">
+                    <h4>【活動公告】113年下半年度「社子親子共讀」系列講座開始報名！</h4>
+                    <p class="date">2024-08-15</p>
+                    <p>為推廣家庭閱讀風氣，本會將舉辦三場親子共讀講座，歡迎大手牽小手，一起享受閱讀的樂趣。</p>
+                </div>
+                <div class="news-item">
+                    <h4>【獎助學金】113學年度優秀學生獎學金申請即日起至9月30日截止</h4>
+                    <p class="date">2024-08-01</p>
+                    <p>凡設籍社子地區之高中職及大專院校在學學生，符合資格者均可申請，詳情請洽本會辦公室。</p>
+                </div>
+                <div class="news-item">
+                    <h4>【會務報告】第四屆董事會第九次會議紀錄已上傳</h4>
+                    <p class="date">2024-07-20</p>
+                    <p>為落實透明化治理，本會會議紀錄皆公開予大眾閱覽，感謝各界監督與支持。</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- ---------- 支持我們 ---------- -->
+        <section id="support" style="background-color: #FFFFFF;">
+            <div class="container" style="text-align: center;">
+                <h2>支持我們</h2>
+                <p style="max-width: 700px; margin: 0 auto 30px;">您的每一份捐助，都是點亮社子未來的光芒。我們誠摯邀請您一同加入回饋鄉里的行列，無論是捐款支持或成為志工，您的參與都將為社區帶來巨大的能量。</p>
+                <h3>捐款資訊</h3>
+                <p>銀行：台北富邦銀行 社子分行 (代碼 012)<br>
+                   戶名：財團法人台北市社子文教基金會<br>
+                   帳號：123-456-789012</p>
+                <p>捐款後請來電或Email告知，以利開立捐款收據。</p>
+                <br>
+                <a href="#contact" class="btn">成為志工</a>
+            </div>
+        </section>
+        
+        <!-- ---------- 聯絡我們 ---------- -->
+        <section id="contact">
+            <div class="container" style="text-align: center;">
+                <h2>聯絡我們</h2>
+                <p>歡迎您親自蒞臨或透過以下方式與我們聯繫。</p>
+                <p><strong>地址：</strong>台北市士林區倫等街54巷25號二樓</p>
+                <p><strong>電話：</strong>(02) 2811-XXXX (此為示意)</p>
+                <p><strong>電子郵件：</strong>shezi.edu@email.com (此為示意)</p>
+                <p><strong>服務時間：</strong>週一至週五 09:00 - 17:00</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- ---------- 頁尾 ---------- -->
+    <footer>
+        <div class="container">
+            <div class="footer-contact">
+                <p>財團法人台北市社子文教基金會</p>
+                <p>董事長：宋勝海</p>
+            </div>
+            <p>&copy; 2024 財團法人台北市社子文教基金會. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- ---------- 章程彈出視窗 (Modal) ---------- -->
+    <div id="charterModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" id="closeModalBtn">&times;</span>
+            <div class="modal-body">
+<pre>
+<strong>財團法人台北市社子文教基金會捐助章程</strong>
+
+第一條 本基金會依照民法暨教育部文教財團法人監督準則組織之,定名為「財團法人台北市社子文教基金會」。
+
+第二條 本會已響應社會公益，回饋鄉里為宗旨,依有關法令規定辦理左列業務:
+1、獎學金之發放及幼教服務
+2、成立圖書館。
+3、舉辦文藝活動,附設補習班,成立出版部門、發行社區雜誌及相關文教刊物。
+4、促進文化交流、聯誼及推廣。
+5、提供相關業務之諮詢服務。
+
+第三條 本會設立基金共新台幣伍佰萬元整,由宋廷惠 宋勝海 宋勝泰 宋勝楠 許泥生 許地租 張有水、陳玉枝、許俊雄、吳阮阿美、宋旭曜等人共同捐助。俟本會依法完成財團法人登記後,得繼續接受捐助。
+
+第四條 本會會址,設於台北市士林區倫等街54巷25號二樓。
+
+第五條 本會設董事會管理之,董事會職權如左:
+1、基金會之籌集,管理及運用。
+2、業務計劃之制定及推行。
+3、內部組織之制定及管理。
+4、獎助案件的處理與有關辦法之訂定。
+5、年度收支預算及決算之審定。
+6、董事之改選。
+7、其他重要事項之處理。
+
+第六條 本會董事會由董事十一人組成,第一屆董事由原捐助人選聘之,第二屆以後董事由前一屆董事會選聘之。董事均為無給職。
+
+第七條 本會董事任期每屆三年,連選得連任,董事在任期中如因故出缺,董事會得另行選聘適當人員補足原任期,每屆董事任期屆滿前壹個月,董事會應召集會議,改選聘下屆董事、新舊任董事,並按期辦理交接。
+
+第八條 本會董事互選一人為董事長,綜理會務,對外代表本會。
+
+第九條 本會董事會每年至少開會二次,必要時得召集臨時會議,會議由董事長召集之並任主席。須有過半數董事出席始得開會。對於議案之表決,以出席董事過半數同意並經主管機關准許後行之。但左列重要事项之決議應有三分之二以上董事之出席,以現任董事總額過半数同意行之。
+1、章程變更之擬議,如有民法第六十二,六十三條情形並應經過法院為必要處分。
+2、不動產處分之擬議。
+3、解散之擬議。
+召開董事會之前十日,為將開會通知連同議案送達各董事,並依規定報請主管機關派員列席指導。會後並將董事會議紀錄呈報主管機關核備。
+
+第十條 本會以每年一月一日至十二月三十一日為業務及會計年度,每年一月底以前,董事會應審定左列事項,函報主管機關核備。
+1、上年度業務報告及經費收支決算。
+2、本年度業務計劃及經費收支預算。
+3、財產清冊。
+
+第十一條 本會劉理年度業務計劃以外之工作,當符合本章程第二條之規定,並須事先孟戰主管機關核備。
+
+第十二條 本會辦理各項業務所需經費,以支用基金孳息及法人成立後所得捐助為原則,其財產於安全可靠之原則下,提董事會之決議,主管機關之許可,得可在財產總額二分之一,且不得動支法定最低設立基金之現金額度內,轉為有助增加財源之投資或購置教育法人自用之不動產。
+
+第十三條 本會由於業務需要或其他因素,變更董事、財產及其他重要事項,均須經董事會通過,函報主管機關許可,並向法院辦理變更登記。
+
+第十四條 本會係永久性質,如因故解散時,經依法解散之剩餘財產,不得歸屬於任何個人或私人團體,應歸屬於本會所在地之地方自治機關,或政府指定之機關團體。
+
+第十五條 本章程訂於民國八十二年八月十一日,民國九十一年八月二十四日第三屆董事會第九次會議修訂通過,民國九十四年十月二十四日第四屆董事會第八次會議第二次修訂通過,如有未盡事宜,悉依有關法令辦理。
+
+第十六條 本章程經本會完成財團法人登記後施行。
+
+</pre>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- 彈出視窗 (Modal) 的 JavaScript ---
+        const modal = document.getElementById('charterModal');
+        const openBtn = document.getElementById('openModalBtn');
+        const closeBtn = document.getElementById('closeModalBtn');
+
+        openBtn.onclick = function() {
+            modal.style.display = 'block';
+        }
+
+        closeBtn.onclick = function() {
+            modal.style.display = 'none';
+        }
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
