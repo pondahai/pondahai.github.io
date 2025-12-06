@@ -397,7 +397,9 @@ https://fustyles.github.io/webduino/WebSerial.html
 		let serial_timer;
 
 		let serial_ready = false;
-		let lastSentCommand = "";
+		let commandBuffer = [];
+
+
 
 		// Initialize the chart
 		const ctx = document.getElementById('pressureChart').getContext('2d');
@@ -831,7 +833,7 @@ https://fustyles.github.io/webduino/WebSerial.html
 					serial_newline.value = serial_newline.value.replace(/\\n/g, "\n");
 					serial_newline.value = serial_newline.value.replace(/\\r/g, "\r");
 					var msg = serial_text.value + serial_newline.value;
-					lastSentCommand = msg;
+					logCommand(msg);
 					serial_message(msg, "orange");
 					serial_text.value = "";
 
@@ -857,7 +859,7 @@ https://fustyles.github.io/webduino/WebSerial.html
 					serial_message(serial_uint8.value, "orange");
 					var intArray = serial_uint8.value.split(",");
 					msg = String.fromCharCode.apply(null, intArray);
-					lastSentCommand = "Uint8: " + serial_uint8.value;
+					logCommand("Uint8: " + serial_uint8.value);
 					serial_uint8.value = "";
 
 					serial_writer[serial_selProductId] = serial_port.writable.getWriter();
@@ -881,7 +883,7 @@ https://fustyles.github.io/webduino/WebSerial.html
 			if (serial_port && serial_writer) {
 				try {
 					var msg = "synctime," + utcString + serial_newline.value;
-					lastSentCommand = msg;
+					logCommand(msg);
 					serial_message(msg, "orange");
 					serial_text.value = "";
 
@@ -912,7 +914,7 @@ https://fustyles.github.io/webduino/WebSerial.html
 					let infoString = `${gender},${age},${height},${weight}`;
 
 					var msg = "user," + infoString;
-					lastSentCommand = msg;
+					logCommand(msg);
 					serial_message(msg, "orange");
 					serial_text.value = "";
 
@@ -1159,16 +1161,32 @@ https://fustyles.github.io/webduino/WebSerial.html
 				chart_data_count++;
 
 
+
+
 				// store to db
 				const dataToSave = [pressure1, pressure2, pressure3, differential, last5pointAvg, prev5pointAvg, state, onoff_event, predict_Pose, Pose_event];
-				DBModule.save(dataToSave, lastSentCommand).then(() => {
+
+				let combinedCommands = commandBuffer.join('; ');
+				DBModule.save(dataToSave, combinedCommands).then(() => {
 					console.log('Data saved');
-					lastSentCommand = ""; // Clear the command after saving
+					commandBuffer = []; // Clear buffer after saving
 				}).catch(error => {
 					console.error('Save error:', error);
 				});
 			}
 		}
+
+		function logCommand(command) {
+			const now = new Date();
+			const timeString = now.getHours().toString().padStart(2, '0') + ':' +
+				now.getMinutes().toString().padStart(2, '0') + ':' +
+				now.getSeconds().toString().padStart(2, '0') + '.' +
+				now.getMilliseconds().toString().padStart(3, '0');
+
+			commandBuffer.push(`${command} @${timeString}`);
+			console.log('Command buffered: ' + command);
+		}
+
 		var func_count = 0;
 		setInterval(async function () {
 			if (serial_port && serial_writer && serial_ready) {
@@ -1203,7 +1221,7 @@ https://fustyles.github.io/webduino/WebSerial.html
 			if (serial_port && serial_writer) {
 				try {
 					var msg = cmdStr;
-					lastSentCommand = msg;
+					logCommand(msg);
 					serial_message(msg, "orange");
 					serial_text.value = "";
 
