@@ -395,6 +395,7 @@ https://fustyles.github.io/webduino/WebSerial.html
 		let serial_selProductId = "";
 		let serial_selVendorId = "";
 		let serial_timer;
+		let serial_closed_promise = null;
 
 		let serial_ready = false;
 		let commandBuffer = [];
@@ -778,7 +779,28 @@ https://fustyles.github.io/webduino/WebSerial.html
 
 				try {
 					var rate = Number(serial_baud.value);
-					await serial_port.open({ baudRate: rate });
+					serial_message("Connecting to Port...", "orange");
+
+					// Open with timeout race
+					const timeoutMs = 10000;
+					const openPromise = serial_port.open({ baudRate: rate });
+					let openTimeout = false;
+
+					const timeoutPromise = new Promise((resolve) => {
+						setTimeout(() => {
+							openTimeout = true;
+							resolve("TIMEOUT");
+						}, timeoutMs);
+					});
+
+					const result = await Promise.race([openPromise, timeoutPromise]);
+
+					if (result === "TIMEOUT") {
+						serial_message("Connection taking longer than expected (10s)... Please wait or refresh.", "red");
+						// We still wait for the actual open to potentially finish if it's just slow
+						await openPromise;
+					}
+
 					var msg = "VendorId: " + serial_selVendorId.toString(16) + " ProductId: " + serial_selProductId.toString(16) + " Ready!";
 					serial_message(msg, "blue");
 
@@ -788,6 +810,7 @@ https://fustyles.github.io/webduino/WebSerial.html
 					//await serial_port.setSignals({ dataTerminalReady: true });
 
 					const closed = readUntilClosed();
+					serial_closed_promise = closed;
 
 					serial_ready = true;
 					fillChartArray();
@@ -811,14 +834,48 @@ https://fustyles.github.io/webduino/WebSerial.html
 		serial_buttonClose.addEventListener('click', async () => {
 			try {
 				if (serial_port) {
-					/*
+					// Close Readable Stream
 					serial_keepReading = false;
-					serial_reader.cancel();
-					await closed;
-					*/
+					if (serial_reader) {
+						try {
+							await serial_reader.cancel();
+						} catch (e) {
+							console.log("Reader cancel error (safely ignored):", e);
+						}
+					}
+					if (serial_closed_promise) {
+						await serial_closed_promise;
+					}
 
-					serial_port.close();
+					// Close Writable Stream (TextEncoder pipe)
+					if (serial_selProductId && serial_textEncoder[serial_selProductId]) {
+						try {
+							const textEncoder = serial_textEncoder[serial_selProductId];
+							const writableStreamClosed = serial_writableStreamClosed[serial_selProductId];
+
+							if (textEncoder.writable) {
+								const writer = textEncoder.writable.getWriter();
+								await writer.close();
+							}
+
+							if (writableStreamClosed) {
+								await writableStreamClosed;
+							}
+						} catch (e) {
+							console.log("Writable close error (safely ignored):", e);
+						}
+
+						delete serial_textEncoder[serial_selProductId];
+						delete serial_writableStreamClosed[serial_selProductId];
+					}
+
+					await serial_port.close();
 					serial_port = null;
+					serial_closed_promise = null;
+
+					// Reset UI State if needed
+					serial_ready = false;
+
 					serial_message("Closed", "blue");
 				}
 			} catch (error) {
