@@ -94,6 +94,31 @@ https://fustyles.github.io/webduino/WebSerial.html
 		.screen .button-container button:last-child {
 			text-align: right;
 		}
+
+		.indicator-container {
+			display: flex;
+			gap: 5px;
+			align-items: center;
+		}
+
+		.indicator {
+			width: 25px;
+			height: 25px;
+			border-radius: 50%;
+			background-color: gray;
+			border: 1px solid #333;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			color: white;
+			font-size: 12px;
+			font-weight: bold;
+		}
+
+		.indicator.on {
+			background-color: #00ff00;
+			box-shadow: 0 0 5px #00ff00;
+		}
 	</style>
 </head>
 
@@ -165,6 +190,23 @@ https://fustyles.github.io/webduino/WebSerial.html
 						</td>
 						<td>
 							<button id="serial_sendUint8">Send Uint8Array</button>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label>State: </label>
+							<input type="text" id="systemStateDisplay" readonly
+								style="width: 150px; text-align: center;">
+						</td>
+						<td>
+							<div class="indicator-container">
+								<div id="led_s1" class="indicator" title="Motor">S1</div>
+								<div id="led_s2" class="indicator" title="Detect Valve">S2</div>
+								<div id="led_s3" class="indicator" title="Neck Valve">S3</div>
+								<div id="led_s4" class="indicator" title="Head Valve">S4</div>
+								<div id="led_s5" class="indicator" title="Pump In">S5</div>
+								<div id="led_s6" class="indicator" title="Pump In">S6</div>
+							</div>
 						</td>
 					</tr>
 					<tr>
@@ -929,6 +971,19 @@ https://fustyles.github.io/webduino/WebSerial.html
 		//         pressure1, pressure2, pressure3, differential, last5pointAvg, prev5pointAvg, state, onoff_event, predict_Pose, Pose_event
 		let pressure1, pressure2, pressure3, differential, state, onoff_event, last5pointAvg, prev5pointAvg, predict_Pose, Pose_event;
 
+		const SystemState = [
+			"INIT",
+			"DRAIN_ALL",
+			"FILL_MONITOR",
+			"FILL_NECK",
+			"FILL_HEAD",
+			"STANDBY",
+			"ADJUSTING_HEIGHT",
+			"RESET_MONITOR",
+			"REFILL_MONITOR",
+			"MANUAL_CONTROL"
+		];
+
 		let debugDataBuffer = ""; // Static variable to hold incomplete debug data
 		let parsedData = {};
 
@@ -1029,6 +1084,9 @@ https://fustyles.github.io/webduino/WebSerial.html
 							serial_status.scrollTop = serial_status.scrollHeight;
 						}
 						state = value;
+						const stateName = SystemState[state] || "UNKNOWN (" + state + ")";
+						const stateDisplay = document.getElementById('systemStateDisplay');
+						if (stateDisplay) stateDisplay.value = stateName;
 					}
 					if (index == 2) {
 						serial_status.innerHTML += "<font color='" + colour + "'>" + "onoff: " + value + "</font><br>";
@@ -1036,6 +1094,17 @@ https://fustyles.github.io/webduino/WebSerial.html
 							serial_status.scrollTop = serial_status.scrollHeight;
 						}
 						onoff_event = value;
+						for (let i = 1; i <= 6; i++) {
+							const isOn = (onoff_event >> (i - 1)) & 1;
+							const led = document.getElementById('led_s' + i);
+							if (led) {
+								if (isOn) {
+									led.classList.add('on');
+								} else {
+									led.classList.remove('on');
+								}
+							}
+						}
 					}
 					if (index == 3) {
 						serial_status.innerHTML += "<font color='" + colour + "'>" + "last5: " + value + "</font><br>";
