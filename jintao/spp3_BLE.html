@@ -945,9 +945,11 @@ https://fustyles.github.io/webduino/WebSerial.html
 				serial_status.scrollTop = serial_status.scrollHeight;
 			}
 
+
+
 			const dataString = msg.toString().replace('\r\n', '');  // Convert buffer data to string
-			// Robust parsing: split by space/comma, remove empty entries, parse floats
-			const dataPoints = dataString.split(/[\s,]+/).filter(Boolean).map(parseFloat);  // Parse data into numbers
+			// Robust parsing: split by space/comma, remove empty entries
+			let dataPoints = dataString.split(/[\s,]+/).filter(Boolean);
 
 			// Append the new message to the buffer
 			debugDataBuffer += msg;
@@ -973,155 +975,175 @@ https://fustyles.github.io/webduino/WebSerial.html
 			}
 
 
-			if (isValidFloatString3(dataString)) {
+			if (dataPoints.length > 0) {
+				const prefix = dataPoints[0];
 
-				// Update chart data and labels
-				var now = new Date();
-				if (chart_data_count % 10 == 0) {
-					chart.data.labels.push(now.toISOString().slice(-13, -4));  // Add timestamp as label
-				} else {
-					chart.data.labels.push("");  // Add timestamp as label
-				}
-				if (chart_data_count > 50) {
-					chart.data.labels.shift();
-				}
-				dataPoints.forEach((value, index) => {
-					chart.data.datasets[index].data.push(value);
-					if (chart_data_count > 50) {
-						chart.data.datasets[index].data.shift();
+				if (prefix.startsWith("P:")) {
+					// Handle Pressure Data (P: val1 val2 val3)
+					// Remove prefix part "P:" from first element if it's attached, or shift if separated space
+					let values = [];
+					if (prefix === "P:") {
+						values = dataPoints.slice(1).map(parseFloat);
+					} else {
+						// P:123
+						let firstVal = prefix.substring(2);
+						values = [parseFloat(firstVal), ...dataPoints.slice(1).map(parseFloat)];
 					}
-					if (index == 0) {
-						pressure1 = value;
-					}
-					if (index == 1) {
-						pressure2 = value;
-					}
-					if (index == 2) {
-						pressure3 = value;
-					}
-				});
-				// Update the chart
-				chart.update();
-			}
 
-			if (isValidData7(dataString)) {
-				dataPoints.forEach((value, index) => {
-					if (index == 0) {
-						serial_status.innerHTML += "<font color='" + colour + "'>" + "diff: " + value + "</font><br>";
-						if (scrollControl === "auto") {
-							serial_status.scrollTop = serial_status.scrollHeight;
-						}
+					if (values.length >= 3) {
 						// Update chart data and labels
 						var now = new Date();
 						if (chart_data_count % 10 == 0) {
-							chart3.data.labels.push(now.toISOString().slice(-13, -4));  // Add timestamp as label
+							chart.data.labels.push(now.toISOString().slice(-13, -4));  // Add timestamp as label
 						} else {
-							chart3.data.labels.push("");  // Add timestamp as label
+							chart.data.labels.push("");  // Add timestamp as label
 						}
 						if (chart_data_count > 50) {
-							chart3.data.labels.shift();
+							chart.data.labels.shift();
 						}
-						chart3.data.datasets[0].data.push(value);
-						if (chart_data_count > 50) {
-							chart3.data.datasets[0].data.shift();
-						}
-						differential = value;
-						chart3.update();
+
+						values.forEach((value, index) => {
+							if (index < 3) { // Only take first 3
+								chart.data.datasets[index].data.push(value);
+								if (chart_data_count > 50) {
+									chart.data.datasets[index].data.shift();
+								}
+								if (index == 0) pressure1 = value;
+								if (index == 1) pressure2 = value;
+								if (index == 2) pressure3 = value;
+							}
+						});
+						// Update the chart
+						chart.update();
+					}
+				}
+				else if (prefix.startsWith("I:")) {
+					// Handle Info Data (I: val1 val2 ... val7)
+					let values = [];
+					if (prefix === "I:") {
+						values = dataPoints.slice(1).map(parseFloat);
+					} else {
+						let firstVal = prefix.substring(2);
+						values = [parseFloat(firstVal), ...dataPoints.slice(1).map(parseFloat)];
 					}
 
-					if (index == 1) {
-						serial_status.innerHTML += "<font color='" + colour + "'>" + "state: " + value + "</font><br>";
-						if (scrollControl === "auto") {
-							serial_status.scrollTop = serial_status.scrollHeight;
-						}
-						state = value;
-						const stateName = SystemState[state] || "UNKNOWN (" + state + ")";
-						const stateDisplay = document.getElementById('systemStateDisplay');
-						if (stateDisplay) stateDisplay.value = stateName;
-					}
-					if (index == 2) {
-						serial_status.innerHTML += "<font color='" + colour + "'>" + "onoff: " + value + "</font><br>";
-						if (scrollControl === "auto") {
-							serial_status.scrollTop = serial_status.scrollHeight;
-						}
-						onoff_event = value;
-						for (let i = 1; i <= 6; i++) {
-							const isOn = (onoff_event >> (i - 1)) & 1;
-							const led = document.getElementById('led_s' + i);
-							if (led) {
-								if (isOn) {
-									led.classList.add('on');
+					if (values.length >= 7) {
+						values.forEach((value, index) => {
+							if (index == 0) {
+								serial_status.innerHTML += "<font color='" + colour + "'>" + "diff: " + value + "</font><br>";
+								if (scrollControl === "auto") {
+									serial_status.scrollTop = serial_status.scrollHeight;
+								}
+								// Update chart data and labels
+								var now = new Date();
+								if (chart_data_count % 10 == 0) {
+									chart3.data.labels.push(now.toISOString().slice(-13, -4));  // Add timestamp as label
 								} else {
-									led.classList.remove('on');
+									chart3.data.labels.push("");  // Add timestamp as label
+								}
+								if (chart_data_count > 50) {
+									chart3.data.labels.shift();
+								}
+								chart3.data.datasets[0].data.push(value);
+								if (chart_data_count > 50) {
+									chart3.data.datasets[0].data.shift();
+								}
+								differential = value;
+								chart3.update();
+							}
+
+							if (index == 1) {
+								serial_status.innerHTML += "<font color='" + colour + "'>" + "state: " + value + "</font><br>";
+								if (scrollControl === "auto") {
+									serial_status.scrollTop = serial_status.scrollHeight;
+								}
+								state = value;
+								const stateName = SystemState[state] || "UNKNOWN (" + state + ")";
+								const stateDisplay = document.getElementById('systemStateDisplay');
+								if (stateDisplay) stateDisplay.value = stateName;
+							}
+							if (index == 2) {
+								serial_status.innerHTML += "<font color='" + colour + "'>" + "onoff: " + value + "</font><br>";
+								if (scrollControl === "auto") {
+									serial_status.scrollTop = serial_status.scrollHeight;
+								}
+								onoff_event = value;
+								for (let i = 1; i <= 6; i++) {
+									const isOn = (onoff_event >> (i - 1)) & 1;
+									const led = document.getElementById('led_s' + i);
+									if (led) {
+										if (isOn) {
+											led.classList.add('on');
+										} else {
+											led.classList.remove('on');
+										}
+									}
 								}
 							}
-						}
-					}
-					if (index == 3) {
-						serial_status.innerHTML += "<font color='" + colour + "'>" + "last5: " + value + "</font><br>";
-						if (scrollControl === "auto") {
-							serial_status.scrollTop = serial_status.scrollHeight;
-						}
-						// Update chart data and labels
-						var now = new Date();
-						if (chart_data_count % 10 == 0) {
-							chart2.data.labels.push(now.toISOString().slice(-13, -4));  // Add timestamp as label
-						} else {
-							chart2.data.labels.push("");  // Add timestamp as label
-						}
-						if (chart_data_count > 50) {
-							chart2.data.labels.shift();
-						}
-						chart2.data.datasets[0].data.push(value);
-						if (chart_data_count > 50) {
-							chart2.data.datasets[0].data.shift();
-						}
-						last5pointAvg = value;
-					}
-					if (index == 4) {
-						serial_status.innerHTML += "<font color='" + colour + "'>" + "prev5: " + value + "</font><br>";
-						if (scrollControl === "auto") {
-							serial_status.scrollTop = serial_status.scrollHeight;
-						}
-						// Update chart data and labels
-						chart2.data.datasets[1].data.push(value);
-						if (chart_data_count > 50) {
-							chart2.data.datasets[1].data.shift();
-						}
-						prev5pointAvg = value;
-						chart2.update();
-					}
-					if (index == 5) {
-						serial_status.innerHTML += "<font color='" + colour + "'>" + "predict_pose: " + value + "</font><br>";
-						if (scrollControl === "auto") {
-							serial_status.scrollTop = serial_status.scrollHeight;
-						}
-						predict_Pose = value;
-					}
-					if (index == 6) {
-						serial_status.innerHTML += "<font color='" + colour + "'>" + "pose: " + value + "</font><br>";
-						if (scrollControl === "auto") {
-							serial_status.scrollTop = serial_status.scrollHeight;
-						}
-						Pose_event = value;
-					}
-				});
-				console.log(chart_data_count);
-				chart_data_count++;
+							if (index == 3) {
+								serial_status.innerHTML += "<font color='" + colour + "'>" + "last5: " + value + "</font><br>";
+								if (scrollControl === "auto") {
+									serial_status.scrollTop = serial_status.scrollHeight;
+								}
+								// Update chart data and labels
+								var now = new Date();
+								if (chart_data_count % 10 == 0) {
+									chart2.data.labels.push(now.toISOString().slice(-13, -4));  // Add timestamp as label
+								} else {
+									chart2.data.labels.push("");  // Add timestamp as label
+								}
+								if (chart_data_count > 50) {
+									chart2.data.labels.shift();
+								}
+								chart2.data.datasets[0].data.push(value);
+								if (chart_data_count > 50) {
+									chart2.data.datasets[0].data.shift();
+								}
+								last5pointAvg = value;
+							}
+							if (index == 4) {
+								serial_status.innerHTML += "<font color='" + colour + "'>" + "prev5: " + value + "</font><br>";
+								if (scrollControl === "auto") {
+									serial_status.scrollTop = serial_status.scrollHeight;
+								}
+								// Update chart data and labels
+								chart2.data.datasets[1].data.push(value);
+								if (chart_data_count > 50) {
+									chart2.data.datasets[1].data.shift();
+								}
+								prev5pointAvg = value;
+								chart2.update();
+							}
+							if (index == 5) {
+								serial_status.innerHTML += "<font color='" + colour + "'>" + "predict_pose: " + value + "</font><br>";
+								if (scrollControl === "auto") {
+									serial_status.scrollTop = serial_status.scrollHeight;
+								}
+								predict_Pose = value;
+							}
+							if (index == 6) {
+								serial_status.innerHTML += "<font color='" + colour + "'>" + "pose: " + value + "</font><br>";
+								if (scrollControl === "auto") {
+									serial_status.scrollTop = serial_status.scrollHeight;
+								}
+								Pose_event = value;
+							}
+						});
+						console.log(chart_data_count);
+						chart_data_count++;
 
+						// store to db
+						const dataToSave = [pressure1, pressure2, pressure3, differential, last5pointAvg, prev5pointAvg, state, onoff_event, predict_Pose, Pose_event];
 
-
-
-				// store to db
-				const dataToSave = [pressure1, pressure2, pressure3, differential, last5pointAvg, prev5pointAvg, state, onoff_event, predict_Pose, Pose_event];
-
-				let combinedCommands = commandBuffer.join('; ');
-				DBModule.save(dataToSave, combinedCommands).then(() => {
-					console.log('Data saved');
-					commandBuffer = []; // Clear buffer after saving
-				}).catch(error => {
-					console.error('Save error:', error);
-				});
+						let combinedCommands = commandBuffer.join('; ');
+						DBModule.save(dataToSave, combinedCommands).then(() => {
+							console.log('Data saved');
+							commandBuffer = []; // Clear buffer after saving
+						}).catch(error => {
+							console.error('Save error:', error);
+						});
+					}
+				}
 			}
 		}
 
