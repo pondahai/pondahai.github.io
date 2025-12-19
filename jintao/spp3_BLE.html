@@ -890,8 +890,8 @@ https://fustyles.github.io/webduino/WebSerial.html
 			// Regular expression to match a valid floating-point number
 			const floatRegex = /^-?\d+\.?\d*$/;
 
-			// Split the input string into an array of strings
-			const dataPoints = inputString.split(' ');
+			// Split the input string into an array of strings by spaces or commas, filter out empty strings
+			const dataPoints = inputString.split(/[\s,]+/).filter(Boolean);
 
 			// Check if the number of data points is exactly 3
 			if (dataPoints.length !== 3) {
@@ -903,12 +903,15 @@ https://fustyles.github.io/webduino/WebSerial.html
 		}
 
 		function isValidData7(inputString) {
-			const dataPoints = inputString.split(' ');
+			// Split by spaces or commas, filter empty strings
+			const dataPoints = inputString.split(/[\s,]+/).filter(Boolean);
+
 			if (dataPoints.length !== 7) {
 				return false;
 			}
 
-			return true;
+			// Validate all are numbers
+			return dataPoints.every(point => !isNaN(parseFloat(point)));
 		}
 
 		// P指令回傳: 三組壓力值的浮點數 分別代表: 監測 頸部 頭部
@@ -943,7 +946,8 @@ https://fustyles.github.io/webduino/WebSerial.html
 			}
 
 			const dataString = msg.toString().replace('\r\n', '');  // Convert buffer data to string
-			const dataPoints = dataString.split(' ').map(parseFloat);  // Parse data into numbers
+			// Robust parsing: split by space/comma, remove empty entries, parse floats
+			const dataPoints = dataString.split(/[\s,]+/).filter(Boolean).map(parseFloat);  // Parse data into numbers
 
 			// Append the new message to the buffer
 			debugDataBuffer += msg;
