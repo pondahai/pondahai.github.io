@@ -94,6 +94,31 @@ https://fustyles.github.io/webduino/WebSerial.html
 		.screen .button-container button:last-child {
 			text-align: right;
 		}
+
+		.indicator-container {
+			display: flex;
+			gap: 5px;
+			align-items: center;
+		}
+
+		.indicator {
+			width: 25px;
+			height: 25px;
+			border-radius: 50%;
+			background-color: gray;
+			border: 1px solid #333;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			color: white;
+			font-size: 12px;
+			font-weight: bold;
+		}
+
+		.indicator.on {
+			background-color: #00ff00;
+			box-shadow: 0 0 5px #00ff00;
+		}
 	</style>
 </head>
 
@@ -107,7 +132,7 @@ https://fustyles.github.io/webduino/WebSerial.html
 					<tr>
 						<td>
 							<label for="yAxisMax">Y軸最大值:</label>
-							<input type="number" id="yAxisMax" value="4000000">
+							<input type="number" id="yAxisMax" value="9000000">
 						</td>
 						<td>
 							<label for="yAxisMin">Y軸最小值:</label>
@@ -165,6 +190,23 @@ https://fustyles.github.io/webduino/WebSerial.html
 						</td>
 						<td>
 							<button id="serial_sendUint8">Send Uint8Array</button>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label>State: </label>
+							<input type="text" id="systemStateDisplay" readonly
+								style="width: 150px; text-align: center;">
+						</td>
+						<td>
+							<div class="indicator-container">
+								<div id="led_s1" class="indicator" title="Motor">S1</div>
+								<div id="led_s2" class="indicator" title="Detect Valve">S2</div>
+								<div id="led_s3" class="indicator" title="Neck Valve">S3</div>
+								<div id="led_s4" class="indicator" title="Head Valve">S4</div>
+								<div id="led_s5" class="indicator" title="Pump In">S5</div>
+								<div id="led_s6" class="indicator" title="Pump In">S6</div>
+							</div>
 						</td>
 					</tr>
 					<tr>
@@ -353,9 +395,12 @@ https://fustyles.github.io/webduino/WebSerial.html
 		let serial_selProductId = "";
 		let serial_selVendorId = "";
 		let serial_timer;
+		let serial_closed_promise = null;
 
 		let serial_ready = false;
-		let lastSentCommand = "";
+		let commandBuffer = [];
+
+
 
 		// Initialize the chart
 		const ctx = document.getElementById('pressureChart').getContext('2d');
@@ -390,7 +435,7 @@ https://fustyles.github.io/webduino/WebSerial.html
 				maintainAspectRatio: false,
 				scales: {
 					y: {
-						max: 4000000,
+						max: 9000000,
 						min: 80000,
 					},
 					yAxes: [{
@@ -686,7 +731,7 @@ https://fustyles.github.io/webduino/WebSerial.html
 									if (serial_readSting != "")
 										serial_message(serial_readSting, "green");
 									serial_readSting = "";
-								}, 10);
+								}, 100);
 							}
 						}
 					}
@@ -734,7 +779,28 @@ https://fustyles.github.io/webduino/WebSerial.html
 
 				try {
 					var rate = Number(serial_baud.value);
-					await serial_port.open({ baudRate: rate });
+					serial_message("Connecting to Port...", "orange");
+
+					// Open with timeout race
+					const timeoutMs = 10000;
+					const openPromise = serial_port.open({ baudRate: rate });
+					let openTimeout = false;
+
+					const timeoutPromise = new Promise((resolve) => {
+						setTimeout(() => {
+							openTimeout = true;
+							resolve("TIMEOUT");
+						}, timeoutMs);
+					});
+
+					const result = await Promise.race([openPromise, timeoutPromise]);
+
+					if (result === "TIMEOUT") {
+						serial_message("Connection taking longer than expected (10s)... Please wait or refresh.", "red");
+						// We still wait for the actual open to potentially finish if it's just slow
+						await openPromise;
+					}
+
 					var msg = "VendorId: " + serial_selVendorId.toString(16) + " ProductId: " + serial_selProductId.toString(16) + " Ready!";
 					serial_message(msg, "blue");
 
@@ -744,6 +810,7 @@ https://fustyles.github.io/webduino/WebSerial.html
 					//await serial_port.setSignals({ dataTerminalReady: true });
 
 					const closed = readUntilClosed();
+					serial_closed_promise = closed;
 
 					serial_ready = true;
 					fillChartArray();
@@ -767,14 +834,48 @@ https://fustyles.github.io/webduino/WebSerial.html
 		serial_buttonClose.addEventListener('click', async () => {
 			try {
 				if (serial_port) {
-					/*
+					// Close Readable Stream
 					serial_keepReading = false;
-					serial_reader.cancel();
-					await closed;
-					*/
+					if (serial_reader) {
+						try {
+							await serial_reader.cancel();
+						} catch (e) {
+							console.log("Reader cancel error (safely ignored):", e);
+						}
+					}
+					if (serial_closed_promise) {
+						await serial_closed_promise;
+					}
 
-					serial_port.close();
+					// Close Writable Stream (TextEncoder pipe)
+					if (serial_selProductId && serial_textEncoder[serial_selProductId]) {
+						try {
+							const textEncoder = serial_textEncoder[serial_selProductId];
+							const writableStreamClosed = serial_writableStreamClosed[serial_selProductId];
+
+							if (textEncoder.writable) {
+								const writer = textEncoder.writable.getWriter();
+								await writer.close();
+							}
+
+							if (writableStreamClosed) {
+								await writableStreamClosed;
+							}
+						} catch (e) {
+							console.log("Writable close error (safely ignored):", e);
+						}
+
+						delete serial_textEncoder[serial_selProductId];
+						delete serial_writableStreamClosed[serial_selProductId];
+					}
+
+					await serial_port.close();
 					serial_port = null;
+					serial_closed_promise = null;
+
+					// Reset UI State if needed
+					serial_ready = false;
+
 					serial_message("Closed", "blue");
 				}
 			} catch (error) {
@@ -789,7 +890,7 @@ https://fustyles.github.io/webduino/WebSerial.html
 					serial_newline.value = serial_newline.value.replace(/\\n/g, "\n");
 					serial_newline.value = serial_newline.value.replace(/\\r/g, "\r");
 					var msg = serial_text.value + serial_newline.value;
-					lastSentCommand = msg;
+					logCommand(msg);
 					serial_message(msg, "orange");
 					serial_text.value = "";
 
@@ -815,7 +916,7 @@ https://fustyles.github.io/webduino/WebSerial.html
 					serial_message(serial_uint8.value, "orange");
 					var intArray = serial_uint8.value.split(",");
 					msg = String.fromCharCode.apply(null, intArray);
-					lastSentCommand = "Uint8: " + serial_uint8.value;
+					logCommand("Uint8: " + serial_uint8.value);
 					serial_uint8.value = "";
 
 					serial_writer[serial_selProductId] = serial_port.writable.getWriter();
@@ -839,7 +940,7 @@ https://fustyles.github.io/webduino/WebSerial.html
 			if (serial_port && serial_writer) {
 				try {
 					var msg = "synctime," + utcString + serial_newline.value;
-					lastSentCommand = msg;
+					logCommand(msg);
 					serial_message(msg, "orange");
 					serial_text.value = "";
 
@@ -870,7 +971,7 @@ https://fustyles.github.io/webduino/WebSerial.html
 					let infoString = `${gender},${age},${height},${weight}`;
 
 					var msg = "user," + infoString;
-					lastSentCommand = msg;
+					logCommand(msg);
 					serial_message(msg, "orange");
 					serial_text.value = "";
 
@@ -928,6 +1029,19 @@ https://fustyles.github.io/webduino/WebSerial.html
 		// 資料庫欄位:
 		//         pressure1, pressure2, pressure3, differential, last5pointAvg, prev5pointAvg, state, onoff_event, predict_Pose, Pose_event
 		let pressure1, pressure2, pressure3, differential, state, onoff_event, last5pointAvg, prev5pointAvg, predict_Pose, Pose_event;
+
+		const SystemState = [
+			"INIT",
+			"DRAIN_ALL",
+			"FILL_MONITOR",
+			"FILL_NECK",
+			"FILL_HEAD",
+			"STANDBY",
+			"ADJUSTING_HEIGHT",
+			"RESET_MONITOR",
+			"REFILL_MONITOR",
+			"MANUAL_CONTROL"
+		];
 
 		let debugDataBuffer = ""; // Static variable to hold incomplete debug data
 		let parsedData = {};
@@ -1029,6 +1143,9 @@ https://fustyles.github.io/webduino/WebSerial.html
 							serial_status.scrollTop = serial_status.scrollHeight;
 						}
 						state = value;
+						const stateName = SystemState[state] || "UNKNOWN (" + state + ")";
+						const stateDisplay = document.getElementById('systemStateDisplay');
+						if (stateDisplay) stateDisplay.value = stateName;
 					}
 					if (index == 2) {
 						serial_status.innerHTML += "<font color='" + colour + "'>" + "onoff: " + value + "</font><br>";
@@ -1036,6 +1153,17 @@ https://fustyles.github.io/webduino/WebSerial.html
 							serial_status.scrollTop = serial_status.scrollHeight;
 						}
 						onoff_event = value;
+						for (let i = 1; i <= 6; i++) {
+							const isOn = (onoff_event >> (i - 1)) & 1;
+							const led = document.getElementById('led_s' + i);
+							if (led) {
+								if (isOn) {
+									led.classList.add('on');
+								} else {
+									led.classList.remove('on');
+								}
+							}
+						}
 					}
 					if (index == 3) {
 						serial_status.innerHTML += "<font color='" + colour + "'>" + "last5: " + value + "</font><br>";
@@ -1090,16 +1218,32 @@ https://fustyles.github.io/webduino/WebSerial.html
 				chart_data_count++;
 
 
+
+
 				// store to db
 				const dataToSave = [pressure1, pressure2, pressure3, differential, last5pointAvg, prev5pointAvg, state, onoff_event, predict_Pose, Pose_event];
-				DBModule.save(dataToSave, lastSentCommand).then(() => {
+
+				let combinedCommands = commandBuffer.join('; ');
+				DBModule.save(dataToSave, combinedCommands).then(() => {
 					console.log('Data saved');
-					lastSentCommand = ""; // Clear the command after saving
+					commandBuffer = []; // Clear buffer after saving
 				}).catch(error => {
 					console.error('Save error:', error);
 				});
 			}
 		}
+
+		function logCommand(command) {
+			const now = new Date();
+			const timeString = now.getHours().toString().padStart(2, '0') + ':' +
+				now.getMinutes().toString().padStart(2, '0') + ':' +
+				now.getSeconds().toString().padStart(2, '0') + '.' +
+				now.getMilliseconds().toString().padStart(3, '0');
+
+			commandBuffer.push(`${command} @${timeString}`);
+			console.log('Command buffered: ' + command);
+		}
+
 		var func_count = 0;
 		setInterval(async function () {
 			if (serial_port && serial_writer && serial_ready) {
@@ -1134,7 +1278,7 @@ https://fustyles.github.io/webduino/WebSerial.html
 			if (serial_port && serial_writer) {
 				try {
 					var msg = cmdStr;
-					lastSentCommand = msg;
+					logCommand(msg);
 					serial_message(msg, "orange");
 					serial_text.value = "";
 
