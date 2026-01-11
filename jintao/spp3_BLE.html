@@ -385,6 +385,34 @@ https://fustyles.github.io/webduino/WebSerial.html
 		let serial_ready = false;
 		let commandBuffer = [];
 
+		// BLE Queue to handle sequential operations
+		const bleQueue = {
+			queue: [],
+			isProcessing: false,
+			add: function (fn) {
+				this.queue.push(fn);
+				this.process();
+			},
+			process: async function () {
+				if (this.isProcessing || this.queue.length === 0) return;
+
+				this.isProcessing = true;
+				const task = this.queue.shift();
+
+				try {
+					await task();
+				} catch (error) {
+					console.error("BLE Queue Error:", error);
+					serial_message("Queue Error: " + error.message, "red");
+				} finally {
+					this.isProcessing = false;
+					if (this.queue.length > 0) {
+						this.process();
+					}
+				}
+			}
+		};
+
 
 
 		// Initialize the chart
@@ -807,7 +835,9 @@ https://fustyles.github.io/webduino/WebSerial.html
 					serial_text.value = "";
 
 					let encoder = new TextEncoder();
-					await rxCharacteristic.writeValue(encoder.encode(msg));
+					bleQueue.add(async () => {
+						await rxCharacteristic.writeValue(encoder.encode(msg));
+					});
 				} catch (error) {
 					serial_message(error.message, "red");
 				}
@@ -825,7 +855,9 @@ https://fustyles.github.io/webduino/WebSerial.html
 					serial_uint8.value = "";
 
 					const data = new Uint8Array(intArray);
-					await rxCharacteristic.writeValue(data);
+					bleQueue.add(async () => {
+						await rxCharacteristic.writeValue(data);
+					});
 				} catch (error) {
 					serial_message(error.message, "red");
 				}
@@ -847,7 +879,9 @@ https://fustyles.github.io/webduino/WebSerial.html
 					serial_text.value = "";
 
 					let encoder = new TextEncoder();
-					await rxCharacteristic.writeValue(encoder.encode(msg));
+					bleQueue.add(async () => {
+						await rxCharacteristic.writeValue(encoder.encode(msg));
+					});
 				} catch (error) {
 					serial_message(error.message, "red");
 				}
@@ -871,7 +905,9 @@ https://fustyles.github.io/webduino/WebSerial.html
 					serial_text.value = "";
 
 					let encoder = new TextEncoder();
-					await rxCharacteristic.writeValue(encoder.encode(msg));
+					bleQueue.add(async () => {
+						await rxCharacteristic.writeValue(encoder.encode(msg));
+					});
 				} catch (error) {
 					serial_message(error.message, "red");
 				}
@@ -1174,7 +1210,9 @@ https://fustyles.github.io/webduino/WebSerial.html
 					//serial_text.value = "";
 
 					let encoder = new TextEncoder();
-					await rxCharacteristic.writeValue(encoder.encode(msg));
+					bleQueue.add(async () => {
+						await rxCharacteristic.writeValue(encoder.encode(msg));
+					});
 				} catch (error) {
 					serial_message(error.message, "red");
 				}
@@ -1190,7 +1228,9 @@ https://fustyles.github.io/webduino/WebSerial.html
 					serial_text.value = "";
 
 					let encoder = new TextEncoder();
-					await rxCharacteristic.writeValue(encoder.encode(msg));
+					bleQueue.add(async () => {
+						await rxCharacteristic.writeValue(encoder.encode(msg));
+					});
 				} catch (error) {
 					serial_message(error.message, "red");
 				}
