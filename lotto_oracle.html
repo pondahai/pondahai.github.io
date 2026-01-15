@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>時間線預測器 - 威力彩模式</title>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --text-primary: #e2e8f0;
+            --accent-green: #10b981;
+            --accent-red: #ef4444;
+            --accent-gold: #f59e0b;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .container {
+            background-color: var(--card-bg);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            text-align: center;
+            max-width: 600px;
+            width: 90%;
+            border: 1px solid #334155;
+            position: relative;
+        }
+
+        .header {
+            margin-bottom: 20px;
+        }
+
+        .title {
+            font-size: 1.2rem;
+            color: #94a3b8;
+            letter-spacing: 2px;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+
+        .timestamp {
+            font-family: 'Courier New', monospace;
+            font-size: 1.5rem;
+            color: var(--accent-gold);
+            font-weight: bold;
+            text-shadow: 0 0 10px rgba(245, 158, 11, 0.3);
+        }
+
+        .seed-info {
+            font-family: 'Courier New', monospace;
+            font-size: 0.8rem;
+            color: #64748b;
+            margin-top: 5px;
+        }
+
+        /* 號碼顯示區 */
+        .numbers-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin: 30px 0;
+        }
+
+        .ball {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            box-shadow: inset -2px -2px 6px rgba(0,0,0,0.3);
+            transition: transform 0.2s;
+        }
+
+        /* A區樣式 */
+        .ball.zone-a {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            border: 2px solid #34d399;
+        }
+
+        /* B區樣式 */
+        .ball.zone-b {
+            background: linear-gradient(135deg, #ef4444, #b91c1c);
+            color: white;
+            border: 2px solid #f87171;
+            margin-left: 15px; /* 分隔線 */
+            position: relative;
+        }
+        
+        /* B區上方標示 */
+        .ball.zone-b::before {
+            content: 'B';
+            position: absolute;
+            top: -20px;
+            font-size: 0.7rem;
+            color: #94a3b8;
+        }
+
+        /* 分隔線 */
+        .divider {
+            width: 2px;
+            height: 40px;
+            background-color: #475569;
+            margin: 0 5px;
+        }
+
+        /* 控制按鈕 */
+        .controls {
+            margin-top: 20px;
+        }
+
+        button {
+            background-color: #3b82f6;
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background-color: #2563eb;
+        }
+
+        button.paused {
+            background-color: #ef4444;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+        }
+
+        .footer {
+            margin-top: 15px;
+            font-size: 0.8rem;
+            color: #475569;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <div class="title">TIMELINE ORACLE</div>
+            <div class="timestamp" id="time-display">--:--:--</div>
+            <div class="seed-info">SEED: <span id="seed-val">CALCULATING...</span></div>
+        </div>
+
+        <div class="numbers-container" id="lotto-display">
+            </div>
+
+        <div class="controls">
+            <button id="toggle-btn" onclick="toggleTimer()">鎖定當下時空 (STOP)</button>
+        </div>
+
+        <div class="footer">
+            台灣彩券威力彩規則: A區 01-38 (6碼) + B區 01-08 (1碼)
+        </div>
+    </div>
+
+    <script>
+        let intervalId = null;
+        let isRunning = true;
+
+        // 輔助函數：補零
+        const pad = (num) => num.toString().padStart(2, '0');
+
+        // 生成隨機號碼
+        function generateLotto() {
+            // A區: 1-38 取 6 個不重複
+            const zoneA = new Set();
+            while(zoneA.size < 6) {
+                zoneA.add(Math.floor(Math.random() * 38) + 1);
+            }
+            // 轉為陣列並排序
+            const zoneAArray = Array.from(zoneA).sort((a, b) => a - b);
+
+            // B區: 1-8 取 1 個
+            const zoneB = Math.floor(Math.random() * 8) + 1;
+
+            return { zoneA: zoneAArray, zoneB: zoneB };
+        }
+
+        // 更新畫面
+        function updateTimeline() {
+            const now = new Date();
+            
+            // 1. 更新時間顯示
+            const timeStr = `${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
+            const msStr = Math.floor(now.getMilliseconds() / 10).toString().padStart(2, '0');
+            document.getElementById('time-display').innerText = `${timeStr}.${msStr}`;
+
+            // 2. 更新 Seed 顯示 (模擬時間戳整數)
+            document.getElementById('seed-val').innerText = now.getTime();
+
+            // 3. 生成號碼
+            const numbers = generateLotto();
+
+            // 4. 更新 DOM
+            const container = document.getElementById('lotto-display');
+            container.innerHTML = ''; // 清空
+
+            // 渲染 A 區
+            numbers.zoneA.forEach(num => {
+                const ball = document.createElement('div');
+                ball.className = 'ball zone-a';
+                ball.innerText = pad(num);
+                container.appendChild(ball);
+            });
+
+            // 分隔線
+            const divider = document.createElement('div');
+            divider.className = 'divider';
+            container.appendChild(divider);
+
+            // 渲染 B 區
+            const ballB = document.createElement('div');
+            ballB.className = 'ball zone-b';
+            ballB.innerText = pad(numbers.zoneB);
+            container.appendChild(ballB);
+        }
+
+        // 控制暫停/開始
+        function toggleTimer() {
+            const btn = document.getElementById('toggle-btn');
+            if (isRunning) {
+                clearInterval(intervalId);
+                isRunning = false;
+                btn.innerText = "重啟時間流 (RESUME)";
+                btn.classList.add('paused');
+                // 視覺效果：讓背景稍微變暗或鎖定
+                document.querySelector('.timestamp').style.color = '#ef4444';
+            } else {
+                intervalId = setInterval(updateTimeline, 100); // 這裡設為 100ms 讓視覺更流暢，或者設為 1000 每一秒跳一次
+                isRunning = true;
+                btn.innerText = "鎖定當下時空 (STOP)";
+                btn.classList.remove('paused');
+                document.querySelector('.timestamp').style.color = '#f59e0b';
+            }
+        }
+
+        // 初始啟動：設定為每秒更新一次 (1000ms)，若要更有「流動感」可改為 100ms
+        intervalId = setInterval(updateTimeline, 1000);
+        updateTimeline(); // 立即執行一次
+
+    </script>
+</body>
+</html>
