@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Maze with Player</title>
+    <style>
+        canvas { 
+            border: 1px solid black; 
+            display: block; 
+            margin: 20px auto; 
+        }
+    </style>
+</head>
+<body>
+    <canvas id="mazeCanvas" width="300" height="300"></canvas>
+
+    <script>
+        const canvas = document.getElementById('mazeCanvas');
+        const ctx = canvas.getContext('2d');
+        const size = 30;
+        const cellSize = canvas.width / size;
+        let maze = [];
+        let playerPos = {x: 0, y: 0}; // 玩家起點
+        let goalPos = {x: size - 1, y: size - 1}; // 終點
+        let path = [];
+
+        // 初始化迷宮
+        for(let y = 0; y < size; y++) {
+            maze[y] = [];
+            for(let x = 0; x < size; x++) {
+                maze[y][x] = {
+                    visited: false,
+                    walls: [true, true, true, true] // 上, 右, 下, 左
+                };
+            }
+        }
+
+        // 生成迷宮
+        function generateMaze(x, y) {
+            maze[y][x].visited = true;
+            const directions = [[0, -1], [1, 0], [0, 1], [-1, 0]];
+            directions.sort(() => Math.random() - 0.5);
+            
+            for(let [dx, dy] of directions) {
+                let nx = x + dx, ny = y + dy;
+                if(nx >= 0 && nx < size && ny >= 0 && ny < size && !maze[ny][nx].visited) {
+                    let wallIndex = dy > 0 ? 2 : (dy < 0 ? 0 : (dx > 0 ? 1 : 3));
+                    maze[y][x].walls[wallIndex] = false;
+                    maze[ny][nx].walls[(wallIndex + 2) % 4] = false;
+                    generateMaze(nx, ny);
+                }
+            }
+        }
+
+        // 繪製迷宮
+        function drawMaze() {
+            ctx.fillStyle = "white";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.strokeStyle = "black";
+            ctx.lineWidth = 1;
+
+            for(let y = 0; y < size; y++) {
+                for(let x = 0; x < size; x++) {
+                    let cell = maze[y][x];
+                    let xPos = x * cellSize;
+                    let yPos = y * cellSize;
+
+                    if(cell.walls[0]) ctx.strokeRect(xPos, yPos, cellSize, 1); // 上
+                    if(cell.walls[1]) ctx.strokeRect(xPos + cellSize - 1, yPos, 1, cellSize); // 右
+                    if(cell.walls[2]) ctx.strokeRect(xPos, yPos + cellSize - 1, cellSize, 1); // 下
+                    if(cell.walls[3]) ctx.strokeRect(xPos, yPos, 1, cellSize); // 左
+                }
+            }
+
+            // 繪製玩家
+            ctx.fillStyle = "red";
+            ctx.beginPath();
+            ctx.arc(playerPos.x * cellSize + cellSize / 2, playerPos.y * cellSize + cellSize / 2, 5, 0, Math.PI * 2);
+            ctx.fill();
+
+            // 繪製終點
+            ctx.fillStyle = "green";
+            ctx.beginPath();
+            ctx.arc(goalPos.x * cellSize + cellSize / 2, goalPos.y * cellSize + cellSize / 2, 5, 0, Math.PI * 2);
+            ctx.fill();
+
+            // 繪製路徑
+            ctx.strokeStyle = "yellow";
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            for(let i = 0; i < path.length; i++) {
+                ctx.lineTo(path[i].x * cellSize + cellSize / 2, path[i].y * cellSize + cellSize / 2);
+            }
+            ctx.stroke();
+        }
+
+        function movePlayer(dx, dy) {
+            let newX = playerPos.x + dx;
+            let newY = playerPos.y + dy;
+            
+            // 檢查新位置是否在迷宮範圍內
+            if(newX >= 0 && newX < size && newY >= 0 && newY < size) {
+                let wallIndex;
+                if(dx === 1) wallIndex = 1; // 右
+                else if(dx === -1) wallIndex = 3; // 左
+                else if(dy === 1) wallIndex = 2; // 下
+                else if(dy === -1) wallIndex = 0; // 上
+                
+                // 如果該方向的牆壁是打開的，則移動
+                if(!maze[playerPos.y][playerPos.x].walls[wallIndex]) {
+                    playerPos.x = newX;
+                    playerPos.y = newY;
+                    // 避免重複添加相同位置到路徑中
+                    if(path.length === 0 || !(path[path.length-1].x === playerPos.x && path[path.length-1].y === playerPos.y)) {
+                        path.push({x: playerPos.x, y: playerPos.y});
+                    }
+                    drawMaze();
+                }
+            }
+            
+            // 檢查是否到達終點
+            if(playerPos.x === goalPos.x && playerPos.y === goalPos.y) {
+                alert("你到達了終點！");
+            }
+        }
+
+        // 使用 document 來捕獲鍵盤事件，提高兼容性
+        document.addEventListener('keydown', (e) => {
+            e.preventDefault();
+            switch(e.key) {
+                case "ArrowLeft":
+                case "a":
+                case "A":
+                    movePlayer(-1, 0);
+                    break;
+                case "ArrowRight":
+                case "d":
+                case "D":
+                    movePlayer(1, 0);
+                    break;
+                case "ArrowUp":
+                case "w":
+                case "W":
+                    movePlayer(0, -1);
+                    break;
+                case "ArrowDown":
+                case "s":
+                case "S":
+                    movePlayer(0, 1);
+                    break;
+            }
+        });
+
+        // 開始生成迷宮
+        generateMaze(0, 0);
+        // 第一次繪製迷宮
+        drawMaze();
+    </script>
+</body>
+</html>

@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>財團法人台北市社子文教基金會</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ====== 色彩 ====== */
+    :root {
+      --primary-yellow: #ffd34d; /* 暖黃 */
+      --secondary-blue: #2f6edb; /* 教育藍 */
+      --light-gray: #f5f5f5;
+      --dark-gray: #333;
+    }
+
+    /* ====== Reset & 基礎 ====== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+      line-height: 1.6;
+      scroll-behavior: smooth;
+      color: var(--dark-gray);
+    }
+    img {
+      max-width: 100%;
+      display: block;
+    }
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* ====== Header ====== */
+    header {
+      position: sticky;
+      top: 0;
+      width: 100%;
+      background: #ffffffcc;
+      backdrop-filter: blur(6px);
+      z-index: 1000;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 1rem;
+    }
+    .logo {
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: var(--secondary-blue);
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 1.25rem;
+    }
+    nav li a {
+      font-weight: 600;
+      transition: color 0.2s;
+    }
+    nav li a:hover {
+      color: var(--primary-yellow);
+    }
+
+    /* ====== Hero ====== */
+    .hero {
+      background: url('hero.jpg') center / cover no-repeat;
+      min-height: 70vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: #fff;
+      position: relative;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.45);
+    }
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 720px;
+      padding: 0 1rem;
+    }
+    .hero h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+    .hero p {
+      font-size: 1.125rem;
+      margin-bottom: 1.5rem;
+    }
+    .btn-primary {
+      display: inline-block;
+      background: var(--primary-yellow);
+      color: var(--dark-gray);
+      padding: 0.75rem 1.5rem;
+      border-radius: 999px;
+      font-weight: 700;
+      transition: background 0.3s;
+    }
+    .btn-primary:hover {
+      background: #e6be3d;
+    }
+
+    /* ====== Section 模板 ====== */
+    section {
+      padding: 4rem 1rem;
+    }
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .section-title {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--secondary-blue);
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+
+    /* ====== About ====== */
+    .about-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+    }
+    .timeline {
+      border-left: 3px solid var(--primary-yellow);
+      padding-left: 1rem;
+    }
+    .timeline li {
+      margin-bottom: 1rem;
+    }
+
+    /* ====== News ====== */
+    .news-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+    .card {
+      background: #fff;
+      border-radius: 0.75rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .card-content {
+      padding: 1rem;
+      flex: 1;
+    }
+    .card h3 {
+      font-size: 1.125rem;
+      margin-bottom: 0.5rem;
+      color: var(--secondary-blue);
+    }
+
+    /* ====== Programs ====== */
+    .programs {
+      background: var(--light-gray);
+    }
+    .program-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1.5rem;
+    }
+    .program {
+      background: #fff;
+      border-left: 6px solid var(--primary-yellow);
+      padding: 1.25rem;
+      border-radius: 0.5rem;
+      transition: transform 0.2s;
+    }
+    .program:hover {
+      transform: translateY(-4px);
+    }
+
+    /* ====== Resource ====== */
+    .resources .card h3 {
+      color: var(--primary-yellow);
+    }
+
+    /* ====== Donate ====== */
+    .donate {
+      background: var(--secondary-blue);
+      color: #fff;
+      text-align: center;
+      padding: 3rem 1rem;
+    }
+    .donate .btn-primary {
+      background: #fff;
+      color: var(--secondary-blue);
+    }
+
+    /* ====== Contact & Footer ====== */
+    .contact-form {
+      display: grid;
+      gap: 1rem;
+    }
+    .contact-form input,
+    .contact-form textarea {
+      padding: 0.75rem;
+      border: 1px solid #ccc;
+      border-radius: 0.5rem;
+      font-size: 1rem;
+      resize: vertical;
+    }
+    footer {
+      background: var(--dark-gray);
+      color: #eee;
+      padding: 2rem 1rem;
+      text-align: center;
+    }
+
+    /* ====== 響應式 ====== */
+    @media (min-width: 768px) {
+      .hero h1 { font-size: 3rem; }
+      .hero p { font-size: 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+  <!-- ===== Header ===== -->
+  <header>
+    <div class="nav-container">
+      <div class="logo">社子文教基金會</div>
+      <nav>
+        <ul>
+          <li><a href="#about">關於我們</a></li>
+          <li><a href="#news">最新消息</a></li>
+          <li><a href="#programs">教育推廣</a></li>
+          <li><a href="#resources">學習資源</a></li>
+          <li><a href="#donate">捐款支持</a></li>
+          <li><a href="#contact">聯絡我們</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ===== Hero ===== -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>根植社子，共學共榮</h1>
+      <p>在地文化 × 教育創新 × 數位共學</p>
+      <a href="#programs" class="btn-primary">查看最新活動</a>
+    </div>
+  </section>
+
+  <!-- ===== About ===== -->
+  <section id="about">
+    <div class="container about-grid">
+      <div>
+        <h2 class="section-title">關於我們</h2>
+        <p>財團法人台北市社子文教基金會致力於響應社會公益，回饋鄉里，透過教育推廣與文化保存，為社子發聲。</p>
+        <ul class="timeline">
+          <li><strong>1993</strong> – 基金會成立</li>
+          <li><strong>2005</strong> – 圖書館開館</li>
+          <li><strong>2025</strong> – 數位學習平台啟動</li>
+        </ul>
+      </div>
+      <div>
+        <img src="about.jpg" alt="基金會活動照片" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== News ===== -->
+  <section id="news">
+    <div class="container">
+      <h2 class="section-title">最新消息</h2>
+      <div class="news-grid">
+        <!-- 卡片範例 -->
+        <div class="card">
+          <img src="news1.jpg" alt="news" />
+          <div class="card-content">
+            <h3>AI 與數位素養講座開放報名</h3>
+            <p>透過互動體驗，讓長者與學生了解AI工具。</p>
+          </div>
+        </div>
+        <div class="card">
+          <img src="news2.jpg" alt="news" />
+          <div class="card-content">
+            <h3>親子桌遊共學日</h3>
+            <p>家庭一起完成趣味任務，強化合作力！</p>
+          </div>
+        </div>
+        <!-- 其他卡片... -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Programs ===== -->
+  <section id="programs" class="programs">
+    <div class="container">
+      <h2 class="section-title">教育推廣</h2>
+      <div class="program-grid">
+        <div class="program">
+          <h3>AI素養</h3>
+          <p>讓每位社子居民掌握數位時代關鍵能力。</p>
+        </div>
+        <div class="program">
+          <h3>親子共學</h3>
+          <p>透過桌遊與手作，拉近世代距離。</p>
+        </div>
+        <div class="program">
+          <h3>樂齡生活</h3>
+          <p>中醫養生、健康講座，提升銀髮幸福感。</p>
+        </div>
+        <!-- 更多項目... -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Resources ===== -->
+  <section id="resources" class="resources">
+    <div class="container">
+      <h2 class="section-title">學習資源</h2>
+      <div class="news-grid">
+        <div class="card">
+          <div class="card-content">
+            <h3>均一平台</h3>
+            <p>免費課程 + AI 個人化學習</p>
+            <a href="https://www.junyiacademy.org" class="btn-primary" target="_blank">前往平台</a>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-content">
+            <h3>博幼線上教室</h3>
+            <p>偏鄉弱勢兒童課輔資源</p>
+            <a href="https://www.boyo.org.tw" class="btn-primary" target="_blank">深入了解</a>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-content">
+            <h3>九九文教數學題庫</h3>
+            <p>AMC 歷屆試題與解答</p>
+            <a href="https://99cef.org.tw" class="btn-primary" target="_blank">題庫試閱</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Donate ===== -->
+  <section id="donate" class="donate">
+    <h2 class="section-title" style="color:#fff;">捐款支持</h2>
+    <p>您的一份心力，讓教育善循環。</p>
+    <a href="#" class="btn-primary">立即捐款</a>
+  </section>
+
+  <!-- ===== Contact ===== -->
+  <section id="contact">
+    <div class="container">
+      <h2 class="section-title">聯絡我們</h2>
+      <form class="contact-form">
+        <input type="text" placeholder="姓名" required />
+        <input type="email" placeholder="Email" required />
+        <textarea rows="4" placeholder="留言內容"></textarea>
+        <button type="submit" class="btn-primary">送出訊息</button>
+      </form>
+      <p style="margin-top:1rem; text-align:center;">地址：台北市士林區倫等街54巷25號2樓｜電話：(02) 1234-5678｜Email：info@shezi.org.tw</p>
+    </div>
+  </section>
+
+  <!-- ===== Footer ===== -->
+  <footer>
+    <p>© 2025 財團法人台北市社子文教基金會. All Rights Reserved.</p>
+    <p>網站建置：社子基金會數位推廣組</p>
+  </footer>
+</body>
+</html>

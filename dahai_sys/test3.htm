@@ -1,0 +1,95 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=big5">
+<meta name="GENERATOR" content="Microsoft FrontPage 3.0">
+<title>大海系統測試程式三</title>
+</head>
+
+<body bgcolor="#008000">
+<div align="center"><center>
+
+<pre><font color="#FF00FF" size="6" face="華康儷粗黑"><strong>大海系統測試程式三(TEST3.ASM)</strong></font></pre>
+</center></div>
+
+<hr>
+
+<pre><font color="#FFFFFF" size="4">; DaHai system test program NO.3
+; A real time opration system on PC
+; IPL(initial program loader)
+; The PC IPL load program from disk to 0000:7c00
+; size is 1 sector(512 bytes)
+; memory map :
+;
+;   0000:0000
+;       |
+;   0000:7bff   use for stack
+;   0000:7c00   program entry point
+;   0000:7e00   initial program
+;       |
+;   0000:ffff
+
+main:
+        cli                             ; disable all interrupt
+        xor     ax,ax
+        mov     ss,ax                   ; set stack segment = 0000h
+        mov     ds,ax                   ; ds=0000h
+        mov     es,ax                   ; es=0000h
+        mov     sp,7c00h                ; set stack pointer
+        cld                             ; DF=0
+        mov     si,7c00h                ; give string position for 'lodsb'
+        mov     ax,text                 ; 'text' is the string's head
+        add     si,ax                   ; si &lt;= si + text (si=0)
+head:
+        lodsb                           ; al &lt;= ds:[si]
+        cmp     al,0h                   ; check end of string
+        je      e                       ; exit
+        mov     ah,0eh                  ; display one word by tty mode
+        mov     bx,0h                   ; (one time one word) 
+        int     10h                     ; 
+
+        jmp     head
+e:
+        mov     ax,0201h                ;read sector into memory
+        mov     cx,0002h                ;2nd sector
+        mov     dx,0000h                ;
+        mov     bx,512+7c00h            ;ES:BS = 0:7e00h (buffer)
+        sti                             ;enable interrupt
+        int     13h
+        jmp     dword 0000h:7e00h       ;jmp to test1
+end:        
+        jmp     end   
+
+text:
+        db 'Hello the world. This is DaHai system demo.',0ah,0dh,0h
+
+        resb    402
+       
+        db      055h,0aah
+test1:
+        mov     si,7c00h                ; give string position for 'lodsb'
+        mov     ax,text2                 ; 'text' is the string's head
+        add     si,ax                   ; si &lt;= si + text (si=0)
+head2:
+        lodsb                           ; al &lt;= ds:[si]
+        cmp     al,0h                   ; check end of string
+        je      e2                      ; exit
+        mov     ah,0eh                  ; display one word by tty mode
+        mov     bx,0h                   ;  
+        int     10h                     ; 
+
+        jmp     head2
+e2:
+end2:        
+        jmp     end2   
+
+text2:
+        db 'DaHai test.',0ah,0dh,0h</font></pre>
+
+<p>　</p>
+
+<hr>
+
+<p><font face="華康儷粗黑" color="#0000FF" size="6"><a href="index.htm"><strong>返回主頁</strong></a></font></p>
+</body>
+</html>

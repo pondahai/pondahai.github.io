@@ -1,0 +1,903 @@
+<!DOCTYPE HTML>
+<html lang="zh-TW">
+<head>
+    <title>台科大智慧枕墊資料收集系統 v2.0</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+    /* --- 基本 & 佈局樣式 --- */
+    body, html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        background-color: #f4f4f9;
+    }
+    .hidden {
+        display: none !important;
+    }
+    h1, h2 {
+        color: #333;
+    }
+
+    /* --- 登入頁面樣式 --- */
+    #login-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        flex-direction: column;
+        background: linear-gradient(135deg, #71b7e6, #9b59b6);
+    }
+    #login-container h1 {
+        color: white;
+        font-size: 2.5em;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+    #login-button {
+        padding: 15px 30px;
+        font-size: 1.2em;
+        color: #fff;
+        background-color: #4CAF50;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+    #login-button:hover {
+        background-color: #45a049;
+    }
+
+    /* --- 主應用程式樣式 --- */
+    #app-container {
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+    }
+    .app-header {
+        background-color: #ffffff;
+        padding: 10px 15px;
+        border-bottom: 1px solid #ddd;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 10px;
+    }
+    .tab-nav {
+        display: flex;
+        background-color: #333;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch; /* for smooth scrolling on iOS */
+    }
+    .tab-button {
+        background-color: inherit;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        padding: 14px 16px;
+        transition: background-color 0.3s;
+        color: white;
+        font-size: 1em;
+        white-space: nowrap; /* 防止按鈕文字換行 */
+    }
+    .tab-button:hover {
+        background-color: #555;
+    }
+    .tab-button.active {
+        background-color: #5C6BC0; /* A modern blue color */
+    }
+
+    main {
+        flex-grow: 1;
+        overflow-y: auto;
+        background-color: #fff;
+    }
+    .tab-content {
+        padding: 20px;
+        display: none;
+    }
+    .tab-content.active {
+        display: block;
+    }
+
+    /* --- 元件樣式 --- */
+    .form-group {
+        margin-bottom: 15px;
+    }
+    label {
+        display: block;
+        margin-bottom: 5px;
+    }
+    input[type="text"], input[type="number"], select {
+        width: 100%;
+        padding: 8px;
+        box-sizing: border-box;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+    button {
+        padding: 10px 15px;
+        color: white;
+        background-color: #5C6BC0;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    button:hover {
+        opacity: 0.9;
+    }
+    #serial_close_port {
+        background-color: #E57373; /* red */
+    }
+    #exportData {
+        background-color: #81C784; /* green */
+    }
+
+    /* 設定/美顏功能區樣式 */
+    .setting-screen {
+        text-align: center;
+    }
+    .setting-screen img {
+        height: 100px;
+        margin-bottom: 20px;
+    }
+    .setting-screen .button-container {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+    }
+    
+    /* 美顏功能鏡像 */
+    #beauty-camera {
+        width: 100%;
+        max-width: 400px;
+        border-radius: 8px;
+        transform: scaleX(-1); /* 左右翻轉，達到鏡像效果 */
+    }
+
+    /* 工程模式終端機 */
+    #serial_status {
+        width: 100%;
+        height: 300px;
+        border: 1px solid #ccc;
+        background-color: #222;
+        color: #eee;
+        font-family: 'Courier New', Courier, monospace;
+        overflow: auto;
+        padding: 10px;
+        box-sizing: border-box;
+        border-radius: 4px;
+    }
+    #serial_status font[color='green'] { color: #33ff33; }
+    #serial_status font[color='red'] { color: #ff3333; }
+    #serial_status font[color='blue'] { color: #33ccff; }
+    #serial_status font[color='orange'] { color: #ff9933; }
+
+</style>  
+</head>
+<body>
+
+<!-- 登入頁面 -->
+<div id="login-container">
+    <h1>台科大智慧枕墊資料收集系統</h1>
+    <button id="login-button">登入系統</button>
+</div>
+
+<!-- 主應用程式 (預設隱藏) -->
+<div id="app-container" class="hidden">
+    
+    <!-- 1. 固定頂部連線區 -->
+    <header class="app-header">
+        Baud Rate:
+        <select id="serial_baud">
+            <option value="115200">115200</option>
+            <option value="9600">9600</option>
+            <option value="300">300</option>
+            <option value="1200">1200</option>
+            <option value="2400">2400</option>
+            <option value="4800">4800</option>
+            <option value="19200">19200</option>
+            <option value="38400">38400</option>
+            <option value="57600">57600</option>
+            <option value="74880">74880</option>
+            <option value="230400">230400</option>
+            <option value="250000">250000</option>
+            <option value="500000">500000</option>
+            <option value="1000000">1000000</option>	
+            <option value="2000000">2000000</option>		
+        </select>
+        <button id="serial_close_port">Close Port</button>
+        <button id="serial_request_port">Select Port</button>
+    </header>
+
+    <!-- 2. Tab 導覽列 -->
+    <nav class="tab-nav">
+        <button class="tab-button active" data-tab="tab-personal-info">個人資料</button>
+        <button class="tab-button" data-tab="tab-settings">設定功能</button>
+        <button class="tab-button" data-tab="tab-beauty">美顏功能</button>
+        <button class="tab-button" data-tab="tab-snore">鼾聲抑制</button>
+        <button class="tab-button" data-tab="tab-engineering">工程模式</button>
+    </nav>
+
+    <!-- 3. Tab 內容區 -->
+    <main>
+        <!-- Tab 1: 個人資料 -->
+        <div id="tab-personal-info" class="tab-content active">
+            <h2>個人資料區</h2>
+            <form id="userForm">
+                <div class="form-group">
+                    <label>生理性別：</label>
+                    <input type="radio" name="gender" value="female" id="female" required>
+                    <label for="female">女</label>
+                    <input type="radio" name="gender" value="male" id="male" required>
+                    <label for="male">男</label>
+                </div>
+                <div class="form-group">
+                    <label for="age">年齡：</label>
+                    <input type="number" id="age" required>
+                </div>
+                <div class="form-group">
+                    <label for="height">身高（公分）：</label>
+                    <input type="number" id="height" required>
+                </div>
+                <div class="form-group">
+                    <label for="weight">體重（公斤）：</label>
+                    <input type="number" id="weight" required>
+                </div>
+                <button type="button" id="userSet">設定</button>
+            </form>
+        </div>
+
+        <!-- Tab 2: 設定功能 -->
+        <div id="tab-settings" class="tab-content">
+            <div id="screen1" class="setting-screen">
+                <h1>生物力學調整模式</h1>
+                <p>1. 頸椎狀態</p>
+                <form id="radioForm">
+                    <label><input type="radio" name="condition" value="1" checked> 健康</label>
+                    <label><input type="radio" name="condition" value="2"> 輕度退化</label>
+                    <label><input type="radio" name="condition" value="3"> 中度退化</label>
+                    <label><input type="radio" name="condition" value="4"> 重度退化</label>
+                    <label><input type="radio" name="condition" value="5"> 有開刀過</label>
+                </form>
+                <button id="switchScreenBtn1">下一步：仰躺調整</button>
+            </div>
+            <div id="screen2" class="setting-screen" style="display:none;">
+                <h1>生物力學調整模式</h1>
+                <p>2. 仰躺高度微調</p>
+                <img src="https://i.imgur.com/8aJgE6E.png" alt="Supine position">
+                <div>
+                    <label for="numberInput1">仰躺頭部高度:</label>
+                    <input type="number" id="numberInput1" value="7" min="5" max="20" style="width: 50px;">
+                    <button id="decreaseBtn1">-</button>
+                    <button id="increaseBtn1">+</button>
+                </div>
+                <div>
+                    <label for="numberInput2">仰躺頸部高度:</label>
+                    <input type="number" id="numberInput2" value="10" min="5" max="20" style="width: 50px;">
+                    <button id="decreaseBtn2">-</button>
+                    <button id="increaseBtn2">+</button>
+                </div>
+                <div class="button-container">
+                    <button id="backBtn1">回到上一頁</button>
+                    <button id="switchScreenBtn2">下一步：側躺調整</button>
+                </div>
+            </div>
+            <div id="screen3" class="setting-screen" style="display:none;">
+                <h1>生物力學調整模式</h1>
+                <p>3. 側躺高度微調</p>
+                <img src="https://i.imgur.com/sCqfWJt.png" alt="Lateral position">
+                <div>
+                    <label for="numberInput3">側躺頭部高度:</label>
+                    <input type="number" id="numberInput3" value="14" min="5" max="20" style="width: 50px;">
+                    <button id="decreaseBtn3">-</button>
+                    <button id="increaseBtn3">+</button>
+                </div>
+                <div>
+                    <label for="numberInput4">側躺頸部高度:</label>
+                    <input type="number" id="numberInput4" value="16" min="5" max="20" style="width: 50px;">
+                    <button id="decreaseBtn4">-</button>
+                    <button id="increaseBtn4">+</button>
+                </div>
+                <div class="button-container">
+                    <button id="backBtn2">回到上一頁</button>
+                    <button id="closeBtn">結束設定</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 3: 美顏功能 -->
+        <div id="tab-beauty" class="tab-content">
+            <div class="setting-screen">
+                <h2>美顏功能區</h2>
+                <p>請將臉部對準鏡頭，調整至最舒適的側躺高度</p>
+                <video id="beauty-camera" autoplay playsinline muted></video>
+                <br>
+                <div>
+                    <label for="numberInput3_beauty">側躺頭部高度:</label>
+                    <input type="number" id="numberInput3_beauty" value="14" min="5" max="20" style="width: 50px;">
+                    <button id="decreaseBtn3_beauty">-</button>
+                    <button id="increaseBtn3_beauty">+</button>
+                </div>
+                <div>
+                    <label for="numberInput4_beauty">側躺頸部高度:</label>
+                    <input type="number" id="numberInput4_beauty" value="16" min="5" max="20" style="width: 50px;">
+                    <button id="decreaseBtn4_beauty">-</button>
+                    <button id="increaseBtn4_beauty">+</button>
+                </div>
+                 <div class="button-container">
+                    <button id="saveBeautyBtn">儲存設定</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 4: 鼾聲抑制 -->
+        <div id="tab-snore" class="tab-content">
+            <h2>鼾聲抑制區</h2>
+            <p>此功能開發中...</p>
+        </div>
+
+        <!-- Tab 5: 工程模式 -->
+        <div id="tab-engineering" class="tab-content">
+            <h2>工程模式區</h2>
+            <table>
+                <tr>
+                    <td style="vertical-align:top; padding-right: 20px;"> 
+                        <div class="form-group">
+                            <label>手動發送文字指令:</label>
+                            <input type="text" id="serial_text">
+                            <select id="serial_newline">
+                                <option value=""></option>
+                                <option value="\r">\r</option>	
+                                <option value="\n" selected>\n</option>	
+                                <option value="\r\n">\r\n</option>		
+                            </select>
+                            <button id="serial_sendText">Send Text</button>
+                        </div>
+                        <div class="form-group">
+                            <label>手動發送 Uint8Array:</label>
+                            <input type="text" id="serial_uint8" value="">
+                            <button id="serial_sendUint8">Send Uint8Array</button>
+                        </div>
+                        <div class="form-group">
+                            <button id="syncTime">Sync UTC Time</button>
+                            <button id="exportData">Export Data</button>
+                        </div>
+                        <hr>
+                        <label>終端機訊息:</label>
+                        <div id="serial_status"></div>
+                        <div>
+                            <label><input type="radio" name="scrollControl" value="auto" checked> 自動滾動</label>
+                            <label><input type="radio" name="scrollControl" value="fixed"> 固定滾動</label>
+                            <button id="serial_clearText">Clear Text</button>
+                        </div>
+                    </td>
+                    <td  style="vertical-align:top; min-width: 400px;">
+                         <div style="width:100%; height: 200px"><canvas id="pressureChart"></canvas></div>
+                         <div style="width:100%; height: 200px"><canvas id="averChart"></canvas></div>
+                         <div style="width:100%; height: 200px"><canvas id="diffChart"></canvas></div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </main>
+</div>
+
+<script>
+// --- Polyfill for TextEncoderStream if not available ---
+if (typeof TextEncoderStream === 'undefined') {
+    // A simple polyfill for TextEncoderStream
+    // NOTE: This is a simplified version for compatibility.
+    // For full features, a more robust polyfill might be needed.
+    const { ReadableStream, WritableStream } = new (require('web-streams-polyfill/dist/ponyfill.js'))();
+    const { TextEncoder, TextDecoder } = require('text-encoding');
+    
+    global.TextEncoderStream = class TextEncoderStream {
+        constructor() {
+            const encoder = new TextEncoder();
+            this.readable = new ReadableStream({
+                start(controller) {
+                    this.controller = controller;
+                }
+            });
+            this.writable = new WritableStream({
+                write: (chunk) => {
+                    if (this.readable.controller) {
+                        this.readable.controller.enqueue(encoder.encode(chunk));
+                    }
+                },
+                close: () => {
+                     if (this.readable.controller) {
+                        this.readable.controller.close();
+                    }
+                }
+            });
+        }
+    };
+}
+
+
+document.addEventListener('DOMContentLoaded', () => {
+
+    // --- 1. 應用程式控制邏輯 (登入, Tab切換, 相機) ---
+    const loginContainer = document.getElementById('login-container');
+    const appContainer = document.getElementById('app-container');
+    const loginButton = document.getElementById('login-button');
+    const tabButtons = document.querySelectorAll('.tab-button');
+    const tabContents = document.querySelectorAll('.tab-content');
+    const videoElement = document.getElementById('beauty-camera');
+    let cameraStream = null;
+    
+    // 登入
+    loginButton.addEventListener('click', () => {
+        loginContainer.classList.add('hidden');
+        appContainer.classList.remove('hidden');
+    });
+
+    // Tab 切換
+    tabButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+            tabContents.forEach(content => content.classList.remove('active'));
+
+            const tabId = button.dataset.tab;
+            document.getElementById(tabId).classList.add('active');
+            button.classList.add('active');
+
+            if (tabId === 'tab-beauty') {
+                startCamera();
+            } else {
+                stopCamera();
+            }
+        });
+    });
+
+    // 相機控制
+    async function startCamera() {
+        if (cameraStream) return;
+        try {
+            cameraStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user' } });
+            videoElement.srcObject = cameraStream;
+        } catch (err) {
+            console.error("無法取得相機權限:", err);
+            alert("無法取得相機權限，請檢查設定。");
+        }
+    }
+
+    function stopCamera() {
+        if (cameraStream) {
+            cameraStream.getTracks().forEach(track => track.stop());
+            cameraStream = null;
+            videoElement.srcObject = null;
+        }
+    }
+
+
+    // --- 2. 智慧枕墊核心邏輯 (從 spp3.html 移入並修改) ---
+
+    // DOM 元素獲取
+    let serial_baud = document.getElementById('serial_baud');
+    let serial_text = document.getElementById('serial_text');
+    let serial_uint8 = document.getElementById('serial_uint8');
+    let serial_status = document.getElementById('serial_status');
+    let serial_buttonRequest = document.getElementById('serial_request_port');
+    let serial_buttonClose = document.getElementById('serial_close_port');
+    let serial_sendText = document.getElementById('serial_sendText');
+    let serial_sendUint8 = document.getElementById('serial_sendUint8');
+    let serial_clearText = document.getElementById('serial_clearText');
+    let serial_newline = document.getElementById('serial_newline');
+    let serial_syncTime = document.getElementById('syncTime');
+    let db_exportData = document.getElementById('exportData');
+    let serial_userSet = document.getElementById('userSet');
+
+    // 變數宣告
+    let serial_port = null;
+    let serial_textEncoder = {};
+    let serial_writableStreamClosed = {};
+    let serial_writer = {};
+    let serial_reader = null;
+    let serial_readSting = "";
+    let serial_keepReading = true;
+    let serial_selProductId = "";
+    let serial_selVendorId = "";
+    let serial_timer;
+    let serial_ready = false;
+    let chart_data_count = 0;
+    
+    // 資料變數
+    let pressure1, pressure2, pressure3, differential, state, onoff_event, last5pointAvg, prev5pointAvg, predict_Pose, Pose_event;
+    let debugDataBuffer = "";
+    let parsedData = {};
+
+    // Chart.js 初始化
+    const chart = new Chart(document.getElementById('pressureChart').getContext('2d'), {
+        type: 'line',
+        data: {
+            labels: [],
+            datasets: [
+                { label: 'Detect', data: [], fill: false, borderColor: 'rgb(175, 71, 71)', borderWidth: 1, pointRadius: 1 },
+                { label: 'Neck', data: [], fill: false, borderColor: 'rgb(5, 192, 2)', borderWidth: 1, pointRadius: 1 },
+                { label: 'Head', data: [], fill: false, borderColor: 'rgb(5, 2, 192)', borderWidth: 1, pointRadius: 1 }
+            ]
+        },
+        options: { maintainAspectRatio: false, scales: { y: { max: 16000000, min: 80000 }, x: { ticks: { font: { size: 8 }, autoSkip: false } } } }
+    });
+    const chart2 = new Chart(document.getElementById('averChart').getContext('2d'), {
+        type: 'line',
+        data: {
+            labels: [],
+            datasets: [
+                { label: 'last5', data: [], fill: false, borderColor: 'rgb(175, 71, 71)', borderWidth: 1, pointRadius: 1 },
+                { label: 'prev5', data: [], fill: false, borderColor: 'rgb(175, 71, 171)', borderWidth: 1, pointRadius: 1 }
+            ]
+        },
+        options: { maintainAspectRatio: false, scales: { y: { max: 1500, min: 500 }, x: { ticks: { font: { size: 8 }, autoSkip: false } } } }
+    });
+    const chart3 = new Chart(document.getElementById('diffChart').getContext('2d'), {
+        type: 'line',
+        data: {
+            labels: [],
+            datasets: [{ label: 'Diff', data: [], fill: false, borderColor: 'rgb(75, 71, 171)', borderWidth: 1, pointRadius: 1 }]
+        },
+        options: { maintainAspectRatio: false, scales: { y: {}, x: { ticks: { font: { size: 8 }, autoSkip: false } } } }
+    });
+
+    // IndexedDB 模組
+    const DBModule = (() => {
+      let dbName;
+      const storeName = 'dataStore';
+      let db;
+      function initDB(timestamp) {
+        dbName = `MyDataDB_${timestamp}`;
+        return new Promise((resolve, reject) => {
+          const request = indexedDB.open(dbName, 1);
+          request.onerror = event => reject(`Database error: ${event.target.error}`);
+          request.onsuccess = event => { db = event.target.result; resolve(db); };
+          request.onupgradeneeded = event => {
+            event.target.result.createObjectStore(storeName, { keyPath: 'timestamp' });
+          };
+        });
+      }
+      function saveData(data) {
+        return new Promise((resolve, reject) => {
+          if (!db) return reject('Database not initialized');
+          const transaction = db.transaction([storeName], 'readwrite');
+          const store = transaction.objectStore(storeName);
+          const dataWithTimestamp = { timestamp: new Date().toISOString(), values: data };
+          const request = store.add(dataWithTimestamp);
+          request.onerror = event => reject(`Error saving data: ${event.target.error}`);
+          request.onsuccess = event => resolve(event.target.result);
+        });
+      }
+      function getAllData() {
+        return new Promise((resolve, reject) => {
+          if (!db) return reject('Database not initialized');
+          const transaction = db.transaction([storeName], 'readonly');
+          const store = transaction.objectStore(storeName);
+          const request = store.getAll();
+          request.onerror = event => reject(`Error getting data: ${event.target.error}`);
+          request.onsuccess = event => resolve(event.target.result);
+        });
+      }
+      function exportToCSV() {
+        return getAllData().then(data => {
+          let csvContent = 'timestamp,pressure1,pressure2,pressure3,differential,last5pointAvg,prev5pointAvg,state,onoff_event,predict_Pose,Pose_event\n';
+          data.forEach(item => {
+            const row = [item.timestamp, ...item.values].join(',');
+            csvContent += row + '\n';
+          });
+          const txtContent = serial_status.innerHTML.replace(/<br\s*\/?>/gi, '\n').replace(/<[^>]*>/g, '');
+          const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+          const txtBlob = new Blob([txtContent], { type: 'text/plain;charset=utf-8;' });
+          const url = URL.createObjectURL(blob);
+          const txtUrl = URL.createObjectURL(txtBlob);
+          const link = document.createElement('a');
+          link.setAttribute('href', url);
+          link.setAttribute('download', `data_export_${dbName}.csv`);
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          const txtLink = document.createElement('a');
+          txtLink.setAttribute('href', txtUrl);
+          txtLink.setAttribute('download', `data_export_${dbName}.txt`);
+          document.body.appendChild(txtLink);
+          txtLink.click();
+          document.body.removeChild(txtLink);
+        });
+      }
+      return { init: initDB, save: saveData, exportCSV: exportToCSV };
+    })();
+    
+    // 初始化 DB
+    const startTimestamp = new Date().toISOString().replace(/[:.]/g, '-');
+    DBModule.init(startTimestamp).then(() => console.log('Database ready')).catch(error => console.error('Database initialization error:', error));
+
+    // Web Serial 函式
+    navigator.serial.addEventListener("connect", (event) => serial_message("Device connect", "red"));
+    navigator.serial.addEventListener("disconnect", (event) => serial_message("Device disconnect", "red"));
+    
+    async function readUntilClosed() {
+        while (serial_port.readable && serial_keepReading) {
+            serial_reader = serial_port.readable.getReader();
+            try {
+                while (true) {
+                    const { value, done } = await serial_reader.read();
+                    if (done) break;
+                    if (value) {
+                        serial_readSting += new TextDecoder().decode(value);
+                        if (value.includes(10)) {
+                            clearTimeout(serial_timer);
+                            serial_message(serial_readSting, "green");
+                            serial_readSting = "";
+                        } else {
+                            serial_timer = setTimeout(() => {
+                                if (serial_readSting != "") serial_message(serial_readSting, "green");
+                                serial_readSting = "";
+                            }, 10);
+                        }
+                    }
+                }
+            } catch (error) { console.error(error); } 
+            finally { serial_reader.releaseLock(); }
+        }
+    }
+
+    function fillChartArray() {
+        for (var i = 0; i < 50; i++) {
+            chart.data.labels.push("");
+            chart.data.datasets[0].data.push(0);
+            chart.data.datasets[1].data.push(0);
+            chart.data.datasets[2].data.push(0);
+            chart2.data.labels.push("");
+            chart2.data.datasets[0].data.push(0);
+            chart2.data.datasets[1].data.push(0);
+            chart3.data.labels.push("");
+            chart3.data.datasets[0].data.push(0);
+        }
+        chart_data_count = 50;
+    }
+    
+    async function sendCommand(cmdStr) {
+        if (serial_port && serial_port.writable) {
+            try {
+                // Ensure a writer is available
+                const writer = serial_port.writable.getWriter();
+                const encoder = new TextEncoder();
+                serial_message(cmdStr, "orange");
+                await writer.write(encoder.encode(cmdStr));
+                writer.releaseLock();
+            } catch (error) {
+                serial_message(error.message, "red");
+                console.error("Send command error:", error);
+            }
+        }
+    }
+    
+    // 訊息處理與圖表更新
+    function serial_message(msg, colour) {
+        serial_status.insertAdjacentHTML('beforeend', `<font color='${colour}'>${msg.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</font><br>`);
+        if (document.querySelector('input[name="scrollControl"]:checked').value === "auto") {
+            serial_status.scrollTop = serial_status.scrollHeight;
+        }
+
+        const dataString = msg.toString().replace(/[\r\n]/g, '');
+        const dataPoints = dataString.split(' ').map(parseFloat);
+
+        debugDataBuffer += msg;
+        if (debugDataBuffer.includes('N2LP=')) {
+            let cleanedData = debugDataBuffer.replace(/\r?\n|\r/g, ' ').replace(/\s+/g, ' ').trim();
+            const regex = /(\w+)=([^=\s]+)/g;
+            let match;
+            while ((match = regex.exec(cleanedData)) !== null) {
+                parsedData[match[1]] = match[2] || '';
+            }
+            console.log("Parsed Debug Data:", parsedData);
+            debugDataBuffer = "";
+        }
+
+        if (dataString.split(' ').length === 3 && dataPoints.every(p => !isNaN(p))) {
+            const now = new Date();
+            chart.data.labels.push(chart_data_count % 10 == 0 ? now.toISOString().slice(-13, -4) : "");
+            if (chart_data_count > 50) chart.data.labels.shift();
+            
+            [pressure1, pressure2, pressure3] = dataPoints;
+            chart.data.datasets[0].data.push(pressure1);
+            chart.data.datasets[1].data.push(pressure2);
+            chart.data.datasets[2].data.push(pressure3);
+
+            if (chart_data_count > 50) {
+                chart.data.datasets.forEach(dataset => dataset.data.shift());
+            }
+            chart.update();
+        }
+
+        if (dataString.split(' ').length === 7 && dataPoints.every(p => !isNaN(p))) {
+            const now = new Date();
+            const timeLabel = chart_data_count % 10 == 0 ? now.toISOString().slice(-13, -4) : "";
+            
+            [differential, state, onoff_event, last5pointAvg, prev5pointAvg, predict_Pose, Pose_event] = dataPoints;
+            
+            chart2.data.labels.push(timeLabel);
+            if (chart_data_count > 50) chart2.data.labels.shift();
+            chart2.data.datasets[0].data.push(last5pointAvg);
+            chart2.data.datasets[1].data.push(prev5pointAvg);
+            if (chart_data_count > 50) chart2.data.datasets.forEach(ds => ds.data.shift());
+            chart2.update();
+
+            chart3.data.labels.push(timeLabel);
+            if (chart_data_count > 50) chart3.data.labels.shift();
+            chart3.data.datasets[0].data.push(differential);
+            if (chart_data_count > 50) chart3.data.datasets[0].data.shift();
+            chart3.update();
+
+            chart_data_count++;
+            
+            const dataToSave = [pressure1, pressure2, pressure3, differential, last5pointAvg, prev5pointAvg, state, onoff_event, predict_Pose, Pose_event];
+            DBModule.save(dataToSave).catch(error => console.error('Save error:', error));
+        }
+    }
+
+    // 事件監聽
+    serial_buttonRequest.addEventListener('click', async () => {
+        if ("serial" in navigator) {
+            try {
+                serial_port = await navigator.serial.requestPort({ filters: [] });
+                const { usbProductId, usbVendorId } = serial_port.getInfo();
+                serial_selProductId = usbProductId;
+                serial_selVendorId = usbVendorId;
+                serial_keepReading = true;
+                
+                await serial_port.open({ baudRate: Number(serial_baud.value) });
+                serial_message(`Port opened: VID=${usbVendorId}, PID=${usbProductId}`, "blue");
+                readUntilClosed();
+                serial_ready = true;
+                fillChartArray();
+            } catch (error) {
+                serial_message(error.message, "red");
+            }
+        }
+    });
+
+    serial_buttonClose.addEventListener('click', async () => {
+        if (serial_port) {
+            serial_keepReading = false;
+            if(serial_reader) serial_reader.cancel().catch(()=>{});
+            await serial_port.close().catch(()=>{});
+            serial_port = null;
+            serial_ready = false;
+            serial_message("Port closed", "blue");
+        }
+    });
+
+    serial_sendText.addEventListener('click', () => sendCommand(serial_text.value + serial_newline.value.replace(/\\r/g, "\r").replace(/\\n/g, "\n")));
+    serial_sendUint8.addEventListener('click', async () => {
+         if (serial_port && serial_port.writable) {
+            try {
+                const writer = serial_port.writable.getWriter();
+                const intArray = serial_uint8.value.split(",").map(s => parseInt(s.trim())).filter(n => !isNaN(n));
+                await writer.write(new Uint8Array(intArray));
+                writer.releaseLock();
+                serial_message(`Sent Uint8Array: ${serial_uint8.value}`, "orange");
+            } catch (error) {
+                serial_message(error.message, "red");
+            }
+        }
+    });
+    
+    serial_clearText.addEventListener('click', () => { serial_status.innerHTML = ""; });
+    serial_syncTime.addEventListener('click', () => sendCommand(`synctime,${Math.floor(Date.now() / 1000)}\n`));
+    db_exportData.addEventListener('click', () => DBModule.exportCSV().catch(error => console.error('Export error:', error)));
+
+    serial_userSet.addEventListener('click', () => {
+        const gender = document.querySelector('input[name="gender"]:checked')?.value === 'female' ? '0' : '1';
+        const age = document.getElementById('age').value;
+        const height = document.getElementById('height').value;
+        const weight = document.getElementById('weight').value;
+        if (gender && age && height && weight) {
+            sendCommand(`user,${gender},${age},${height},${weight}\n`);
+        } else {
+            alert('請填寫所有個人資料欄位');
+        }
+    });
+
+    // 定時發送 'p' 和 'i' 指令
+    let func_count = 0;
+    setInterval(() => {
+        if (serial_ready) {
+            const pString = (func_count++ % 2 == 0) ? "p\n" : "i\n";
+            sendCommand(pString).catch(e => console.error("Interval send error:", e));
+        }
+    }, 1000);
+
+    // --- 設定功能區 & 美顏功能區邏輯 ---
+    let selectedCondition = '1';
+    const screen1 = document.getElementById('screen1');
+    const screen2 = document.getElementById('screen2');
+    const screen3 = document.getElementById('screen3');
+
+    // 進入設定頁時，發送 DEBUG 命令
+    document.querySelector('button[data-tab="tab-settings"]').addEventListener('click', () => sendCommand("DEBUG,"));
+
+    // 畫面切換按鈕
+    document.getElementById('switchScreenBtn1').addEventListener('click', () => {
+        selectedCondition = document.querySelector('input[name="condition"]:checked')?.value || '1';
+        screen1.style.display = 'none';
+        screen2.style.display = 'block';
+        sendCommand("INIT,NORM,S,");
+        if (parsedData.HSF) document.getElementById('numberInput1').value = parsedData.HSF;
+        if (parsedData.N1SF) document.getElementById('numberInput2').value = parsedData.N1SF;
+    });
+
+    document.getElementById('switchScreenBtn2').addEventListener('click', () => {
+        screen2.style.display = 'none';
+        screen3.style.display = 'block';
+        sendCommand("INIT,NORM,L,");
+        if (parsedData.HLF) document.getElementById('numberInput3').value = parsedData.HLF;
+        if (parsedData.N1LF) document.getElementById('numberInput4').value = parsedData.N1LF;
+    });
+
+    document.getElementById('backBtn1').addEventListener('click', () => {
+        screen2.style.display = 'none';
+        screen1.style.display = 'block';
+    });
+    document.getElementById('backBtn2').addEventListener('click', () => {
+        screen3.style.display = 'none';
+        screen2.style.display = 'block';
+    });
+    document.getElementById('closeBtn').addEventListener('click', () => {
+        sendCommand("SET,OK,");
+        alert("設定完成！");
+        // 可選擇切換回第一個 tab
+        document.querySelector('button[data-tab="tab-personal-info"]').click();
+    });
+
+    // 設定功能區 - 數值調整按鈕
+    const setupAdjustmentListeners = (type, position, inputId, increaseId, decreaseId) => {
+        const input = document.getElementById(inputId);
+        document.getElementById(increaseId).addEventListener('click', () => {
+            if (input.value < 20) {
+                input.value = parseInt(input.value) + 1;
+                sendCommand(`SET,NORM,${selectedCondition},${type},${position},${input.value},`);
+            }
+        });
+        document.getElementById(decreaseId).addEventListener('click', () => {
+            if (input.value > 5) {
+                input.value = parseInt(input.value) - 1;
+                sendCommand(`SET,NORM,${selectedCondition},${type},${position},${input.value},`);
+            }
+        });
+    };
+    setupAdjustmentListeners('S', 'HEAD', 'numberInput1', 'increaseBtn1', 'decreaseBtn1');
+    setupAdjustmentListeners('S', 'NECK', 'numberInput2', 'increaseBtn2', 'decreaseBtn2');
+    setupAdjustmentListeners('L', 'HEAD', 'numberInput3', 'increaseBtn3', 'decreaseBtn3');
+    setupAdjustmentListeners('L', 'NECK', 'numberInput4', 'increaseBtn4', 'decreaseBtn4');
+
+    // 美顏功能區 - 數值調整按鈕
+    const setupBeautyListeners = (position, inputId, increaseId, decreaseId) => {
+        const input = document.getElementById(inputId);
+        document.getElementById(increaseId).addEventListener('click', () => {
+            if (input.value < 20) {
+                input.value = parseInt(input.value) + 1;
+                sendCommand(`SET,NORM,${selectedCondition},L,${position},${input.value},`);
+            }
+        });
+        document.getElementById(decreaseId).addEventListener('click', () => {
+            if (input.value > 5) {
+                input.value = parseInt(input.value) - 1;
+                sendCommand(`SET,NORM,${selectedCondition},L,${position},${input.value},`);
+            }
+        });
+    };
+    setupBeautyListeners('HEAD', 'numberInput3_beauty', 'increaseBtn3_beauty', 'decreaseBtn3_beauty');
+    setupBeautyListeners('NECK', 'numberInput4_beauty', 'increaseBtn4_beauty', 'decreaseBtn4_beauty');
+    document.getElementById('saveBeautyBtn').addEventListener('click', () => {
+        sendCommand("SET,OK,");
+        alert("美顏模式設定已儲存！");
+    });
+
+});
+</script>
+</body>
+</html>

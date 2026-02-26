@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>赛博朋克贪吃蛇</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-container">
+        <div class="header">
+            <h1 class="title">CYBER SNAKE</h1>
+            <div class="score-board">
+                <div class="score">分数: <span id="score">0</span></div>
+                <div class="high-score">最高分: <span id="highScore">0</span></div>
+            </div>
+        </div>
+        
+        <div class="game-area">
+            <canvas id="gameCanvas" width="400" height="400"></canvas>
+            <div class="particles-container" id="particles"></div>
+        </div>
+        
+        <div class="controls">
+            <div class="control-buttons">
+                <button class="control-btn" data-direction="up">↑</button>
+                <div class="middle-row">
+                    <button class="control-btn" data-direction="left">←</button>
+                    <button class="control-btn" data-direction="right">→</button>
+                </div>
+                <button class="control-btn" data-direction="down">↓</button>
+            </div>
+        </div>
+        
+        <div class="game-info">
+            <p>使用方向键或点击按钮控制蛇的移动</p>
+            <button id="startBtn" class="start-btn">开始游戏</button>
+            <button id="pauseBtn" class="pause-btn">暂停</button>
+        </div>
+    </div>
+    
+    <div class="game-over-modal" id="gameOverModal">
+        <div class="modal-content">
+            <h2>游戏结束</h2>
+            <p>最终分数: <span id="finalScore">0</span></p>
+            <button id="restartBtn" class="restart-btn">重新开始</button>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>

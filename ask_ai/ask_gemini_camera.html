@@ -1,0 +1,239 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>按著說話告訴AI要做什麼放開後自動辨識與回應</title>
+  <style>
+    button {
+      width: 100px;
+      height: 100px;
+      user-select: none;
+    }
+
+    @media (max-width: 768px) {
+      button {
+        width: 50px;
+        height: 50px;
+        user-select: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+
+    <script type="importmap">
+      {
+        "imports": {
+          "@google/generative-ai": "https://esm.run/@google/generative-ai"
+        }
+      }
+    </script>
+<script>
+        // TTS
+      function speak  ()  {
+      
+        // const synthesis = window.speechSynthesis;
+        if ( 'speechSynthesis' in window ) {
+          speechSynthesis.cancel();
+          speechSynthesis.getVoices();
+
+        }
+        const utterance = new SpeechSynthesisUtterance();
+        utterance.text = document.getElementById('response').innerHTML;
+        speechSynthesis.speak(utterance);
+      }
+      function fire_trigger() {
+        $('#trigger_me').trigger('click');
+      }
+
+      var prompt = "描述這張照片";
+</script>
+
+    <script type="module">
+      import { GoogleGenerativeAI } from "@google/generative-ai";
+
+      // Access your API key (see "Set up your API key" above)
+      //AIzaSyBDLXgFZINc0R-5C1YLGdDdSZ__3veZqWw
+      const genAI = new GoogleGenerativeAI("");
+
+      // Converts a File object to a GoogleGenerativeAI.Part object.
+      async function fileToGenerativePart(file) {
+        const base64EncodedDataPromise = new Promise((resolve) => {
+          const reader = new FileReader();
+          reader.onloadend = () => resolve(reader.result.split(',')[1]);
+          reader.readAsDataURL(file);
+        });
+        return {
+          inlineData: { data: await base64EncodedDataPromise, mimeType: file.type },
+        };
+      }
+
+      async function run(file) {
+
+      // For text-and-images input (multimodal), use the gemini-pro-vision model
+      const model = genAI.getGenerativeModel({ model: "gemini-pro-vision" });
+
+      // const prompt = "描述這張照片";
+
+
+        const imageParts = await Promise.all(
+          [...[file]].map(fileToGenerativePart)
+        );
+
+
+        const result = await model.generateContent([prompt, ...imageParts]);
+
+        const response = await result.response;
+        const text = response.text();
+        console.log(text);
+        document.getElementById('response').innerHTML = text;
+        document.getElementById('trigger_me').click();
+
+        
+      }
+
+
+      const btn = document.getElementById('take-photo');
+      btn.addEventListener("click", async () => {
+        try {
+          // 拍攝 USB 相機照片
+          const video = document.getElementById("video");
+
+          const canvas = document.getElementById("canvas");
+          const context = canvas.getContext("2d");
+
+
+
+          // 縮放串流影像
+          context.clearRect(0, 0, canvas.width, canvas.height);
+
+          context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+          // 將照片顯示在網頁上
+          const image = document.createElement("img");
+          image.src = canvas.toDataURL("image/jpeg");
+          image.setAttribute("style", "display: none;");
+          document.body.appendChild(image);
+
+          // 1. 取得 canvas 的資料 URL
+          //const dataURL = canvas.toDataURL("image/png");
+
+          // 2. 提取 Base64 數據
+          const base64Data = image.src.split(',')[1];
+
+          let mime = image.src.split(',')[0].match(/:(.*?);/)[1];
+          let bin = atob(base64Data);
+          let length = bin.length;
+          // From http://stackoverflow.com/questions/14967647/ (continues on next line)
+          // encode-decode-image-with-base64-breaks-image (2013-04-21)
+          let buf = new ArrayBuffer(length);
+          let arr = new Uint8Array(buf);
+          bin
+            .split('')
+            .forEach((e,i)=>arr[i]=e.charCodeAt(0));
+            
+          let imgFile = new File([buf],'filename',{type:mime}); // note: [buf]
+
+
+        
+
+          await run(imgFile);
+        } catch (error) {
+          console.error(error);
+        }
+      });
+
+
+    </script>
+
+  <h1>按著說話告訴AI要做什麼放開後自動辨識與回應</h1>
+
+  <p>拍攝 USB 相機照片：</p>
+  <video id="video" width="320" height="240" autoPlay={true} playsInline={true} muted={true}></video>
+  <button id="take-photo" hidden>拍攝照片</button>
+  <button id="button">按住說話</button>
+  <div id="results" ></div>
+  <p>顯示照片：</p>
+  <canvas id="canvas" width="320" height="240"></canvas>
+  <p>回應：</p>
+  <div id="response"></div>
+  <button id="trigger_me" onclick="speak();">speak</button>
+
+  <script>
+    const button = document.getElementById("button");
+    const resultsDiv = document.getElementById("results");
+
+    const recognition = new webkitSpeechRecognition();
+    recognition.continuous = true;
+    recognition.interimResults = true;
+    recognition.lang = "cmn-Hant-TW";
+
+    let isRecognizing = false;
+
+    button.addEventListener("touchstart", (event) => {
+      event.preventDefault();
+      if (!isRecognizing) {
+        recognition.start();
+        isRecognizing = true;
+        document.getElementById("results").style.display = "none"
+      }
+    });
+    button.addEventListener("mousedown", (event) => {
+      event.preventDefault();
+      if (!isRecognizing) {
+        recognition.start();
+        isRecognizing = true;
+        document.getElementById("results").style.display = "none"
+      }
+    });
+
+    button.addEventListener("touchend", () => {
+      if (isRecognizing) {
+        recognition.stop();
+        isRecognizing = false;
+        document.getElementById("results").style.display = "block"
+        document.getElementById('take-photo').click();
+      }
+    });
+    button.addEventListener("mouseup", () => {
+      if (isRecognizing) {
+        recognition.stop();
+        isRecognizing = false;
+        document.getElementById("results").style.display = "block"
+        document.getElementById('take-photo').click();
+      }
+    });
+
+    recognition.onresult = (event) => {
+      const results = event.results;
+      for (const result of results) {
+        const transcript = result[0].transcript;
+        const confidence = result[0].confidence;
+        resultsDiv.innerHTML = `${transcript} \n`;
+        prompt = transcript;
+      }
+    };
+  </script>
+  <script>
+
+
+    // 載入 USB 相機
+    const constraints = {
+      video: {
+        facingMode: {
+          ideal: "environment"
+        }
+      }
+    };
+
+    navigator.mediaDevices.getUserMedia(constraints).then((stream) => {
+      video.srcObject = stream;
+      video.autoplay = true;
+    });      
+
+  </script>
+   
+  </body>
+</html>

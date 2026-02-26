@@ -1,5 +1,10 @@
 <html >
 <head>
+	<!-- <base href="/"> -->
+<link rel="stylesheet" href="css/medium-editor.css" /> <!-- Core -->
+<link rel="stylesheet" href="css/themes/dahai.css" /> <!-- or any other theme -->
+<link rel="stylesheet" href="css/others.css" /> <!-- or any other theme -->
+
     <?php include("head.php"); ?>
 
 <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -19,22 +24,27 @@ if (window.location.hostname.match('pondahai.github.io')) {
 }
 </script>
 
-<meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
-    <meta name="google-signin-scope" content="profile email">
-    <meta name="google-signin-client_id" content="797948848378-0po451kj7nqm08atu85jha2vckrn9pgh.apps.googleusercontent.com">
+<meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+    <meta name="google-signin-scope" content="profile email" />
+    <meta name="google-signin-client_id" content="797948848378-0po451kj7nqm08atu85jha2vckrn9pgh.apps.googleusercontent.com" />
+
+
 <script src="js/jquery-3.4.1.min.js"></script>
 <script src="js/medium-editor.js"></script>
 <script src="js/svg.js"></script>
 <script src="js/svg.draw.js"></script>
-	<script src="https://apis.google.com/js/platform.js" async defer></script>
-<link rel="stylesheet" href="css/medium-editor.css"> <!-- Core -->
-<link rel="stylesheet" href="css/themes/dahai.css"> <!-- or any other theme -->
-<link rel="stylesheet" href="css/others.css"> <!-- or any other theme -->
-<meta property="og:image"      content="icon01.png" />
+	<!-- <script src="https://apis.google.com/js/platform.js" async defer></script> -->
+
+<!-- <meta property="og:image"      content="create_image.php?url=https://wripix.xyz?fileid=" /> -->
+<script>
+	// https://github.com/GoogleChromeLabs/samesite-examples/blob/master/javascript.md
+// 	document.cookie = 'same-site-cookie=foo; SameSite=Lax';
+// document.cookie = 'cross-site-cookie=bar; SameSite=None; Secure';
+	</script>
 </head>
 <body >
 	   <div id="iAmHere" class="editable" ><?php include("quickstart.php"); ?></div>
-
+<div id="iAmAfter"></div>
 <div style="background-color:#220000;padding:10px;height:100%;background-repeat:repeat-x">
    
    <!-- function buttons -->

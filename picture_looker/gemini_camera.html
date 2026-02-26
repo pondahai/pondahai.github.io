@@ -1,0 +1,227 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>使用網頁程式連接 USB 相機拍照</title>
+</head>
+<body>
+  <script>
+        // TTS
+      function speak  ()  {
+      
+        // const synthesis = window.speechSynthesis;
+        if ( 'speechSynthesis' in window ) {
+          speechSynthesis.cancel();
+          speechSynthesis.getVoices();
+
+        }
+        const utterance = new SpeechSynthesisUtterance();
+        utterance.text = document.getElementById('response').innerHTML;
+        speechSynthesis.speak(utterance);
+      }
+      function fire_trigger() {
+        $('#trigger_me').trigger('click');
+      }
+</script>
+    <script type="importmap">
+      {
+        "imports": {
+          "@google/generative-ai": "https://esm.run/@google/generative-ai"
+        }
+      }
+    </script>
+    <script type="module">
+      import { GoogleGenerativeAI } from "@google/generative-ai";
+      const apiKey = getCookie('dahai-app-ai-apiKey');
+
+      if (apiKey === null) {
+        // API key 不存在
+      } else {
+        // API key 存在
+      }
+
+      // Access your API key (see "Set up your API key" above)
+      const genAI = new GoogleGenerativeAI(apiKey);
+
+      // Converts a File object to a GoogleGenerativeAI.Part object.
+      async function fileToGenerativePart(file) {
+        const base64EncodedDataPromise = new Promise((resolve) => {
+          const reader = new FileReader();
+          reader.onloadend = () => resolve(reader.result.split(',')[1]);
+          reader.readAsDataURL(file);
+        });
+        return {
+          inlineData: { data: await base64EncodedDataPromise, mimeType: file.type },
+        };
+      }
+
+      async function run(file) {
+
+      // For text-and-images input (multimodal), use the gemini-pro-vision model
+      const model = genAI.getGenerativeModel({ model: "gemini-pro-vision" });
+
+      const prompt = "描述這張照片";
+
+
+        const imageParts = await Promise.all(
+          [...[file]].map(fileToGenerativePart)
+        );
+
+
+        const result = await model.generateContent([prompt, ...imageParts]);
+
+        const response = await result.response;
+        const text = response.text();
+        console.log(text);
+        document.getElementById('response').innerHTML = text;
+        document.getElementById('trigger_me').click();    
+      }
+
+      const btn = document.getElementById('take-photo');
+      btn.addEventListener("click", async () => {
+        try {
+          // 拍攝 USB 相機照片
+          const video = document.getElementById("video");
+
+          const canvas = document.getElementById("canvas");
+          const context = canvas.getContext("2d");
+
+
+
+          // 縮放串流影像
+          context.clearRect(0, 0, canvas.width, canvas.height);
+
+          context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+          // 將照片顯示在網頁上
+          const image = document.createElement("img");
+          image.src = canvas.toDataURL("image/jpeg");
+          image.setAttribute("style", "display: none;");
+          document.body.appendChild(image);
+
+          // 1. 取得 canvas 的資料 URL
+          //const dataURL = canvas.toDataURL("image/png");
+
+          // 2. 提取 Base64 數據
+          const base64Data = image.src.split(',')[1];
+
+          let mime = image.src.split(',')[0].match(/:(.*?);/)[1];
+          let bin = atob(base64Data);
+          let length = bin.length;
+          // From http://stackoverflow.com/questions/14967647/ (continues on next line)
+          // encode-decode-image-with-base64-breaks-image (2013-04-21)
+          let buf = new ArrayBuffer(length);
+          let arr = new Uint8Array(buf);
+          bin
+            .split('')
+            .forEach((e,i)=>arr[i]=e.charCodeAt(0));
+            
+          let imgFile = new File([buf],'filename',{type:mime}); // note: [buf]
+
+
+        
+
+          await run(imgFile);
+        } catch (error) {
+          console.error(error);
+        }
+      });      
+    </script>
+
+  <h1>使用網頁程式連接 USB 相機拍照</h1>
+  <div id="hint">
+    <h1 >使用 Google AI API</h1>
+
+    <p >歡迎使用我們的 AI 程式。您需要先取得自己的 Google AI API key，才能使用我們的程式。</p>
+
+    <p >請前往以下網址取得您的 API key：</p>
+
+    <a href="https://aistudio.google.com/app/apikey">https://aistudio.google.com/app/apikey</a>
+
+    <p >請將您的 API key 貼上以下文字框：</p>
+
+    <input type="text" id="api-key"  />
+
+    <button id="submit-button">提交</button>
+  </div>
+  <p>拍攝 USB 相機照片：</p>
+  <video id="video" width="320" height="240" autoPlay={true} playsInline={true} muted={true}></video>
+  <button id="take-photo">拍攝照片</button>
+
+  <p>顯示照片：</p>
+  <canvas id="canvas" width="320" height="240"></canvas>
+  <p>回應：</p>
+  <div id="response"></div>
+  <button id="trigger_me" onclick="speak();">speak</button>
+  <p>請注意，本應用使用google服務，相關規範請參考</p>
+  <a href="https://ai.google.dev/terms">https://ai.google.dev/terms</a>
+  <script>
+  function getCookie(cname) {
+    const name = cname + "=";
+    const decodedCookie = decodeURIComponent(document.cookie);
+    const ca = decodedCookie.split(';');
+    for (let i = 0; i < ca.length; i++) {
+      let c = ca[i];
+      while (c.charAt(0) === ' ') {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) === 0) {
+        return c.substring(name.length, c.length);
+      }
+    }
+    return null;
+  }
+  function setCookie(cname, cvalue, exdays) {
+    const d = new Date();
+    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+    const expires = "expires=" + d.toUTCString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+  }  
+  // 判斷 API key 是否存在。
+  const apiKey = getCookie('dahai-app-ai-apiKey');
+
+  if (apiKey === null) {
+    // API key 不存在
+    document.getElementById('hint').style.display = 'block';
+  } else {
+    // API key 存在
+    document.getElementById('hint').style.display = 'none';
+    // 使用 API key 存取 Google AI API。
+  }
+
+  // 提交按鈕的事件處理常式。
+  document.getElementById('submit-button').addEventListener('click', function() {
+    const apiKey = document.getElementById('api-key').value;
+
+    // 將 API key 儲存在 cookie 中。
+    setCookie('dahai-app-ai-apiKey', apiKey);
+
+    //
+    document.getElementById('hint').style.display = 'none';
+
+    // 使用 API key 存取 Google AI API。
+    location.reload();
+  });
+  </script>
+
+  <script>
+
+
+    // 載入 USB 相機
+    const constraints = {
+      video: {
+        facingMode: {
+          ideal: "environment"
+        }
+      }
+    };
+    navigator.mediaDevices.getUserMedia(constraints).then((stream) => {
+      video.srcObject = stream;
+      video.autoplay = true;
+    });      
+
+  </script>
+   
+  </body>
+</html>

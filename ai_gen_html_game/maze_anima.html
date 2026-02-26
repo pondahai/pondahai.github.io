@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maze Generator Animation</title>
+    <style>
+        canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="mazeCanvas" width="500" height="500"></canvas>
+    <script>
+        // 迷宮生成器
+        function Cell(x, y) {
+            this.x = x;
+            this.y = y;
+            this.visited = false;
+            this.walls = [true, true, true, true]; // 上、右、下、左
+        }
+
+        // 生成迷宮
+        async function generateMaze(x, y) {
+            maze[y][x].visited = true;
+            const directions = [[0, -1], [1, 0], [0, 1], [-1, 0]];
+            directions.sort(() => Math.random() - 0.5);
+            
+            for(let [dx, dy] of directions) {
+                let nx = x + dx, ny = y + dy;
+                if(nx >= 0 && nx < size && ny >= 0 && ny < size && !maze[ny][nx].visited) {
+                    let wallIndex = dy > 0 ? 2 : (dy < 0 ? 0 : (dx > 0 ? 1 : 3));
+                    maze[y][x].walls[wallIndex] = false;
+                    maze[ny][nx].walls[(wallIndex + 2) % 4] = false;
+                    drawMaze();
+                    await new Promise(resolve => setTimeout(resolve, 100));
+                    await generateMaze(nx, ny);
+                }
+            }
+        }
+
+        // 畫迷宮
+        function drawMaze() {
+            const canvas = document.getElementById('mazeCanvas');
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            const cellSize = canvas.width / size;
+
+            for(let y = 0; y < size; y++) {
+                for(let x = 0; x < size; x++) {
+                    let cell = maze[y][x];
+                    let xPos = x * cellSize;
+                    let yPos = y * cellSize;
+
+                    if(cell.walls[0]) ctx.fillRect(xPos, yPos, cellSize, 1); // 上
+                    if(cell.walls[1]) ctx.fillRect(xPos + cellSize - 1, yPos, 1, cellSize); // 右
+                    if(cell.walls[2]) ctx.fillRect(xPos, yPos + cellSize - 1, cellSize, 1); // 下
+                    if(cell.walls[3]) ctx.fillRect(xPos, yPos, 1, cellSize); // 左
+                }
+            }
+        }
+
+        // 初始化迷宮
+        let size = 20;
+        let maze = Array(size).fill().map((_, y) => Array(size).fill().map((_, x) => new Cell(x, y)));
+
+        // 立即執行的 async 函數
+        (async function() {
+            await generateMaze(0, 0); // 從左上角開始
+            drawMaze(); // 最後一次畫出完整的迷宮
+        })();
+    </script>
+</body>
+</html>
