@@ -1,197 +1,271 @@
-<html >
+<!DOCTYPE html>
+<html lang="zh-TW">
 <head>
-    <?php include("head.php"); ?>
-
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-57926490-4"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-if (window.location.hostname.match('wripix.xyz')) {
-  gtag('config', 'UA-57926490-4');
-}
-if (window.location.hostname.match('jolted-troop.000webhostapp.com')) {
-  gtag('config', 'UA-57926490-3');
-}
-if (window.location.hostname.match('pondahai.github.io')) {
-  gtag('config', 'UA-57926490-2');
-}
-</script>
-
-<meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
-    <meta name="google-signin-scope" content="profile email">
-    <meta name="google-signin-client_id" content="797948848378-0po451kj7nqm08atu85jha2vckrn9pgh.apps.googleusercontent.com">
-<script src="js/jquery-3.4.1.min.js"></script>
-<script src="js/medium-editor.js"></script>
-<script src="js/svg.js"></script>
-<script src="js/svg.draw.js"></script>
-	<script src="https://apis.google.com/js/platform.js" async defer></script>
-<link rel="stylesheet" href="css/medium-editor.css"> <!-- Core -->
-<link rel="stylesheet" href="css/themes/dahai.css"> <!-- or any other theme -->
-<link rel="stylesheet" href="css/others.css"> <!-- or any other theme -->
-<meta property="og:image"      content="icon01.png" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>彭宇豪 (Pondahai) - 個人網站</title>
+    <link rel="stylesheet" href="css/feed.css">
 </head>
-<body >
-	   <div id="iAmHere" class="editable" ><?php include("quickstart.php"); ?></div>
-
-<div style="background-color:#220000;padding:10px;height:100%;background-repeat:repeat-x">
-   
-   <!-- function buttons -->
-    <span style="float:left;">
-        <div class="radio-group" >
-        <!--Add buttons to initiate auth sequence and sign out-->
-        <button id="authorize_button" class="" style="display: none;"><label><font size="5">&#10145; &#128682;</font></label></button>
-        <button id="signout_button" class="" style="display: none;"><label><font size="5">&#128682; &#10145;</font></label></button>
-
-        
-
-        <button id="savefile_button" class="" onclick="downloadFileFromCurrentDocument();"><label><font size="5">&#10145; &#128190;</font></label></button><button id="loadfile_button" class="" onclick="uploadFileToCurrentDocument();"><label><font size="5">&#128190; &#10145;</font></label></button><button id="savecloudfile_button" class="" onclick="uploadToCloud();"><label><font size="5">&#10145; &#9729;</font></label></button><button id="sharefile_button" class="" onclick="uploadToCloudAndShare();"><label><font size="5">分</font></label></button>
-        
-        <!-- 
-            fb share button
-        -->
-        	<span id="fbsharebuttonposition"></span>
+<body>
+    <!-- 導航列 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">🦐 Pondahai</div>
+            <ul class="nav-menu">
+                <li><a href="#portfolio" onclick="showSection('portfolio')">🎯 作品集</a></li>
+                <li><a href="#resume" onclick="showSection('resume')">📄 履歷</a></li>
+                <li><a href="#daily" onclick="showSection('daily')">📰 每日回顧報</a></li>
+            </ul>
         </div>
-    </span>
-
-
-    <!-- radio button for paper style change -->
-
-    <span style="float:middle;">
-        <!-- <form > -->
-        <div  class="radio-group">
-            <input type="radio" id="option-one" name="paperstyleselector" onclick="changePaperStyle(1);"><label for="option-one"><font size="5">口</font></label><input type="radio" id="option-two" name="paperstyleselector" checked="checked" onclick="changePaperStyle(2);"><label for="option-two"><font size="5">三</font></label><input type="radio" id="option-three" name="paperstyleselector" onclick="changePaperStyle(3);"><label for="option-three"><font size="5">回</font></label>
-        </div>
-        <!-- </form> -->
-    </span>
-
-    <!-- pondahai -->
-    <!--
-    <span style="float:right;" ><font color="white" size="1"><a href="https://www.facebook.com/pondahai">pondahai 2019</a></font></span>
-    -->
-    <span style="float:right;">
-      <svg width="100%" height="100" >
-        <text text-anchor="middle" x="50%" y="50%" class="text text-1 ">
-        <a href="https://www.facebook.com/pondahai">pondahai 2019</a>
-        </text>
-        <text text-anchor="middle" x="50%" y="50%" class="text text-2 ">
-        <a href="https://www.facebook.com/pondahai">pondahai 2019</a>
-        </text>
-        <text text-anchor="middle" x="50%" y="50%" class="text text-3 ">
-        <a href="https://www.facebook.com/pondahai">pondahai 2019</a>
-        </text>
-        <text text-anchor="middle" x="50%" y="50%" class="text text-4 ">
-        <a href="https://www.facebook.com/pondahai">pondahai 2019</a>
-        </text>
-      </svg> 
-    </span>
-
-    <div >
-        <!-- <span style="float:left;color:white;"> -->
-            <span align="left" id="fileslist" style="float:left;color:white;white-space: pre-wrap;width:95%;"></span>
-        <!-- </span> -->
+    </nav>
+    
+    <div class="container">
+        <!-- 側邊欄 -->
+        <aside class="sidebar">
+            <div class="profile-card">
+                <div class="avatar">🦐</div>
+                <h2>彭宇豪</h2>
+                <p>台科大博士生 | 軟硬整合 | 生成式 AI</p>
+                <div class="stats">
+                    <div><strong>12+</strong><br><span>專案</span></div>
+                    <div><strong>10+</strong><br><span>年經驗</span></div>
+                </div>
+            </div>
+        </aside>
+        
+        <!-- 主內容區 -->
+        <main class="main-content">
+            <!-- 作品集 -->
+            <section id="portfolio" class="section">
+                <div class="feed-container">
+                    <h2 class="section-title">🎯 作品集</h2>
+                    <div class="projects-grid" id="projects-list">
+                        <p class="loading">載入中...</p>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- 履歷 -->
+            <section id="resume" class="section">
+                <div class="feed-container">
+                    <h2 class="section-title">📄 學術履歷</h2>
+                    
+                    <!-- 學歷 -->
+                    <div class="fb-post">
+                        <div class="fb-post-header">
+                            <div class="fb-avatar">🎓</div>
+                            <div class="fb-post-info">
+                                <div class="fb-name">學歷</div>
+                            </div>
+                        </div>
+                        <div class="fb-post-content">
+                            <div class="resume-item">
+                                <span class="year">2022 - 現在</span>
+                                <div>
+                                    <strong>國立臺灣科技大學</strong><br>
+                                    <span>應用科技研究所 醫學工程組 博士生</span><br>
+                                    <small>研究主題：智慧枕墊系統 / 打鼾檢測與控制</small>
+                                </div>
+                            </div>
+                            <div class="resume-item">
+                                <span class="year">2019 - 2022</span>
+                                <div>
+                                    <strong>碩士</strong><br>
+                                    <span>待補資料</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 經歷 -->
+                    <div class="fb-post">
+                        <div class="fb-post-header">
+                            <div class="fb-avatar">💼</div>
+                            <div class="fb-post-info">
+                                <div class="fb-name">經歷</div>
+                            </div>
+                        </div>
+                        <div class="fb-post-content">
+                            <div class="resume-item">
+                                <span class="year">現在</span>
+                                <div>
+                                    <strong>泰電電業 X 馥林文化</strong><br>
+                                    <span>Maker 相關工作</span>
+                                </div>
+                            </div>
+                            <div class="resume-item">
+                                <span class="year">~2018</span>
+                                <div>
+                                    <strong>www.comdek.com - 資深工程師</strong><br>
+                                    <span>工作 7 年，負責生理監視器與醫療儀器軟硬體規劃開發</span>
+                                </div>
+                            </div>
+                            <div class="resume-item">
+                                <span class="year">~更早</span>
+                                <div>
+                                    <strong>www.beckietech.com - 嵌入式系統工程師</strong><br>
+                                    <span>負責嵌入式系統整合與新功能開發</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 專業技能 -->
+                    <div class="fb-post">
+                        <div class="fb-post-header">
+                            <div class="fb-avatar">🛠</div>
+                            <div class="fb-post-info">
+                                <div class="fb-name">專業技能</div>
+                            </div>
+                        </div>
+                        <div class="fb-post-content">
+                            <p><strong>硬體：</strong></p>
+                            <div class="skills">
+                                <span class="skill-tag">PCB電路板設計</span>
+                                <span class="skill-tag">硬體系統研發設計</span>
+                                <span class="skill-tag">電子電路設計</span>
+                                <span class="skill-tag">類比電路設計</span>
+                                <span class="skill-tag">數位電路分析設計</span>
+                                <span class="skill-tag">電機設備研發</span>
+                            </div>
+                            <br>
+                            <p><strong>韌體/軟體：</strong></p>
+                            <div class="skills">
+                                <span class="skill-tag">韌體工程開發</span>
+                                <span class="skill-tag">微電腦軟體設計</span>
+                                <span class="skill-tag">嵌入式系統</span>
+                                <span class="skill-tag">單晶片 (8051/AVR/ARM)</span>
+                                <span class="skill-tag">Linux Kernel</span>
+                            </div>
+                            <br>
+                            <p><strong>程式語言：</strong></p>
+                            <div class="skills">
+                                <span class="skill-tag">Python</span>
+                                <span class="skill-tag">C</span>
+                                <span class="skill-tag">C++</span>
+                                <span class="skill-tag">JavaScript</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 認證資格 -->
+                    <div class="fb-post">
+                        <div class="fb-post-header">
+                            <div class="fb-avatar">📜</div>
+                            <div class="fb-post-info">
+                                <div class="fb-name">認證資格</div>
+                            </div>
+                        </div>
+                        <div class="fb-post-content">
+                            <div class="skills">
+                                <span class="skill-tag">醫療儀器 CE 認證</span>
+                                <span class="skill-tag">ISO 13485</span>
+                                <span class="skill-tag">FDA 認證</span>
+                                <span class="skill-tag">TFDA 認證</span>
+                                <span class="skill-tag">GMP</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- 每日回顧報 -->
+            <section id="daily" class="section active">
+                <div class="feed-container">
+                    <h2 class="section-title">📰 每日回顧報</h2>
+                    <div class="fb-feed" id="daily-feed">
+                        <!-- 由 JavaScript 動態產生 -->
+                    </div>
+                </div>
+            </section>
+        </main>
     </div>
-</div>
-
-
-
-<!--
-<div class="button_cont" align="center"><a class="example_b" href="add-website-here" target="_blank" rel="nofollow noopener" onclick="downloadCurrentDocument();">&#x21D2; &#128190;</a></div>
-<div class="button_cont" align="center"><a class="example_b" href="add-website-here" target="_blank" rel="nofollow noopener" onclick="uploadToCurrentDocument();">&#128190; &#x21D2;</a></div>
--->
-
-
-<script>
-	var editor = new MediumEditor('.editable',{
-  	autoLink: true,
-    allowMultiParagraphSelection: false,
-  	toolbar: {
-  		buttons: [
-      'bold', 
-      'italic', 
-      'underline', 
-      'anchor', 
-      'quote', 
-       {
-              name: 'justifyLeft',
-              action: 'justifyLeft',
-              aria: 'left justify',
-              tagNames: [],
-              style: {
-                  prop: 'text-align',
-                  value: 'left'
-              },
-              contentDefault: '<font size="5" style="position: absolute;top: 13%;left:42%">⇤</font>',
-              contentFA: '<i class="fa fa-align-left"></i>'
-          },
-       {
-              name: 'justifyCenter',
-              action: 'justifyCenter',
-              aria: 'center justify',
-              tagNames: [],
-              style: {
-                  prop: 'text-align',
-                  value: 'center'
-              },
-              contentDefault: '<font size="5" style="position: absolute;top: 10%;left:49%">|</font>',
-              contentFA: '<i class="fa fa-align-center"></i>'
-          },
-       {
-              name: 'justifyRight',
-              action: 'justifyRight',
-              aria: 'right justify',
-              tagNames: [],
-              style: {
-                  prop: 'text-align',
-                  value: 'right'
-              },
-              contentDefault: '<font size="5" style="position: absolute;top: 13%;left:53%">⇥</font>',
-              contentFA: '<i class="fa fa-align-right"></i>'
-          },
-          {
-              name: 'h1',
-              action: 'append-h1',
-              aria: 'header type one',
-              tagNames: ['h1'],
-              contentDefault: '<font size="6" style="position: absolute;top: 0%;left:65%">字</font>',
-              contentFA: '<i class="fa fa-header"><sup>1</sup>'
-          },
-          {
-              name: 'h2',
-              action: 'append-h2',
-              aria: 'header type two',
-              tagNames: ['h2'],
-              contentDefault: '<font size="5">字</font>',
-              contentFA: '<i class="fa fa-header"><sup>2</sup>'
-          },
-          {
-              name: 'h6',
-              action: 'append-h6',
-              aria: 'header type six',
-              tagNames: ['h6'],
-              contentDefault: '<font size="1" style="position: absolute;top: 33%;left:83%">字</font>',
-              contentFA: '<i class="fa fa-header"><sup>6</sup>'
-          },
-      'pre'
-      ]
-  	},
-    anchor: {
-        /* These are the default options for anchor form,
-           if nothing is passed this is what it used */
-        customClassOption: null,
-        customClassOptionText: 'Button',
-        linkValidation: false,
-        placeholderText: 'Paste or type a link',
-        targetCheckbox: true,
-        targetCheckboxText: 'Open in new window'
-    }
-});
-</script>
-<script src="js/others.js"></script>
-<script async defer src="https://apis.google.com/js/api.js"
-  onload="this.onload=function(){};handleClientLoad()"
-  onreadystatechange="if (this.readyState === 'complete') this.onload()">
-</script>
+    
+    <footer class="footer">
+        <p>© 2026 彭宇豪 (Pondahai) | 
+            <a href="https://github.com/pondahai">GitHub</a> | 
+            <a href="https://www.ptt.cc/bbs/index.html">PTT: cyberwalker</a> |
+            <a href="https://pda.104.com.tw/profile/share/3EWkpAd7mhbXDF77EEYDzACi2Jetw7vB">104 履歷</a>
+        </p>
+    </footer>
+    
+    <script src="js/daily-data.js"></script>
+    <script>
+        // 顯示區塊
+        function showSection(id) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            history.pushState(null, null, '#' + id);
+        }
+        
+        // 從 URL hash 載入區塊
+        if (window.location.hash) {
+            showSection(window.location.hash.substring(1));
+        }
+        
+        // 載入 GitHub 專案
+        async function loadProjects() {
+            try {
+                const response = await fetch('https://api.github.com/users/pondahai/repos?sort=updated&per_page=12');
+                const repos = await response.json();
+                
+                const grid = document.getElementById('projects-list');
+                grid.innerHTML = repos.map(repo => `
+                    <div class="project-card">
+                        <h3><a href="${repo.html_url}" target="_blank">${repo.name}</a></h3>
+                        <p>${repo.description || '無描述'}</p>
+                        <div class="tags">
+                            ${repo.language ? `<span class="tag">${repo.language}</span>` : ''}
+                            <span class="star">⭐ ${repo.stargazers_count}</span>
+                        </div>
+                    </div>
+                `).join('');
+            } catch (e) {
+                document.getElementById('projects-list').innerHTML = '<p>無法載入專案列表</p>';
+            }
+        }
+        
+        // 格式化日期
+        function formatDate(dateStr) {
+            const date = new Date(dateStr);
+            const today = new Date();
+            const diff = Math.floor((today - date) / (1000 * 60 * 60 * 24));
+            
+            if (diff === 0) return '今天';
+            if (diff === 1) return '昨天';
+            if (diff < 7) return `${diff} 天前`;
+            
+            return date.toLocaleDateString('zh-TW', { month: 'short', day: 'numeric' });
+        }
+        
+        // 產生每日回顧牆
+        function loadDailyFeed() {
+            const feed = document.getElementById('daily-feed');
+            feed.innerHTML = dailyReports.map(([date, title, content, mood]) => `
+                <div class="fb-post">
+                    <div class="fb-post-header">
+                        <div class="fb-avatar">🦐</div>
+                        <div class="fb-post-info">
+                            <div class="fb-name">彭宇豪</div>
+                            <div class="fb-time">${formatDate(date)} · ${mood}</div>
+                        </div>
+                    </div>
+                    <div class="fb-post-content">
+                        <h3>${title}</h3>
+                        <p>${content.replace(/\n/g, '<br>')}</p>
+                    </div>
+                    <div class="fb-post-footer">
+                        <span>👍 喜歡</span>
+                        <span>💬 留言</span>
+                        <span>🔄 分享</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        // 初始化
+        loadProjects();
+        loadDailyFeed();
+    </script>
 </body>
 </html>
