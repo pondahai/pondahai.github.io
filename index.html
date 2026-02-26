@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>彭宇豪 (Pondahai) - 個人網站</title>
+    <link rel="stylesheet" href="css/feed.css">
+</head>
+<body>
+    <!-- 導航列 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">🦐 Pondahai</div>
+            <ul class="nav-menu">
+                <li><a href="#portfolio" onclick="showSection('portfolio')">🎯 作品集</a></li>
+                <li><a href="#resume" onclick="showSection('resume')">📄 履歷</a></li>
+                <li><a href="#daily" onclick="showSection('daily')">📰 每日回顧報</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <!-- 側邊欄 -->
+        <aside class="sidebar">
+            <div class="profile-card">
+                <div class="avatar">🦐</div>
+                <h2>彭宇豪</h2>
+                <p>台科大博士生 | 軟硬整合 | 生成式 AI</p>
+                <div class="stats">
+                    <div><strong>12+</strong><br><span>專案</span></div>
+                    <div><strong>10+</strong><br><span>年經驗</span></div>
+                </div>
+            </div>
+        </aside>
+        
+        <!-- 主內容區 -->
+        <main class="main-content">
+            <!-- 作品集 -->
+            <section id="portfolio" class="section">
+                <div class="feed-container">
+                    <h2 class="section-title">🎯 作品集</h2>
+                    <div class="projects-grid" id="projects-list">
+                        <p class="loading">載入中...</p>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- 履歷 -->
+            <section id="resume" class="section">
+                <div class="feed-container">
+                    <h2 class="section-title">📄 學術履歷</h2>
+                    
+                    <!-- 學歷 -->
+                    <div class="fb-post">
+                        <div class="fb-post-header">
+                            <div class="fb-avatar">🎓</div>
+                            <div class="fb-post-info">
+                                <div class="fb-name">學歷</div>
+                            </div>
+                        </div>
+                        <div class="fb-post-content">
+                            <div class="resume-item">
+                                <span class="year">2022 - 現在</span>
+                                <div>
+                                    <strong>國立臺灣科技大學</strong><br>
+                                    <span>應用科技研究所 醫學工程組 博士生</span><br>
+                                    <small>研究主題：智慧枕墊系統 / 打鼾檢測與控制</small>
+                                </div>
+                            </div>
+                            <div class="resume-item">
+                                <span class="year">2019 - 2022</span>
+                                <div>
+                                    <strong>碩士</strong><br>
+                                    <span>待補資料</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 經歷 -->
+                    <div class="fb-post">
+                        <div class="fb-post-header">
+                            <div class="fb-avatar">💼</div>
+                            <div class="fb-post-info">
+                                <div class="fb-name">經歷</div>
+                            </div>
+                        </div>
+                        <div class="fb-post-content">
+                            <div class="resume-item">
+                                <span class="year">現在</span>
+                                <div>
+                                    <strong>大昌榮塑膠工廠有限公司 - 負責人</strong><br>
+                                    <span>統一編號：29507816 | 資本額：500萬</span>
+                                </div>
+                            </div>
+                            <div class="resume-item">
+                                <span class="year">~2020</span>
+                                <div>
+                                    <strong>www.comdek.com - 資深工程師</strong><br>
+                                    <span>工作 7 年，負責生理監視器與醫療儀器軟硬體規劃開發</span>
+                                </div>
+                            </div>
+                            <div class="resume-item">
+                                <span class="year">~2018</span>
+                                <div>
+                                    <strong>www.beckietech.com - 嵌入式系統工程師</strong><br>
+                                    <span>負責嵌入式系統整合與新功能開發</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 專業技能 -->
+                    <div class="fb-post">
+                        <div class="fb-post-header">
+                            <div class="fb-avatar">🛠</div>
+                            <div class="fb-post-info">
+                                <div class="fb-name">專業技能</div>
+                            </div>
+                        </div>
+                        <div class="fb-post-content">
+                            <p><strong>硬體：</strong></p>
+                            <div class="skills">
+                                <span class="skill-tag">PCB電路板設計</span>
+                                <span class="skill-tag">硬體系統研發設計</span>
+                                <span class="skill-tag">電子電路設計</span>
+                                <span class="skill-tag">類比電路設計</span>
+                                <span class="skill-tag">數位電路分析設計</span>
+                                <span class="skill-tag">電機設備研發</span>
+                            </div>
+                            <br>
+                            <p><strong>韌體/軟體：</strong></p>
+                            <div class="skills">
+                                <span class="skill-tag">韌體工程開發</span>
+                                <span class="skill-tag">微電腦軟體設計</span>
+                                <span class="skill-tag">嵌入式系統</span>
+                                <span class="skill-tag">單晶片 (8051/AVR/ARM)</span>
+                                <span class="skill-tag">Linux Kernel</span>
+                            </div>
+                            <br>
+                            <p><strong>程式語言：</strong></p>
+                            <div class="skills">
+                                <span class="skill-tag">Python</span>
+                                <span class="skill-tag">C</span>
+                                <span class="skill-tag">C++</span>
+                                <span class="skill-tag">JavaScript</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 認證資格 -->
+                    <div class="fb-post">
+                        <div class="fb-post-header">
+                            <div class="fb-avatar">📜</div>
+                            <div class="fb-post-info">
+                                <div class="fb-name">認證資格</div>
+                            </div>
+                        </div>
+                        <div class="fb-post-content">
+                            <div class="skills">
+                                <span class="skill-tag">醫療儀器 CE 認證</span>
+                                <span class="skill-tag">ISO 13485</span>
+                                <span class="skill-tag">FDA 認證</span>
+                                <span class="skill-tag">TFDA 認證</span>
+                                <span class="skill-tag">GMP</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- 每日回顧報 -->
+            <section id="daily" class="section active">
+                <div class="feed-container">
+                    <h2 class="section-title">📰 每日回顧報</h2>
+                    <div class="fb-feed" id="daily-feed">
+                        <!-- 由 JavaScript 動態產生 -->
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+    
+    <footer class="footer">
+        <p>© 2026 彭宇豪 (Pondahai) | 
+            <a href="https://github.com/pondahai">GitHub</a> | 
+            <a href="https://www.ptt.cc/bbs/index.html">PTT: cyberwalker</a> |
+            <a href="https://pda.104.com.tw/profile/share/3EWkpAd7mhbXDF77EEYDzACi2Jetw7vB">104 履歷</a>
+        </p>
+    </footer>
+    
+    <script src="js/daily-data.js"></script>
+    <script>
+        // 顯示區塊
+        function showSection(id) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            history.pushState(null, null, '#' + id);
+        }
+        
+        // 從 URL hash 載入區塊
+        if (window.location.hash) {
+            showSection(window.location.hash.substring(1));
+        }
+        
+        // 載入 GitHub 專案
+        async function loadProjects() {
+            try {
+                const response = await fetch('https://api.github.com/users/pondahai/repos?sort=updated&per_page=12');
+                const repos = await response.json();
+                
+                const grid = document.getElementById('projects-list');
+                grid.innerHTML = repos.map(repo => `
+                    <div class="project-card">
+                        <h3><a href="${repo.html_url}" target="_blank">${repo.name}</a></h3>
+                        <p>${repo.description || '無描述'}</p>
+                        <div class="tags">
+                            ${repo.language ? `<span class="tag">${repo.language}</span>` : ''}
+                            <span class="star">⭐ ${repo.stargazers_count}</span>
+                        </div>
+                    </div>
+                `).join('');
+            } catch (e) {
+                document.getElementById('projects-list').innerHTML = '<p>無法載入專案列表</p>';
+            }
+        }
+        
+        // 格式化日期
+        function formatDate(dateStr) {
+            const date = new Date(dateStr);
+            const today = new Date();
+            const diff = Math.floor((today - date) / (1000 * 60 * 60 * 24));
+            
+            if (diff === 0) return '今天';
+            if (diff === 1) return '昨天';
+            if (diff < 7) return `${diff} 天前`;
+            
+            return date.toLocaleDateString('zh-TW', { month: 'short', day: 'numeric' });
+        }
+        
+        // 產生每日回顧牆
+        function loadDailyFeed() {
+            const feed = document.getElementById('daily-feed');
+            feed.innerHTML = dailyReports.map(([date, title, content, mood]) => `
+                <div class="fb-post">
+                    <div class="fb-post-header">
+                        <div class="fb-avatar">🦐</div>
+                        <div class="fb-post-info">
+                            <div class="fb-name">彭宇豪</div>
+                            <div class="fb-time">${formatDate(date)} · ${mood}</div>
+                        </div>
+                    </div>
+                    <div class="fb-post-content">
+                        <h3>${title}</h3>
+                        <p>${content.replace(/\n/g, '<br>')}</p>
+                    </div>
+                    <div class="fb-post-footer">
+                        <span>👍 喜歡</span>
+                        <span>💬 留言</span>
+                        <span>🔄 分享</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        // 初始化
+        loadProjects();
+        loadDailyFeed();
+    </script>
+</body>
+</html>
