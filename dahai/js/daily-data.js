@@ -1,6 +1,13 @@
 // 每日回顧報資料
 // 格式：[日期, 標題, 內容, 心情emoji]
+// 已按時間排序（新的在前）
 const dailyReports = [
+    [
+        "2026-02-25",
+        "🔍 CDP 9222 大法修煉成功",
+        "建立 cdp-gmail 和 cdp-google-search Skill 🦐",
+        "💪"
+    ],
     [
         "2026-01-31",
         "🦞 脫殼蝦報到！",
@@ -60,12 +67,6 @@ const dailyReports = [
         "🔧 跟 Gemini 打造數位分身",
         "把 FB 資料下載後清洗，丟到 NotebookLM，準備打造數位分身！\n\n「一下子架構就出來了」",
         "🧬"
-    ],
-    [
-        "2026-02-25",
-        "🔍 CDP 9222 大法修煉成功",
-        "建立 cdp-gmail 和 cdp-google-search Skill 🦐",
-        "💪"
     ]
 ];
 
