@@ -873,7 +873,7 @@ function downloadFromCloud_old (id,name) {
   
       // Client ID and API key from the Developer Console
       var CLIENT_ID = '797948848378-0po451kj7nqm08atu85jha2vckrn9pgh.apps.googleusercontent.com';
-      var API_KEY = 'AIzaSyBGRwie6OSq5sOM3N-DK3GopS1O0EjWrBY';
+      var API_KEY = '';
 
       // Array of API discovery doc URLs for APIs used by the quickstart
       var DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"];
