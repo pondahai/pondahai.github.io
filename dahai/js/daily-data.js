@@ -10,15 +10,9 @@ const dailyReports = [
     ],,
 [
         "2026-02-27",
-        "📝 知識整理",
+        "🚀 重大里程碑",
         "智慧枕墊研究持續推進。Line Bot 新聞機器人專案維運。",
-        "📚"
-    ],
-    [
-        "2026-02-27",
-        "💡 技術新發現",
-        "智慧枕墊研究持續推進，致力於打鼾檢測與控制系統。\nLine Bot 新聞機器人專案維運中。",
-        "🧠"
+        "✨"
     ]
     [
         "2026-01-31",
@@ -85,11 +79,4 @@ const dailyReports = [
 // 匯出給 HTML 用
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = { dailyReports };
-},
-    [
-        "2026-02-27",
-        "🎉 階段性成果",
-        "智慧枕墊研究持續推進。Line Bot 新聞機器人專案維運。",
-        "✨"
-    ]
-];
+}
