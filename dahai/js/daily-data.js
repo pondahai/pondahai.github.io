@@ -5,7 +5,7 @@ const dailyReports = [
     [
         "2026-02-28",
         "💡 技術新發現",
-        "智慧枕墊研究持續推進，聚焦打鼾檢測與控制。Line Bot 新聞機器人專案持續優化。",
+        "持續深化軟硬整合與生成式 AI 應用能力。Line Bot 新聞機器人專案持續優化，這個專案整合了 Selenium 網頁爬蟲與 LLM 摘要生成，展現 AI 落地的實作能力。",
         "🧠"
     ],
     [
@@ -76,7 +76,6 @@ const dailyReports = [
     ]
 ];
 
-// 匯出給 HTML 用
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = { dailyReports };
 }
