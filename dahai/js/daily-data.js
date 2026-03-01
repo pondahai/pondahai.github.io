@@ -3,10 +3,16 @@
 // 已按時間排序（新的在前）
 const dailyReports = [
     [
+        "2026-03-01",
+        "📖 學習與成長",
+        "Line Bot 新聞機器人專案持續優化。",
+        "📚"
+    ],
+    [
         "2026-02-28",
-        "💡 技術新發現",
-        "持續深化軟硬整合與生成式 AI 應用能力。Line Bot 新聞機器人專案持續優化，這個專案整合了 Selenium 網頁爬蟲與 LLM 摘要生成，展現 AI 落地的實作能力。",
-        "🧠"
+        "📖 學習與成長",
+        "Line Bot 新聞機器人專案持續優化。",
+        "📚"
     ],
     [
         "2026-02-27",
@@ -76,6 +82,7 @@ const dailyReports = [
     ]
 ];
 
+// 匯出給 HTML 用
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = { dailyReports };
 }
