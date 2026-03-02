@@ -417,11 +417,13 @@
         function formatDate(dateStr) {
             const date = new Date(dateStr);
             const today = new Date();
-            const diff = Math.floor((today - date) / (1000 * 60 * 60 * 24));
+            const diffDays = Math.floor((today - date) / (1000 * 60 * 60 * 24));
+            const diffYears = Math.floor(diffDays / 365);
             
-            if (diff === 0) return '今天';
-            if (diff === 1) return '昨天';
-            if (diff < 7) return `${diff} 天前`;
+            if (diffDays === 0) return '今天';
+            if (diffDays === 1) return '昨天';
+            if (diffDays < 7) return `${diffDays} 天前`;
+            if (diffYears >= 1) return `${diffYears}年前`;
             
             return date.toLocaleDateString('zh-TW', { month: 'short', day: 'numeric' });
         }
