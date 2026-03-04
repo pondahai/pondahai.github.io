@@ -20,6 +20,20 @@
     <meta name="twitter:image" content="https://pondahai.github.io/dahai/images/avatar.jpg">
     
     <link rel="stylesheet" href="css/feed.css">
+
+<style>
+.source-tag {
+    background: #e8f4ea;
+    color: #1a7f37;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.85em;
+    margin: 0 2px;
+}
+.daily-content br {
+    margin: 4px 0;
+}
+</style>
 </head>
 <body>
     <!-- 導航列 -->
@@ -401,7 +415,7 @@
                 grid.innerHTML = repos.map(repo => `
                     <div class="project-card">
                         <h3><a href="${repo.html_url}" target="_blank">${repo.name}</a></h3>
-                        <p>${repo.description || '無描述'}</p>
+                        <p class="daily-content">${repo.description || '無描述'}</p>
                         <div class="tags">
                             ${repo.language ? `<span class="tag">${repo.language}</span>` : ''}
                             <span class="star">⭐ ${repo.stargazers_count}</span>
@@ -442,7 +456,13 @@
                     </div>
                     <div class="fb-post-content">
                         <h3>${title}</h3>
-                        <p>${content.replace(/\n/g, '<br>')}</p>
+                        <p class="daily-content">${content
+.replace(/；/g, '<br>📌 ')
+.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+.replace(/\*([^*]+)\*/g, '<em>$1</em>')
+.replace(/\(digital-twin\)/g, '<span class="source-tag">📱</span>')
+.replace(/\(memory\)/g, '<span class="source-tag">📝</span>')
+}</p>
                     </div>
                     <div class="fb-post-footer">
                         <span>👍 喜歡</span>
