@@ -5,7 +5,7 @@ const dailyReports = [
     [
         "2026-03-04",
         "📜 過往紀錄回顧",
-        "2025年乙巳年驚蟄，2025年乙巳年驚蟄，https://www.reddit.com/r/LocalLLaMA/comments/1j2kdeb/openbenchtable_is_great_for_trying_out_different/?utm_source=share&",
+        "(<|endoftext|>### Problem",
         "📚"
     ],
     [
