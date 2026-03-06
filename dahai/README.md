@@ -24,9 +24,12 @@
 - **多元內容**：支援 FB 貼文、AI 圖片分析、外部連結摘要等
 - **時間顯示**：超過 1 年顯示「X年前」
 
-### 資料來源
+### 資料來源（位於本機 OpenClaw 工作區）
+
+> 以下資料夾位於 `~/.openclaw/workspace/`，不在 GitHub repo 中
+
 1. `memory/YYYY-MM-DD.md` - 日常筆記
-2. `cerebras-kb-chat/knowledge/**` - 數位分身知識庫（FB/部落格記錄）
+2. `cerebras-kb-chat/knowledge/**` - 數位分身知識庫（FB/部落格記錄，約 20,000+ 筆）
 
 ### 更新流程
 1. 掃描當天月/日的歷史紀錄（從知識庫）
