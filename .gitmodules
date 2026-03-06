@@ -28,3 +28,6 @@
 [submodule "barbara-pwa"]
 	path = barbara-pwa
 	url = https://github.com/pondahai/barbara-pwa
+[submodule "jintao/pillow-data-collect-web"]
+	path = jintao/pillow-data-collect-web
+	url = https://github.com/XUE030130/Pillow-data-collect-web.git
