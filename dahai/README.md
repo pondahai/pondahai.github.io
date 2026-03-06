@@ -54,11 +54,13 @@ pondahai.github.io/
 └── 其他靜態頁面...
 ```
 
-## 📝 相關腳本
+## 📝 相關腳本（位於本機 OpenClaw 工作區）
+
+> 以下腳本位於 `~/.openclaw/workspace/scripts/`，不在 GitHub repo 中
 
 | 腳本 | 功能 |
 |------|------|
-| `generate_dahai_daily.js` | 每日回顧報生成器 |
+| `generate_dahai_daily.js` | 每日回顧報生成器（Cron 自動執行） |
 | `enrich_digital_twin_links.js` | 數位分身連結補摘要腳本 |
 
 ## 網址
