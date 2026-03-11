@@ -4,9 +4,9 @@
 const dailyReports = [
     [
         "2026-03-11",
-        "🗂️ 知識庫回顧",
-        "歷史回顧：2019年03-11（digital-twin）應用的道理很簡單，能做的事情卻很玄妙～\nhttps://www.analog.com/media/en/technical-documentation/data-sheets/AD5933.pdf\n\n> [AI 圖片分析]: 這張圖片主要展示了一款電子元件 AD5934 的應用場景與功能框圖，以下是詳細的繁體中文描述：\n\n> [AI 連結摘要] (https://www.analog.com/media/en/technical-documentation/data-sheets/AD5933.pdf): （摘要失敗）%PDF-1.6\r%����\r\n3670 0 obj\r<</；2025年03-11（digital-twin）FB Post\n\n- Platform: FB (Archive)\n- Date: 3/11/2025, 5:59:59 PM\n- Title: Dahai Pon 分享了 1 條連結。\n\n---\n\n看人扒開系統程式碼很過癮的~~；2025年03-11（digital-twin）FB Post\n\n- Platform: FB (Archive)\n- Date: 3/11/2025, 5:59:59 PM\n- Title: Dahai Pon 分享了 1 條連結。\n\n---\n\n看人扒開系統程式碼很過癮的~~。",
-        "✨"
+        "📖 歷史上的今天",
+        "2019年3月11日：深入探討了AD5934電子元件的應用場景與功能框圖，揭示了其簡易道理背後的玄妙細節（應用的道理很簡單，能做的事情卻很玄妙～）之後，AI分析提供的資料（https://www.analog.com/media/en/technical-documentation/data-sheets/AD5933.pdf）雖然未能成功摘要，但仍顯示了進一步了解電子元件細節的可能。",
+        "📚"
     ],
     [
         "2026-03-10",
