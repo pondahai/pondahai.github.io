@@ -3,6 +3,12 @@
 // 已按時間排序（新的在前）
 const dailyReports = [
     [
+        "2026-03-17",
+        "🕰️ 今日回顧",
+        "歷史回顧：2025年03-17（digital-twin）https://www.instagram.com/reel/DHPHeG1oZGV/?igsh=c2djNDg5ZmwyaHBi\n\n> [AI 連結摘要] (https://www.instagram.com/reel/DHPHeG1oZGV/?igsh=c2djNDg5ZmwyaHBi): （摘要失敗）Instagram Instagram Log In Sign Up Meta About Blog Jobs Help API Privacy Terms Locations Instagram Lite Meta AI Threads ...；2025年03-17（digital-twin）太好了\n以後可以跟服裝店的人體模特聊天問程式碼怎麼寫了~\n\nhttps://www.threads.net/@invest.lab.hk/post/DHSCV3HTJ_8?xmt=AQGzYC4Vow4wiEz7GoyD7GEQbvPHfkruaNzO8u6FZYQmfQ。",
+        "📚"
+    ],
+    [
         "2026-03-16",
         "📖 歷史上的今天",
         "歷史回顧：2018年03-16（digital-twin）恆春枋寮沿海，東北風，風力七級至八級，陣風九級，小湧轉中湧，天氣有時好天有時落雨～\n\n還有鯨魚在微笑～～\n\nhttps://www.davidrumsey.com/luna/servlet/detail/RUMSEY~8~1~306140~90076532:Tourist-s-Map-of-Taiwan\n\ndavid_rumsey\n\n> [AI 圖片分析]: 這是一幅以台灣為主體的插畫式地圖，整體風格帶有濃厚的復古手繪特色，色彩鮮豔卻不失年代感。圖像背景為淺藍色，代表海洋，而台灣島則以柔和的粉紅色為主體，形成鮮明對比。\n\n 地圖主體與地理標註\n- 台灣島形態：圖中清晰；2022年03-16（digital-twin）小時候超愛的「黃金小戰士」❤️\n如今再看一次他們的名字\n原來都是「來打」，打火機😂\n不過字尾加了個n\n我腦補：大概是覺得打火機太糗了，那他變成什麼「坦」比較酷😂\n\n主角是 黃金打火機\n還有 SCOPE打火機 計時器打火機 電磁（氣？）打火機 機械打火機 IC打火機；2022年03-16（digital-twin）小時候超愛的「黃金小戰士」❤️\n如今再看一次他們的名字\n原來都是「來打」，打火機😂\n不過字尾加了個n\n我腦補：大概是覺得打火機太糗了，那他變成什麼「坦」比較酷😂\n\n主角是 黃金打火機\n還有 SCOPE打火機 計時器打火機 電磁（氣？）打火機 機械打火機 IC打火機。",
