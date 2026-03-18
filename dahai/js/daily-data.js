@@ -3,6 +3,12 @@
 // 已按時間排序（新的在前）
 const dailyReports = [
     [
+        "2026-03-18",
+        "📖 歷史上的今天",
+        "歷史回顧：2025年03-18（digital-twin）我小時候就很想打造一部像這樣的掌上型電腦\n那時候剛學8051\n很認真畫了很多方塊圖\n也曾用萬孔板焊接了一塊鍵盤\n那時候配的是12864的點陣單色LCD\n第一個應用程式是接MODEM撥接到hinet\n\n這個多年了\n很感動還是有人在追求這一塊\n\n德不孤必有鄰；2025年03-18（digital-twin）我小時候就很想打造一部像這樣的掌上型電腦\n那時候剛學8051\n很認真畫了很多方塊圖\n也曾用萬孔板焊接了一塊鍵盤\n那時候配的是12864的點陣單色LCD\n第一個應用程式是接MODEM撥接到hinet\n\n這個多年了\n很感動還是有人在追求這一塊\n\n德不孤必有鄰。",
+        "📚"
+    ],
+    [
         "2026-03-17",
         "🕰️ 今日回顧",
         "歷史回顧：2025年03-17（digital-twin）https://www.instagram.com/reel/DHPHeG1oZGV/?igsh=c2djNDg5ZmwyaHBi\n\n> [AI 連結摘要] (https://www.instagram.com/reel/DHPHeG1oZGV/?igsh=c2djNDg5ZmwyaHBi): （摘要失敗）Instagram Instagram Log In Sign Up Meta About Blog Jobs Help API Privacy Terms Locations Instagram Lite Meta AI Threads ...；2025年03-17（digital-twin）太好了\n以後可以跟服裝店的人體模特聊天問程式碼怎麼寫了~\n\nhttps://www.threads.net/@invest.lab.hk/post/DHSCV3HTJ_8?xmt=AQGzYC4Vow4wiEz7GoyD7GEQbvPHfkruaNzO8u6FZYQmfQ。",
