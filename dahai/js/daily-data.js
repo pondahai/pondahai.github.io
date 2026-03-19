@@ -2,13 +2,18 @@
 // 格式：[日期, 標題, 內容, 心情emoji]
 // 已按時間排序（新的在前）
 const dailyReports = [
-[
-    "2026-03-18",
-    "🚀 科技前線：NVIDIA GTC 2026 洞察",
-    "NVIDIA GTC 2026 關鍵洞察：1. 與 Groq 技術整合以強化推論效能；2. Physical AI 實體落地；3. AutoResearch 讓 Agent 成為科學家。這是對「套殼 AI」的淘汰警訊，真正的護城河在於深度硬體整合。",
-    "🧐"
-],
-
+    [
+        "2026-03-19",
+        "🗂️ 知識庫回顧",
+        "> **[AI 網頁偵測]** (https://www.instagram.com/reel/DHQ_8TJNuVA/?igsh=ajR2Mms3NW84a2hr): 網址似乎連結到 Instagram 影音內容，目前無法擷取影片內容。",
+        "✨"
+    ],
+    [
+        "2026-03-18",
+        "🚀 科技前線：NVIDIA GTC 2026 洞察",
+        "NVIDIA GTC 2026 關鍵洞察：1. 與 Groq 技術整合以強化推論效能；2. Physical AI 實體落地；3. AutoResearch 讓 Agent 成為科學家。這是對「套殼 AI」的淘汰警訊，真正的護城河在於深度硬體整合。",
+        "🧐"
+    ],
     [
         "2026-03-18",
         "📖 歷史上的今天",
