@@ -3,6 +3,12 @@
 // 已按時間排序（新的在前）
 const dailyReports = [
     [
+        "2026-03-24",
+        "🌟 今日回顧精選",
+        "https://www.kickstarter.com/projects/pixl-pen/pixl-pen-the-first-fully-open-source-ai-pen/description",
+        "✨"
+    ],
+    [
         "2026-03-23",
         "📖 歷史上的今天",
         "他的YouTube頻道也叫做「Joseph's Machines」",
