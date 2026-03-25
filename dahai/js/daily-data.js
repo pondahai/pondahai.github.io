@@ -3,6 +3,12 @@
 // 已按時間排序（新的在前）
 const dailyReports = [
     [
+        "2026-03-25",
+        "📜 過往紀錄回顧",
+        "https://www.nvidia.com/en-us/technologies/quantum-optical-link/",
+        "📚"
+    ],
+    [
         "2026-03-24",
         "🌟 今日回顧精選",
         "https://www.kickstarter.com/projects/pixl-pen/pixl-pen-the-first-fully-open-source-ai-pen/description",
