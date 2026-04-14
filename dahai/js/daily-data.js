@@ -3,6 +3,12 @@
 // 已按時間排序（新的在前）
 const dailyReports = [
     [
+        "2026-04-14",
+        "🌟 今日回顧精選",
+        "> ![Image](raw/photos_extracted/your_facebook_activity/posts/media/_EJf1kH)",
+        "✨"
+    ],
+    [
         "2026-04-13",
         "🗂️ 知識庫回顧",
         "歷史回顧：2016年04-13（digital-twin）參與了一本新雜誌的誕生，敲開薰。\n\n> [AI 圖片分析]: 這張圖片展示了一本《circuit cellar 嵌入式科技》雜誌的封面，放置在淺色木質桌面上，整體設計緊密結合嵌入式技術與物聯網應用主題。以下為詳細描述（使用繁體中文）：；2025年04-13（digital-twin）「是否可以通過整合多模態學習技術，使大型語言模型（LLM）在其推理過程中實現圖像化（visualization）的內部表徵，例如利用內化的視覺隱喻（internalized visual metaphors）或心象（mental imagery）作為輔助，進而增強其類似於鏈式思維（Chain-of-Thought）推理和網絡檢索（web search）等外部參考機制的整體認知能力？」；2025年04-13（digital-twin）電車模擬器\n\n隨著場景越來越複雜\n程式的效率開始變成關鍵\n於是跟gemini說這樣不行呦\n\ngemini先是教我先profiling哪裏是運行瓶頸\n我把執行結果貼給他看\n於是gemini教我可以如何如何\n我就看了一下決定:不然我們先來解決軌道繪製效率問題好了\n最後程式效能大大提升!!\n\n最佳化\ngemini_2_5_pro\nvibe_coding。",
