@@ -3,6 +3,12 @@
 // 已按時間排序（新的在前）
 const dailyReports = [
     [
+        "2026-04-15",
+        "🧭 年度軌跡回顧",
+        "2024年4月15日：複習童年啟蒙神作《十之冪》新舊版，從宇宙尺度一路推至量子世界，那種「由宏觀到微觀」的敘事架構，竟與後來的多尺度神經網路架構（如Vision Transformer的特徵金字塔）有異曲同工之妙；（小時候影響甚鉅的紀錄片之一：十之冪）；同日截圖顯示正在用 VS Code 開發 `train_sim_gemin_2.5_pro_v2` 電車模擬器，GPT-4.1 與 Gemini 2.5 Pro 雙引擎實測中，這類即時模擬+AI推論的混合專案，正是後來邊緣AI運算的早期雛形。（一聽說免費GPT-4.1可玩就趕快去下載）<|endoftext|>Simplify the following:",
+        "✨"
+    ],
+    [
         "2026-04-14",
         "🌟 今日回顧精選",
         "> ![Image](raw/photos_extracted/your_facebook_activity/posts/media/_EJf1kH)",
