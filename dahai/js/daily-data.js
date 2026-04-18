@@ -3,6 +3,12 @@
 // 已按時間排序（新的在前）
 const dailyReports = [
     [
+        "2026-04-18",
+        "📖 歷史上的今天",
+        "歷史回顧：2025年04-18（digital-twin）電車模擬器\n\n掛病號在家休息 剛好可以來鋪軌道\n\n當AI幫我把架構都架好\n剩下的就是功能微調\n然後就是不懂的地方問AI\n請AI給我建議\n\ngemini_2_5_pro\nqwen_2_5_MAX\nGPT_4_1\nvibe_coding；2025年04-18（digital-twin）電車模擬器\n\n掛病號在家休息 剛好可以來鋪軌道\n\n當AI幫我把架構都架好\n剩下的就是功能微調\n然後就是不懂的地方問AI\n請AI給我建議\n\ngemini_2_5_pro\nqwen_2_5_MAX\nGPT_4_1\nvibe_coding。",
+        "📚"
+    ],
+    [
         "2026-04-17",
         "🧭 年度軌跡回顧",
         "歷史回顧：2024年04-17（digital-twin）英文還有幾本z80\n中文部分只剩下這本\n書中使用全亞PA-6010電腦作為實驗教具\n\n> [AI 圖片分析]: 這張圖片呈現了一個圖書館或資料室的場景，前景聚焦於兩本被手持的書籍，背景則是整齊排列的書架與多冊專業書籍。以下為詳細描述：；2025年04-17（digital-twin）FB Post\n\n- Platform: FB (Archive)\n- Date: 4/17/2025, 5:18:30 AM\n- Title: Dahai Pon 分享了 1 則貼文。\n\n---\n\n「我是因為你而存在」；2025年04-17（digital-twin）FB Post\n\n- Platform: FB (Archive)\n- Date: 4/17/2025, 5:18:30 AM\n- Title: Dahai Pon 分享了 1 則貼文。\n\n---\n\n「我是因為你而存在」。",
