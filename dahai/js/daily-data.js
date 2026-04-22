@@ -3,6 +3,12 @@
 // 已按時間排序（新的在前）
 const dailyReports = [
     [
+        "2026-04-22",
+        "🕰️ 今日回顧",
+        "https://veo2.googlevideos.ai/view?r=MTYwNjc3NDA3NTIwNDAwMA==",
+        "📚"
+    ],
+    [
         "2026-04-21",
         "🗂️ 知識庫回顧",
         "歷史回顧：2025年04-21（digital-twin）聽說拉瑪四變笨喔?\n我測試了groq上的\nmeta-llama/llama-4-maverick-17b-128e-instruct\n得到以下的對話~~\n\n> [AI 圖片分析]: 這張圖片展示了一個類似聊天應用的對話界面，背景為純白色，對話氣泡以淺藍色（助理消息）與白色（用戶消息）區分，整體呈現清晰的交流結構。以下為詳細描述：\n\n> [AI 圖片分析]: 這張圖片呈現的是一段文字內容，主要聚焦於字母列表與對英語單詞「strawberry」中字母「r」數量的說明。圖片整體為淺藍色背景，文字以黑色字體呈現，下方還包含一個訊息輸入區的界面元素。\n\n首先，圖片上方清晰列出10個字母，；2025年04-21（digital-twin）FB Post\n\n- Platform: FB (Archive)\n- Date: 4/21/2025, 12:33:43 AM\n- Title: Dahai Pon 分享了 1 則貼文。\n\n---\n\n神奇的結構；2025年04-21（digital-twin）電車模擬器\n\n本來以為3D遊戲重要的\nskybox/skydome機制很難實現\n也就是地平線環景\n結果AI一下子就幫我做好了\n\ngemini_2_5_pro。",
