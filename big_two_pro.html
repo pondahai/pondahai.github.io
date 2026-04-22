@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <title>大老二 - 專業 AI 鐵律版</title>
+    <style>
+        body {
+            background-color: #1a472a; color: white; font-family: "Microsoft JhengHei", Arial, sans-serif;
+            text-align: center; margin: 0; padding: 20px;
+        }
+        #game-board { display: flex; flex-direction: column; justify-content: space-between; height: 95vh; }
+        .info-board {
+            background: rgba(0,0,0,0.5); padding: 10px; border-radius: 8px; margin-bottom: 10px;
+            display: flex; justify-content: space-around; font-size: 18px; font-weight: bold; border: 1px solid #3d8c5d;
+        }
+        .active-player { color: #ffeb3b; text-shadow: 0 0 8px #fbc02d; transform: scale(1.1); }
+        .table-area {
+            flex-grow: 1; display: flex; justify-content: center; align-items: center;
+            border: 3px double rgba(255,255,255,0.2); margin: 10px 20px; border-radius: 20px; position: relative;
+            background: radial-gradient(circle, #245a38 0%, #1a472a 100%);
+        }
+        .hand { display: flex; justify-content: center; padding: 20px 0; min-height: 150px; }
+        /* 隱形容器：鎖定滑鼠觸發區域，不隨牌移動 */
+        .card-slot {
+            width: 30px; /* 剛好是牌重疊後的顯示寬度 */
+            height: 105px;
+            position: relative;
+            transition: width 0.2s;
+        }
+        .card-slot:first-child { width: 70px; } /* 第一張牌不重疊 */
+        
+        .card {
+            width: 70px; height: 105px; background-color: white; border: 1px solid #999; border-radius: 8px;
+            display: flex; flex-direction: column; justify-content: flex-start; align-items: flex-start; 
+            padding: 6px 10px; box-sizing: border-box; line-height: 1.1; 
+            font-size: 22px; font-weight: bold; color: black; cursor: pointer; 
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: -3px 3px 6px rgba(0,0,0,0.4); user-select: none;
+            position: absolute; left: 0; top: 0;
+        }
+        
+        /* 當滑鼠進入固定的 Slot 時，內部的 Card 才向上移 */
+        .card-slot:hover .card { 
+            transform: translateY(-20px); 
+            z-index: 100; 
+            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+        }
+        
+        /* 選中狀態：比 Hover 更高 */
+        .card.selected { 
+            transform: translateY(-40px) !important; 
+            border: 3px solid #f1c40f; 
+            box-shadow: 0 0 15px #f1c40f; 
+            z-index: 90; 
+        }
+        
+        .card.red { color: #e74c3c; }
+
+        /* 牌桌專用卡片樣式：覆蓋手牌的絕對定位 */
+        #table-cards-container .card {
+            position: relative;
+            margin-left: -30px; /* 牌桌上的牌輕微重疊，更有打牌感 */
+            transform: none !important; /* 取消懸停位移 */
+            cursor: default;
+        }
+        #table-cards-container .card:first-child { margin-left: 0; }
+        
+        .controls { margin-top: 10px; padding-bottom: 20px; }
+        button {
+            padding: 12px 30px; font-size: 20px; cursor: pointer; margin: 0 15px; 
+            border-radius: 8px; border: none; background: linear-gradient(#f1c40f, #f39c12); color: #2c3e50; font-weight: bold;
+            box-shadow: 0 4px 0 #d35400; transition: 0.1s;
+        }
+        button:active { transform: translateY(3px); box-shadow: 0 1px 0 #d35400; }
+        button:disabled { background: #95a5a6; box-shadow: 0 4px 0 #7f8c8d; cursor: not-allowed; opacity: 0.7; }
+        #table-msg { font-size: 20px; background: rgba(0,0,0,0.2); padding: 5px 15px; border-radius: 20px; }
+    </style>
+</head>
+<body>
+
+    <div id="game-board">
+        <h2 style="margin: 5px 0;">大老二：梅花 3 鐵律版</h2>
+        
+        <div class="info-board">
+            <span id="info-1">電腦 1 (13)</span>
+            <span id="info-2">電腦 2 (13)</span>
+            <span id="info-3">電腦 3 (13)</span>
+        </div>
+
+        <div class="table-area" id="table-area">
+            <div id="table-msg-container" style="position:absolute; top: 20px; width: 100%; text-align: center;">
+                <p style="color: #ccc; font-size: 18px; margin: 0;" id="table-msg">正在洗牌中...</p>
+            </div>
+            <div id="table-cards-container" style="display: flex; justify-content: center; align-items: center; width: 100%; height: 100%;">
+                <!-- 牌組會顯示在這裡 -->
+            </div>
+        </div>
+
+        <div>
+            <div id="turn-indicator" style="font-size: 22px; margin-bottom: 10px; color: #f1c40f; font-weight: bold;">
+                準備開始...
+            </div>
+            <div class="hand" id="player-hand"></div>
+            <div class="controls">
+                <button id="btn-play" onclick="playerPlayCards()">出牌</button>
+                <button id="btn-pass" onclick="playerPass()">Pass</button>
+            </div>
+        </div>
+    </div>
+
+<script>
+    const SUITS = ['♣', '♦', '♥', '♠']; 
+    const RANKS = ['3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A', '2'];
+    
+    let deck = [];
+    let players = [[], [], [], []]; 
+    let selectedCards = []; 
+    let currentTableHand = null; 
+    let currentPlayer = 0; 
+    let passCount = 0;     
+    let lastPlayedPlayer = 0; 
+    let gameEnded = false;
+    let isFirstRound = true; // 鐵律：首局
+
+    function initGame() {
+        deck = [];
+        for (let r = 0; r < RANKS.length; r++) {
+            for (let s = 0; s < SUITS.length; s++) {
+                deck.push({ suit: SUITS[s], rank: RANKS[r], power: r * 4 + s, isRed: (SUITS[s] === '♦' || SUITS[s] === '♥') });
+            }
+        }
+        // 洗牌
+        for (let i = deck.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [deck[i], deck[j]] = [deck[j], deck[i]];
+        }
+        players = [[], [], [], []];
+        for (let i = 0; i < 52; i++) { players[i % 4].push(deck[i]); }
+        
+        // 排序並找出梅花 3
+        let club3Owner = 0;
+        for(let i=0; i<4; i++) { 
+            players[i].sort((a, b) => a.power - b.power); 
+            if (players[i].some(c => c.power === 0)) club3Owner = i;
+        }
+        
+        currentTableHand = null; 
+        currentPlayer = club3Owner; // 梅花 3 先出
+        passCount = 0; 
+        lastPlayedPlayer = club3Owner; 
+        gameEnded = false;
+        isFirstRound = true;
+
+        renderPlayerHand(); 
+        updateUI();
+        
+        const starterName = (club3Owner === 0) ? "你" : `電腦 ${club3Owner}`;
+        document.getElementById('table-msg').innerText = `持有 ♣3 的人是 ${starterName}，請先出牌！`;
+        document.getElementById('table-cards-container').innerHTML = '';
+
+        if (currentPlayer !== 0) {
+            setTimeout(() => { playAI(currentPlayer); }, 1500);
+        }
+    }
+
+    function renderPlayerHand() {
+        const handDiv = document.getElementById('player-hand');
+        handDiv.innerHTML = ''; selectedCards = []; 
+        players[0].forEach((card) => {
+            // 建立固定容器
+            const slot = document.createElement('div');
+            slot.className = 'card-slot';
+            
+            const cardDiv = document.createElement('div');
+            cardDiv.className = `card ${card.isRed ? 'red' : ''}`;
+            cardDiv.innerHTML = `<div>${card.rank}</div><div>${card.suit}</div>`;
+            
+            // 點擊事件綁定在 cardDiv 上，但滑鼠互動由 slot 鎖定
+            cardDiv.onclick = () => { if(currentPlayer === 0 && !gameEnded) toggleSelectCard(card, cardDiv); };
+            
+            slot.appendChild(cardDiv);
+            handDiv.appendChild(slot);
+        });
+    }
+
+    function toggleSelectCard(card, cardElement) {
+        const cardIndex = selectedCards.indexOf(card);
+        if (cardIndex > -1) {
+            selectedCards.splice(cardIndex, 1); cardElement.classList.remove('selected');
+        } else {
+            selectedCards.push(card); cardElement.classList.add('selected');
+        }
+    }
+
+    // --- 核心：牌型檢查 ---
+    function checkHandType(cards) {
+        const len = cards.length;
+        cards.sort((a, b) => a.power - b.power);
+        if (len === 1) return { type: 'Single', name: '單張', count: 1, maxPower: cards[0].power, comboRank: 0 };
+        if (len === 2) {
+            if (cards[0].rank === cards[1].rank) return { type: 'Pair', name: '對子', count: 2, maxPower: cards[1].power, comboRank: 0 }; 
+            return null; 
+        }
+        if (len === 5) {
+            const rankCounts = {};
+            cards.forEach(c => { rankCounts[c.rank] = (rankCounts[c.rank] || 0) + 1; });
+            const counts = Object.values(rankCounts).sort((a, b) => b - a);
+
+            // 同花順 (ComboRank: 5)
+            const isFlush = cards.every(c => c.suit === cards[0].suit);
+            let isStraight = true;
+            const rankIndices = cards.map(c => RANKS.indexOf(c.rank)).sort((a, b) => a - b);
+            for (let i = 0; i < 4; i++) { if (rankIndices[i + 1] - rankIndices[i] !== 1) { isStraight = false; break; } }
+            
+            if (isStraight && isFlush) return { type: 'StraightFlush', name: '同花順', count: 5, comboRank: 5, maxPower: cards[4].power };
+            if (counts[0] === 4) return { type: 'FourOfAKind', name: '鐵支', count: 5, comboRank: 4, maxPower: cards.find(c => rankCounts[c.rank] === 4).power };
+            if (counts[0] === 3 && counts[1] === 2) return { type: 'FullHouse', name: '葫蘆', count: 5, comboRank: 3, maxPower: cards.find(c => rankCounts[c.rank] === 3).power };
+            if (isFlush) return { type: 'Flush', name: '同花', count: 5, comboRank: 2, maxPower: cards[4].power };
+            if (isStraight) return { type: 'Straight', name: '順子', count: 5, comboRank: 1, maxPower: cards[4].power };
+        }
+        return null; 
+    }
+
+    function playerPlayCards() {
+        if (currentPlayer !== 0) return;
+        if (selectedCards.length === 0) return;
+        
+        const handType = checkHandType(selectedCards);
+        if (!handType) { alert('這不是合法的牌型喔！'); return; }
+
+        // 鐵律檢查
+        if (isFirstRound) {
+            if (!selectedCards.some(c => c.power === 0)) { alert('首局第一手必須包含梅花 3！'); return; }
+        }
+
+        if (currentTableHand !== null) {
+            if (handType.count !== currentTableHand.count) { alert(`必須打出 ${currentTableHand.count} 張牌。`); return; }
+            if (handType.comboRank < currentTableHand.comboRank || (handType.comboRank === currentTableHand.comboRank && handType.maxPower <= currentTableHand.maxPower)) {
+                alert('牌不夠大！'); return;
+            }
+        }
+        playCardsAction(0, handType, selectedCards);
+    }
+
+    function playerPass() {
+        if (currentPlayer !== 0) return;
+        if (currentTableHand === null) { alert("你必須帶頭出牌，不能 Pass！"); return; }
+        handlePass(0);
+    }
+
+    function playCardsAction(playerIndex, handType, cardsToPlay) {
+        currentTableHand = handType; passCount = 0; lastPlayedPlayer = playerIndex;
+        isFirstRound = false; 
+        
+        players[playerIndex] = players[playerIndex].filter(c => !cardsToPlay.includes(c));
+        
+        const msgText = document.getElementById('table-msg');
+        const cardArea = document.getElementById('table-cards-container');
+        const playerName = playerIndex === 0 ? "你" : `電腦 ${playerIndex}`;
+        
+        msgText.innerHTML = `<span style="font-weight:bold; color: #ffeb3b;">${playerName} 打出: ${handType.name}</span>`;
+        cardArea.innerHTML = ''; // 出新牌時才清空舊牌
+        
+        cardsToPlay.forEach(card => {
+            const cardDiv = document.createElement('div');
+            cardDiv.className = `card ${card.isRed ? 'red' : ''}`;
+            cardDiv.style.marginLeft = '5px'; 
+            cardDiv.innerHTML = `<div>${card.rank}</div><div>${card.suit}</div>`;
+            cardArea.appendChild(cardDiv);
+        });
+
+        if (playerIndex === 0) renderPlayerHand();
+        checkWin(playerIndex);
+    }
+
+    function handlePass(playerIndex) {
+        passCount++;
+        const msgText = document.getElementById('table-msg');
+        const playerName = playerIndex === 0 ? "你" : `電腦 ${playerIndex}`;
+        msgText.innerHTML = `<span style="color: #bbb;">${playerName} Pass!</span>`;
+        // 這裡不更動 cardArea，所以牌組會留著
+        nextTurn();
+    }
+
+    function nextTurn() {
+        if (gameEnded) return;
+        if (passCount === 3) {
+            currentTableHand = null; passCount = 0; currentPlayer = lastPlayedPlayer; 
+            setTimeout(() => {
+                document.getElementById('table-msg').innerText = `大家都 Pass，由 ${currentPlayer === 0 ? '你' : '電腦 '+currentPlayer} 重新主攻`;
+                document.getElementById('table-cards-container').innerHTML = ''; // 三家 Pass 才正式清空
+            }, 800);
+        } else {
+            currentPlayer = (currentPlayer + 1) % 4; 
+        }
+        updateUI();
+        if (currentPlayer !== 0) { setTimeout(() => { playAI(currentPlayer); }, 1200); }
+    }
+
+    function updateUI() {
+        for(let i=1; i<=3; i++) {
+            const infoSpan = document.getElementById(`info-${i}`);
+            infoSpan.innerText = `電腦 ${i} (${players[i].length})`;
+            infoSpan.className = (currentPlayer === i) ? 'active-player' : '';
+        }
+        const turnIndicator = document.getElementById('turn-indicator');
+        if (currentPlayer === 0) {
+            turnIndicator.innerText = currentTableHand === null ? "輪到你了！請自由出牌" : "請壓牌或 Pass";
+            document.getElementById('btn-play').disabled = false;
+            document.getElementById('btn-pass').disabled = (currentTableHand === null);
+        } else {
+            turnIndicator.innerText = `電腦 ${currentPlayer} 思考中...`;
+            document.getElementById('btn-play').disabled = true;
+            document.getElementById('btn-pass').disabled = true;
+        }
+    }
+
+    // --- AI 升級：找尋所有牌型 ---
+    function getAllCombos(hand) {
+        let combos = { single: [], pair: [], five: [] };
+        
+        // 單張
+        hand.forEach(c => combos.single.push([c]));
+        
+        // 對子
+        for (let i = 0; i < hand.length - 1; i++) {
+            if (hand[i].rank === hand[i+1].rank) combos.pair.push([hand[i], hand[i+1]]);
+        }
+
+        // 輔助：按數字分組
+        let groups = {};
+        hand.forEach(c => { groups[c.rank] = groups[c.rank] || []; groups[c.rank].push(c); });
+
+        // 鐵支 & 葫蘆
+        let pairList = Object.values(groups).filter(g => g.length >= 2);
+        let tripleList = Object.values(groups).filter(g => g.length >= 3);
+        let quadList = Object.values(groups).filter(g => g.length === 4);
+
+        quadList.forEach(q => {
+            // 隨便找一張非此花色的單牌湊 5 張
+            let other = hand.find(c => c.rank !== q[0].rank);
+            if (other) combos.five.push([...q, other]);
+        });
+
+        tripleList.forEach(t => {
+            pairList.forEach(p => {
+                if (t[0].rank !== p[0].rank) combos.five.push([...t.slice(0,3), ...p.slice(0,2)]);
+            });
+        });
+
+        // 順子 (簡單實作)
+        let uniqueRanks = []; let used = {};
+        hand.forEach(c => { if(!used[c.rank]) { used[c.rank] = c; uniqueRanks.push(c); }});
+        for(let i=0; i<=uniqueRanks.length - 5; i++) {
+            let res = [uniqueRanks[i]];
+            for(let j=1; j<5; j++) {
+                if(RANKS.indexOf(uniqueRanks[i+j].rank) - RANKS.indexOf(uniqueRanks[i+j-1].rank) === 1) res.push(uniqueRanks[i+j]);
+                else break;
+            }
+            if(res.length === 5) combos.five.push(res);
+        }
+
+        // 同花
+        SUITS.forEach(s => {
+            let suitCards = hand.filter(c => c.suit === s);
+            if (suitCards.length >= 5) combos.five.push(suitCards.slice(0, 5));
+        });
+
+        return combos;
+    }
+
+    function playAI(aiIndex) {
+        if (gameEnded) return;
+        const hand = players[aiIndex];
+        const combos = getAllCombos(hand);
+        let bestPlay = null;
+
+        if (currentTableHand === null) {
+            // 自由出牌策略：優先出最強的 5 張牌型，若首局則必含 ♣3
+            if (isFirstRound) {
+                bestPlay = combos.five.find(c => c.some(p => p.power === 0)) || 
+                           combos.pair.find(c => c.some(p => p.power === 0)) || 
+                           combos.single.find(c => c[0].power === 0);
+            } else {
+                bestPlay = combos.five[0] || combos.pair[0] || [hand[0]];
+            }
+        } else {
+            // 接招策略
+            if (currentTableHand.count === 1) {
+                let target = hand.find(c => c.power > currentTableHand.maxPower);
+                if (target) bestPlay = [target];
+            } else if (currentTableHand.count === 2) {
+                bestPlay = combos.pair.find(p => p[1].power > currentTableHand.maxPower);
+            } else if (currentTableHand.count === 5) {
+                bestPlay = combos.five.find(f => {
+                    let type = checkHandType(f);
+                    return (type.comboRank > currentTableHand.comboRank) || 
+                           (type.comboRank === currentTableHand.comboRank && type.maxPower > currentTableHand.maxPower);
+                });
+            }
+        }
+
+        if (bestPlay) {
+            playCardsAction(aiIndex, checkHandType(bestPlay), bestPlay);
+        } else {
+            handlePass(aiIndex);
+        }
+    }
+
+    function checkWin(playerIndex) {
+        if (players[playerIndex].length === 0) {
+            gameEnded = true;
+            // 延遲執行 alert，確保瀏覽器有時間把最後一張牌畫出來
+            setTimeout(() => {
+                const playerName = playerIndex === 0 ? "你" : `電腦 ${playerIndex}`;
+                alert(`🎊 恭喜！${playerName} 贏了這場比賽！`);
+                // 給玩家一點時間看最後的桌面，再重新開始
+                setTimeout(() => {
+                    if(confirm("想再玩一局嗎？")) location.reload();
+                }, 500);
+            }, 600); 
+        } else {
+            nextTurn(); 
+        }
+    }
+
+    window.onload = initGame;
+</script>
+</body>
+</html>
