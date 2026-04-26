@@ -1276,19 +1276,19 @@ https://fustyles.github.io/webduino/WebSerial.html
 			const btnStop = document.getElementById('btn_stop');
 
 			btnManual.addEventListener('click', function () {
-				sendCommand("MANUAL,");
+				sendCommand("MANUAL,\n");
 			});
 
 			btnFillAll.addEventListener('click', function () {
-				sendCommand("FILL_ALL,");
+				sendCommand("FILL_ALL,\n");
 			});
 
 			btnDrainAll.addEventListener('click', function () {
-				sendCommand("DRAIN_ALL,");
+				sendCommand("DRAIN_ALL,\n");
 			});
 
 			btnStop.addEventListener('click', function () {
-				sendCommand("STOP,");
+				sendCommand("STOP,\n");
 			});
 
 			openModalBtn.addEventListener('click', function () {
