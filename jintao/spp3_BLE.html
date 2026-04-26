@@ -1308,12 +1308,12 @@ https://fustyles.github.io/webduino/WebSerial.html
 			});
 
 			btnStop.addEventListener('click', function () {
+				sendCommand("S,1,0,\n");
 				sendCommand("S,2,0,\n");
 				sendCommand("S,3,0,\n");
 				sendCommand("S,4,0,\n");
 				sendCommand("S,5,0,\n");
 				sendCommand("S,6,0,\n");
-				sendCommand("S,1,0,\n");
 			});
 
 			btnFillHead.addEventListener('click', function () {
