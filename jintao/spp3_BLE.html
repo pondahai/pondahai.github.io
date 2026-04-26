@@ -1280,15 +1280,15 @@ https://fustyles.github.io/webduino/WebSerial.html
 			});
 
 			btnFillAll.addEventListener('click', function () {
-				sendCommand("FILL_ALL,\n");
+				sendCommand("S,2,1,\nS,3,1,\nS,4,1,\nS,5,1,\nS,6,1,\nS,1,1,\n");
 			});
 
 			btnDrainAll.addEventListener('click', function () {
-				sendCommand("DRAIN_ALL,\n");
+				sendCommand("S,2,1,\nS,3,1,\nS,4,1,\nS,5,0,\nS,6,0,\nS,1,1,\n");
 			});
 
 			btnStop.addEventListener('click', function () {
-				sendCommand("STOP,\n");
+				sendCommand("S,2,0,\nS,3,0,\nS,4,0,\nS,5,0,\nS,6,0,\nS,1,0,\n");
 			});
 
 			openModalBtn.addEventListener('click', function () {
