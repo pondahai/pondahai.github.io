@@ -1288,6 +1288,7 @@ https://fustyles.github.io/webduino/WebSerial.html
 			});
 
 			btnFillAll.addEventListener('click', function () {
+				sendCommand("S,1,0,\n");
 				sendCommand("S,2,1,\n");
 				sendCommand("S,3,1,\n");
 				sendCommand("S,4,1,\n");
@@ -1297,6 +1298,7 @@ https://fustyles.github.io/webduino/WebSerial.html
 			});
 
 			btnDrainAll.addEventListener('click', function () {
+				sendCommand("S,1,0,\n");
 				sendCommand("S,2,1,\n");
 				sendCommand("S,3,1,\n");
 				sendCommand("S,4,1,\n");
@@ -1315,6 +1317,7 @@ https://fustyles.github.io/webduino/WebSerial.html
 			});
 
 			btnFillHead.addEventListener('click', function () {
+				sendCommand("S,1,0,\n");
 				sendCommand("S,4,1,\n");
 				sendCommand("S,5,1,\n");
 				sendCommand("S,6,1,\n");
@@ -1322,6 +1325,7 @@ https://fustyles.github.io/webduino/WebSerial.html
 			});
 
 			btnFillNeck.addEventListener('click', function () {
+				sendCommand("S,1,0,\n");
 				sendCommand("S,3,1,\n");
 				sendCommand("S,5,1,\n");
 				sendCommand("S,6,1,\n");
@@ -1329,6 +1333,7 @@ https://fustyles.github.io/webduino/WebSerial.html
 			});
 
 			btnFillDetect.addEventListener('click', function () {
+				sendCommand("S,1,0,\n");
 				sendCommand("S,2,1,\n");
 				sendCommand("S,5,1,\n");
 				sendCommand("S,6,1,\n");
