@@ -163,7 +163,13 @@ https://fustyles.github.io/webduino/WebSerial.html
 						</td>
 						<td>
 							<button id="serial_sendText">Send Text</button>
-						</td>
+							</div>
+							<div style="margin-top: 10px;">
+							<button id="btn_manual">Manual模式</button>
+							<button id="btn_fill_all">全充</button>
+							<button id="btn_drain_all">全洩</button>
+							<button id="btn_stop" style="background-color: #ffcccc;">停止</button>
+							</div>
 					</tr>
 					<tr>
 						<td>
@@ -1263,6 +1269,27 @@ https://fustyles.github.io/webduino/WebSerial.html
 			const decreaseBtn3 = document.getElementById('decreaseBtn3');
 			const increaseBtn4 = document.getElementById('increaseBtn4');
 			const decreaseBtn4 = document.getElementById('decreaseBtn4');
+
+			const btnManual = document.getElementById('btn_manual');
+			const btnFillAll = document.getElementById('btn_fill_all');
+			const btnDrainAll = document.getElementById('btn_drain_all');
+			const btnStop = document.getElementById('btn_stop');
+
+			btnManual.addEventListener('click', function () {
+				sendCommand("MANUAL,");
+			});
+
+			btnFillAll.addEventListener('click', function () {
+				sendCommand("FILL_ALL,");
+			});
+
+			btnDrainAll.addEventListener('click', function () {
+				sendCommand("DRAIN_ALL,");
+			});
+
+			btnStop.addEventListener('click', function () {
+				sendCommand("STOP,");
+			});
 
 			openModalBtn.addEventListener('click', function () {
 				modal.style.display = 'block';
