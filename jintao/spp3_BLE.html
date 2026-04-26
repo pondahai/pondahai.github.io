@@ -169,6 +169,11 @@ https://fustyles.github.io/webduino/WebSerial.html
 								<button id="btn_drain_all">全洩</button>
 								<button id="btn_stop" style="background-color: #ffcccc;">停止</button>
 							</div>
+							<div style="margin-top: 10px;">
+								<button id="btn_fill_head">充頭</button>
+								<button id="btn_fill_neck">充頸</button>
+								<button id="btn_fill_detect">充偵測</button>
+							</div>
 						</td>
 					</tr>
 					<tr>
@@ -1274,21 +1279,60 @@ https://fustyles.github.io/webduino/WebSerial.html
 			const btnFillAll = document.getElementById('btn_fill_all');
 			const btnDrainAll = document.getElementById('btn_drain_all');
 			const btnStop = document.getElementById('btn_stop');
+			const btnFillHead = document.getElementById('btn_fill_head');
+			const btnFillNeck = document.getElementById('btn_fill_neck');
+			const btnFillDetect = document.getElementById('btn_fill_detect');
 
 			btnManual.addEventListener('click', function () {
 				sendCommand("MANUAL,\n");
 			});
 
 			btnFillAll.addEventListener('click', function () {
-				sendCommand("S,2,1,\nS,3,1,\nS,4,1,\nS,5,1,\nS,6,1,\nS,1,1,\n");
+				sendCommand("S,2,1,\n");
+				sendCommand("S,3,1,\n");
+				sendCommand("S,4,1,\n");
+				sendCommand("S,5,1,\n");
+				sendCommand("S,6,1,\n");
+				sendCommand("S,1,1,\n");
 			});
 
 			btnDrainAll.addEventListener('click', function () {
-				sendCommand("S,2,1,\nS,3,1,\nS,4,1,\nS,5,0,\nS,6,0,\nS,1,1,\n");
+				sendCommand("S,2,1,\n");
+				sendCommand("S,3,1,\n");
+				sendCommand("S,4,1,\n");
+				sendCommand("S,5,0,\n");
+				sendCommand("S,6,0,\n");
+				sendCommand("S,1,1,\n");
 			});
 
 			btnStop.addEventListener('click', function () {
-				sendCommand("S,2,0,\nS,3,0,\nS,4,0,\nS,5,0,\nS,6,0,\nS,1,0,\n");
+				sendCommand("S,2,0,\n");
+				sendCommand("S,3,0,\n");
+				sendCommand("S,4,0,\n");
+				sendCommand("S,5,0,\n");
+				sendCommand("S,6,0,\n");
+				sendCommand("S,1,0,\n");
+			});
+
+			btnFillHead.addEventListener('click', function () {
+				sendCommand("S,4,1,\n");
+				sendCommand("S,5,1,\n");
+				sendCommand("S,6,1,\n");
+				sendCommand("S,1,1,\n");
+			});
+
+			btnFillNeck.addEventListener('click', function () {
+				sendCommand("S,3,1,\n");
+				sendCommand("S,5,1,\n");
+				sendCommand("S,6,1,\n");
+				sendCommand("S,1,1,\n");
+			});
+
+			btnFillDetect.addEventListener('click', function () {
+				sendCommand("S,2,1,\n");
+				sendCommand("S,5,1,\n");
+				sendCommand("S,6,1,\n");
+				sendCommand("S,1,1,\n");
 			});
 
 			openModalBtn.addEventListener('click', function () {
