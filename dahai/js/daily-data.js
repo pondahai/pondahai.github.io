@@ -3,6 +3,12 @@
 // 已按時間排序（新的在前）
 const dailyReports = [
     [
+        "2026-05-01",
+        "📜 過往紀錄回顧",
+        "> **[AI 圖片分析]**: 這張圖片呈現了放置在淺色木紋桌面上的實驗性電子裝置與兩張黑白照片的組合。",
+        "📚"
+    ],
+    [
         "2026-04-30",
         "📜 過往紀錄回顧",
         "歷史回顧：2025年04-30（digital-twin）看到reddit localLLama上面網友連呼嘖嘖\n趕緊也來玩一下\nqwen3-30b-a3b\n\n看樣子\n推理以及混合專家MOE已經變成標配\n\n而且MOE架構讓CPU也可以跑得動\n不過就是主記憶體要夠大\n像目前 i7-8665U + 主記憶體24GB\n跑\nqwen3-30b-a3b-q4_k_m 18GB的大小\n大約有6~7 token/s的速率\n\nqwen3\n\n> [AI 圖片分析]: 這張圖片由三個主要區域組成，從左至右分別為終端窗口、瀏覽器窗口及一個畫布界面，呈現出一套結合程式開發與視覺模擬的場景。\n\n左側：終端窗口  \n- 顯示多行程式運行的日誌內容，其中重複出現；2025年04-30（digital-twin）FB Post\n\n- Platform: FB (Archive)\n- Date: 4/30/2025, 1:39:26 PM\n- Title: Dahai Pon 分享了 1 條連結。\n\n---\n\n10個電路模擬器~~；2025年04-30（digital-twin）看到reddit localLLama上面網友連呼嘖嘖\n趕緊也來玩一下\nqwen3-30b-a3b\n\n看樣子\n推理以及混合專家MOE已經變成標配\n\n而且MOE架構讓CPU也可以跑得動\n不過就是主記憶體要夠大\n像目前 i7-8665U + 主記憶體24GB\n跑\nqwen3-30b-a3b-q4_k_m 18GB的大小\n大約有6~7 token/s的速率\n\nqwen3。",
