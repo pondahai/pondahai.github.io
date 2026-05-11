@@ -3,6 +3,12 @@
 // 已按時間排序（新的在前）
 const dailyReports = [
     [
+        "2026-05-11",
+        "🌟 今日回顧精選",
+        "歷史回顧：2025年05-11（digital-twin）電車模擬器\n\n跟gemini深切懇談之後\n我的電車模擬器\n終於有轉轍器了(僅視覺效果無動態效果)\n\n由於還沒有到處理音效的部分\n因此現在玩模擬器的時候要自己用嘴巴\n模擬列車通過轉轍器的獨特音效\n 摳囉摳囉~~\n\ngemini_2_5_pro\nvibe_coding\n\n> [AI 圖片分析]: 這張圖片呈現的是電腦螢幕分屏顯示的內容，主要包含軟體操作介面與模擬視圖兩大部分，以繁體中文為主的技術討論為核心，以下是詳細描述：；2025年05-11（digital-twin）https://zh.wikipedia.org/zh-tw/%E9%9B%BB%E5%B9%BB%E5%9C%8B%E5%BA%A6\n\n> [AI 連結摘要] (https://zh.wikipedia.org/zh-tw/%E9%9B%BB%E5%B9%BB%E5%9C%8B%E5%BA%A6): （摘要失敗）電幻國度 - 維基百科，自由的百科全書 跳至內容 主選單 主選單 移至側邊欄 隱藏 導覽 首頁 分類索引 特色內容 新聞動態 隨機條目 聯絡我們 關於維基百科 貢獻 說明 維基社群 編輯入門 互助客棧 IRC即時聊天 近期變更 特殊頁面 搜...；2025年05-11（digital-twin）乍看之下有特色\n進去一看果然有來歷~~\n\nhttps://buy.housefun.com.tw/buy/house/6100751?utm_source=ad_facebook&utm_medium=ppa&utm_content=NewTaipei&utm_campaign=buy_right_2025&utm_id=6738229404903&utm_term=6738229405103&fbclid=IwY2xjawKNVstleHRuA2FlbQEwAGFkaWQAAAYg38dMV2JyaWQRMUxIeU03eml6TmlXams1Z04BHtjSLwz0kKfXLpnyQBZd。",
+        "✨"
+    ],
+    [
         "2026-05-10",
         "🧭 年度軌跡回顧",
         "歷史回顧：2025年05-10（digital-twin）我跟gemini結對程式設計\n到最後變成在跟他談心~~\n\n> [AI 圖片分析]: 圖片內容為一段關於軟件設計討論的文字，以繁體中文呈現，整體結構包含引導性提示、用戶提問、專家回應及設計原則解析。\n\n首先，畫面頂部有一行簡短的引導語：「請告訴我你的想法。這是一個很好的討論點，有助於我們打磨設計。」此語句以普通中文書寫，作為啟動討論的開場白，意在鼓勵參與者分享觀點。\n\n緊接著，出現一個對話框式的用戶提問，內容為：「我對內差值需要import到這裡感到焦慮 這種焦慮合理嗎?」其中「內差值」應為技術術語（可能指插值計算相關邏輯），用戶表達對在代碼中導入（import）該模塊感到擔憂，並質疑此；2025年05-10（digital-twin）FB Post\n\n- Platform: FB (Archive)\n- Date: 5/10/2025, 10:15:13 AM\n- Title: Dahai Pon 分享了 1 則貼文。\n\n---\n\n以後城市傢俱都這樣客製化~~；2025年05-10（digital-twin）我跟gemini-2.5-pro再合作一次彈珠台模擬器 很理想呢~\n\n我這次是先請它模擬可以顯示常態分布的彈珠檯\ngemini跟我說那叫作:高爾頓板（英語：Galton board），又稱為豆機（bean machine）\n然後再作視覺化模擬\n然後微調一下 就OK啦~\n\n對話在這裡:\nhttps://aistudio.google.com/app/prompts?state=%7B%22ids%22:%5B%221twcxlNv0fUKf2Ah7IIDi61bQTaJFSRny%22%5D,%22action%22:%22open%22,%22userId%22:%22104110992064。",
