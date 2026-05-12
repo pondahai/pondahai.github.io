@@ -3,6 +3,12 @@
 // 已按時間排序（新的在前）
 const dailyReports = [
     [
+        "2026-05-12",
+        "🗂️ 知識庫回顧",
+        "歷史回顧：2023年05-12（digital-twin）是復古包裝耶❤️\n\n> [AI 圖片分析]: 這張圖片呈現一間商店內的貨架陳列，主要展示各式威化餅乾產品，背景可見明亮的店內環境。貨架由淺黃色木質隔板構成，前方設有透明玻璃圍欄，玻璃表面略帶反光，映出店內燈光與部分模糊的其他商品。\n\n 貨架主體：威化餅乾產品\n貨架上層分為左右兩側，以黃綠相間的竹編紋理為主視覺設計，整體風格活潑鮮艷。\n\n 左側：椰子口味威化餅乾\n- 上方大型包裝：底色為黃綠條紋竹編圖案，中央印有完整的「COCO」（應為COCONUT縮寫）字樣，旁邊搭配「WAFERS」英文字母。包裝左側繪有打開的椰子圖案，椰子內可見椰水與碎塊，旁邊放置兩塊威化餅乾的；2024年05-12（digital-twin）最近這個up主的短片深深打動我\n又有新的感動😭\n\n它的另外一部講林布蘭夜巡(其實是白天)\n瞬間淚崩~\n\n還有一部講山水畫跟韓熙載夜宴圖\n突然明白畫家的用意；2024年05-12（digital-twin）FB Post\n\n- Platform: FB (Archive)\n- Date: 5/12/2024, 10:09:08 AM\n- Title: Dahai Pon 分享了 1 條連結。\n\n---\n\n電腦BIOS發展史~~。",
+        "✨"
+    ],
+    [
         "2026-05-11",
         "🌟 今日回顧精選",
         "歷史回顧：2025年05-11（digital-twin）電車模擬器\n\n跟gemini深切懇談之後\n我的電車模擬器\n終於有轉轍器了(僅視覺效果無動態效果)\n\n由於還沒有到處理音效的部分\n因此現在玩模擬器的時候要自己用嘴巴\n模擬列車通過轉轍器的獨特音效\n 摳囉摳囉~~\n\ngemini_2_5_pro\nvibe_coding\n\n> [AI 圖片分析]: 這張圖片呈現的是電腦螢幕分屏顯示的內容，主要包含軟體操作介面與模擬視圖兩大部分，以繁體中文為主的技術討論為核心，以下是詳細描述：；2025年05-11（digital-twin）https://zh.wikipedia.org/zh-tw/%E9%9B%BB%E5%B9%BB%E5%9C%8B%E5%BA%A6\n\n> [AI 連結摘要] (https://zh.wikipedia.org/zh-tw/%E9%9B%BB%E5%B9%BB%E5%9C%8B%E5%BA%A6): （摘要失敗）電幻國度 - 維基百科，自由的百科全書 跳至內容 主選單 主選單 移至側邊欄 隱藏 導覽 首頁 分類索引 特色內容 新聞動態 隨機條目 聯絡我們 關於維基百科 貢獻 說明 維基社群 編輯入門 互助客棧 IRC即時聊天 近期變更 特殊頁面 搜...；2025年05-11（digital-twin）乍看之下有特色\n進去一看果然有來歷~~\n\nhttps://buy.housefun.com.tw/buy/house/6100751?utm_source=ad_facebook&utm_medium=ppa&utm_content=NewTaipei&utm_campaign=buy_right_2025&utm_id=6738229404903&utm_term=6738229405103&fbclid=IwY2xjawKNVstleHRuA2FlbQEwAGFkaWQAAAYg38dMV2JyaWQRMUxIeU03eml6TmlXams1Z04BHtjSLwz0kKfXLpnyQBZd。",
