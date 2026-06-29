@@ -3,6 +3,12 @@
 // 已按時間排序（新的在前）
 const dailyReports = [
     [
+        "2026-06-29",
+        "🕰️ 今日回顧",
+        "歷史回顧：2025年06-29（digital-twin）稍早前我在樹莓派上實作(指揮gemini)\n實現注音輸入法以及中文顯示\n\n今天\n我把注音輸入法抽出來\n先在esp32上實作(指揮gemini)\n透過putty顯示\n因為把索引檔案硬編碼在程式中\n因此程式碼來到三百多KB\n\n索引檔的內容\n就像是字典後面的注音索引表一樣\n\n但是這次沒有使用字型檔案\n所有訊息都是UTF8的資料流動\n最後的顯示是終端裝置puTTY負責\n\n> [AI 圖片分析]: 這張圖片是一組電腦螢幕截圖，展示了多個程式開發與測試相關的視窗疊加在一起，主要包含 Google AI Studio、Arduino IDE、串列監控視窗及程式碼編輯區等內容，以下是詳細描述：；2024年06-29（digital-twin）FB Post\n\n- Platform: FB (Archive)\n- Date: 6/29/2024, 9:21:31 AM\n- Title: Dahai Pon 分享了 1 則貼文。\n\n---\n\n哈哈哈\n這位怪奇畫家也有出周邊~~；2024年06-29（digital-twin）這位網友收集了十大好玩scratch遊戲(第十個未公開)\n偉大的griffpatch只排名其中之一~~。",
+        "📚"
+    ],
+    [
         "2026-06-28",
         "🌟 今日回顧精選",
         "歷史回顧：2018年06-28（digital-twin）分解10吋螢幕時\n背光燈條竟被我抽出來了\n10吋螢幕 紙糊阿NO計畫 買新螢幕來拆比較划算\n\n> [AI 圖片分析]: 這張圖片呈現了一個電子設備的內部構成，主要聚焦於一塊綠色的印刷電路板（PCB）及其周圍的連接線路與周邊元件，背景為深棕色的木質工作桌面。以下為詳細描述：；2024年06-28（digital-twin）有趣的歷史\n真的曾經有夢想過這樣的組合 哈哈\n\nhttps://youtu.be/isj8OYaxvbY?si=YEBY2QabBszho-zJ\n\n> [AI 連結摘要] (https://youtu.be/isj8OYaxvbY?si=YEBY2QabBszho-zJ): （摘要失敗）CEC-G Restoration - the RARE Apple II x Nintendo Famicom Clone / 稀有修复！30年前的苹果x任天堂缝合怪CEC-G！ - YouTube 簡介 媒體 著作權 與我們聯絡 創作者...；2024年06-28（digital-twin）FB Post\n\n- Platform: FB (Archive)\n- Date: 6/28/2024, 9:24:19 AM\n- Title: Dahai Pon 分享了 1 則貼文。\n\n---\n\n美酒加咖啡\n還有🍅蛋🍞\n\n太浪漫了。",
