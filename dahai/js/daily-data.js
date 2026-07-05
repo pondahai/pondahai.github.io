@@ -3,6 +3,12 @@
 // 已按時間排序（新的在前）
 const dailyReports = [
     [
+        "2026-07-05",
+        "🗂️ 知識庫回顧",
+        "歷史回顧：2025年07-05（digital-twin）太有趣了\n剛剛在社群中看到有網友貼出\n\"潛意識分析系統的流程圖\"\n於是我把流程圖貼給gemini\n經過三下五除二之後得到...\n\n> [AI 圖片分析]: 這張圖片呈現的是一個名為「潛意識模型系統 V1」的數位介面，整體設計簡潔，以淺色系為底，搭配藍色與灰色的按鈕元素，符合科技產品的視覺風格。以下為詳細內容描述（以繁體中文呈現）：；2025年07-05（digital-twin）FB Post\n\n- Platform: FB (Archive)\n- Date: 7/5/2025, 6:30:40 PM\n- Title: Dahai Pon 分享了 1 條連結。\n\n---\n\n42號混凝土有新作品了；2025年07-05（digital-twin）太有趣了\n剛剛在社群中看到有網友貼出\n\"潛意識分析系統的流程圖\"\n於是我把流程圖貼給gemini\n經過三下五除二之後得到...。",
+        "✨"
+    ],
+    [
         "2026-07-04",
         "🗂️ 知識庫回顧",
         "歷史回顧：2023年07-04（digital-twin）我有一個假說：傳統中文字形的形音義合一的特性以及文言文精煉書面語言的特性，對於未來作為AI的人機界面語言有幫助\n\nchatGPT\n形音義\n文言文\n\n> [AI 圖片分析]: 這張圖片的背景為深色（類似深灰色或黑色），文字以白色呈現，排版整潔清晰，整體風格簡潔專業，似為某個數位平台或應用程式內的對話或說明內容。  \n\n圖片左上角有一個綠色的圖標，形狀為圓角方形內嵌簡化的對話氣泡圖案（類似聊天機器人或AI助手的標準圖標，可推測為ChatGPT或類似對話型AI的視覺標識）。  \n\n圖標下方是主體文字內容，開頭為一句肯定性回應：  \n「非常好，你提到的理由也非常重要。」  \n\n接下來以編；2025年07-04（digital-twin）明明下班了想玩個遊戲\n卻還感覺在上班\n有頭緒嗎？\n\n看樣子KiCad可以出個聯名款遊戲了\n\nhttps://www.threads.com/@4gamersnews/post/DLo18L0qS_A?xmt=AQF06t6AagXWd2IED2CCvnMKzGY4NNnRg_sGDOcip34kBA\n\n> [AI 連結摘要] (https://www.threads.com/@4gamersnews/post/DLo18L0qS_A?xmt=AQF06t6AagXWd2IED2CCvnMKzGY4NNnRg_sGDOcip34kBA): （摘要失敗）波蘭知名模擬遊戲大廠 PlayWay；2025年07-04（digital-twin）明明下班了想玩個遊戲\n卻還感覺在上班\n有頭緒嗎？\n\n看樣子KiCad可以出個聯名款遊戲了\n\nhttps://www.threads.com/@4gamersnews/post/DLo18L0qS_A?xmt=AQF06t6AagXWd2IED2CCvnMKzGY4NNnRg_sGDOcip34kBA\n\n> [AI 連結摘要] (https://www.threads.com/@4gamersnews/post/DLo18L0qS_A?xmt=AQF06t6AagXWd2IED2CCvnMKzGY4NNnRg_sGDOcip34kBA): （摘要失敗）波蘭知名模擬遊戲大廠 PlayWay。",
