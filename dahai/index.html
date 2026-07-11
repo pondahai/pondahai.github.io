@@ -378,6 +378,9 @@
                     <div class="fb-feed" id="daily-feed">
                         <!-- 由 JavaScript 動態產生 -->
                     </div>
+                    <div id="daily-more" style="text-align:center; margin:20px 0; display:none;">
+                        <button id="load-older" style="cursor:pointer; padding:10px 28px; font-size:1em; border:none; border-radius:20px; background:#e8f4ea; color:#1a7f37;">📜 載入更早的回顧</button>
+                    </div>
                 </div>
             </section>
         </main>
@@ -442,10 +445,9 @@
             return date.toLocaleDateString('zh-TW', { month: 'short', day: 'numeric' });
         }
         
-        // 產生每日回顧牆
-        function loadDailyFeed() {
-            const feed = document.getElementById('daily-feed');
-            feed.innerHTML = dailyReports.map(([date, title, content, mood]) => `
+        // 單篇貼文 HTML
+        function postHTML([date, title, content, mood]) {
+            return `
                 <div class="fb-post">
                     <div class="fb-post-header">
                         <div class="fb-avatar">🦐</div>
@@ -470,12 +472,59 @@
                         <span>🔄 分享</span>
                     </div>
                 </div>
-            `).join('');
+            `;
         }
-        
+
+        // 產生每日回顧牆（主檔只有最近 30 篇，更早的在 js/archive/<年份>.json）
+        function loadDailyFeed() {
+            const feed = document.getElementById('daily-feed');
+            feed.innerHTML = dailyReports.map(postHTML).join('');
+        }
+
+        // 歷史歸檔載入（點按鈕逐年載入）
+        let archiveYears = null;
+        let archiveIdx = 0;
+
+        async function initArchiveButton() {
+            try {
+                const res = await fetch('js/archive/index.json');
+                if (!res.ok) return; // 尚無歸檔，按鈕保持隱藏
+                archiveYears = await res.json();
+                if (archiveYears.length > 0) {
+                    document.getElementById('daily-more').style.display = 'block';
+                }
+            } catch (e) { /* 無歸檔或離線，按鈕保持隱藏 */ }
+        }
+
+        async function loadOlder() {
+            const btn = document.getElementById('load-older');
+            btn.disabled = true;
+            btn.textContent = '載入中…';
+            try {
+                const year = archiveYears[archiveIdx];
+                const res = await fetch(`js/archive/${year}.json`);
+                const entries = await res.json();
+                document.getElementById('daily-feed').insertAdjacentHTML('beforeend', entries.map(postHTML).join(''));
+                archiveIdx++;
+                if (archiveIdx >= archiveYears.length) {
+                    btn.textContent = '—— 已到最早的回顧 ——';
+                    btn.style.cursor = 'default';
+                } else {
+                    btn.disabled = false;
+                    btn.textContent = `📜 載入 ${archiveYears[archiveIdx]} 年的回顧`;
+                }
+            } catch (e) {
+                btn.disabled = false;
+                btn.textContent = '載入失敗，點此重試';
+            }
+        }
+
+        document.getElementById('load-older').addEventListener('click', loadOlder);
+
         // 初始化
         loadProjects();
         loadDailyFeed();
+        initArchiveButton();
     </script>
 </body>
 </html>
