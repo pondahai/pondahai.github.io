@@ -445,8 +445,8 @@
             return date.toLocaleDateString('zh-TW', { month: 'short', day: 'numeric' });
         }
         
-        // 單篇貼文 HTML
-        function postHTML([date, title, content, mood]) {
+        // 單篇貼文 HTML（第 5 欄 model 為選填：AI 整理模型署名）
+        function postHTML([date, title, content, mood, model]) {
             return `
                 <div class="fb-post">
                     <div class="fb-post-header">
@@ -465,6 +465,7 @@
 .replace(/\(digital-twin\)/g, '<span class="source-tag">📱</span>')
 .replace(/\(memory\)/g, '<span class="source-tag">📝</span>')
 }</p>
+                        ${model ? `<div style="font-size:0.75em; color:#999; margin-top:8px;">🤖 ${model} 整理</div>` : ''}
                     </div>
                     <div class="fb-post-footer">
                         <span>👍 喜歡</span>
