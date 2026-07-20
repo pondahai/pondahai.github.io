@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>pondahai · 專案入口</title>
+<meta property="og:title" content="pondahai · 專案入口">
+<meta property="og:description" content="pondahai 的網頁小專案與實驗集合">
+<style>
+  :root{
+    --bg:#f6f7fb; --card:#ffffff; --fg:#1a1c22; --muted:#5b6070;
+    --border:#e6e8ef; --accent:#4f6df5; --accent-fg:#ffffff;
+    --shadow:0 1px 2px rgba(20,25,50,.06),0 8px 24px rgba(20,25,50,.06);
+  }
+  @media (prefers-color-scheme:dark){
+    :root{
+      --bg:#0f1117; --card:#171a22; --fg:#e8eaf0; --muted:#9aa0b4;
+      --border:#262a36; --accent:#6f88ff; --accent-fg:#0f1117;
+      --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35);
+    }
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--bg); color:var(--fg);
+    font-family:system-ui,-apple-system,"Segoe UI","Noto Sans TC",Roboto,"Helvetica Neue",Arial,sans-serif;
+    line-height:1.6; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:960px; margin:0 auto; padding:48px 20px 72px}
+  header.hero{margin-bottom:36px}
+  .hero h1{font-size:2rem; margin:0 0 8px; letter-spacing:.5px}
+  .hero p{margin:0; color:var(--muted); font-size:1.05rem}
+  .hero .sub{margin-top:14px; font-size:.9rem}
+  .hero .sub a{color:var(--accent); text-decoration:none}
+  .hero .sub a:hover{text-decoration:underline}
+  .grid{
+    display:grid; gap:16px;
+    grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+    margin-top:8px;
+  }
+  .card{
+    background:var(--card); border:1px solid var(--border); border-radius:14px;
+    padding:20px; box-shadow:var(--shadow); display:flex; flex-direction:column;
+    transition:transform .12s ease, box-shadow .12s ease, border-color .12s ease;
+  }
+  .card:hover{transform:translateY(-3px); border-color:var(--accent)}
+  .card h2{margin:0 0 6px; font-size:1.15rem; display:flex; align-items:center; gap:8px}
+  .card .emoji{font-size:1.3rem}
+  .card p{margin:0 0 16px; color:var(--muted); font-size:.92rem; flex:1}
+  .actions{display:flex; gap:8px; flex-wrap:wrap}
+  .btn{
+    display:inline-block; padding:7px 14px; border-radius:9px; font-size:.85rem;
+    text-decoration:none; font-weight:600; border:1px solid transparent;
+  }
+  .btn-primary{background:var(--accent); color:var(--accent-fg)}
+  .btn-primary:hover{filter:brightness(1.08)}
+  .btn-ghost{background:transparent; color:var(--muted); border-color:var(--border)}
+  .btn-ghost:hover{color:var(--fg); border-color:var(--accent)}
+  footer{margin-top:48px; text-align:center; color:var(--muted); font-size:.85rem}
+  footer a{color:var(--accent); text-decoration:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="hero">
+    <h1>🧪 pondahai 的專案實驗室</h1>
+    <p>一堆用網頁做的小工具、小遊戲與 AI 實驗，點卡片直接玩／使用。</p>
+    <p class="sub">
+      回 <a href="./index.html">主頁</a> ·
+      GitHub <a href="https://github.com/pondahai" target="_blank" rel="noopener">@pondahai</a>
+    </p>
+  </header>
+
+  <main class="grid">
+
+    <article class="card">
+      <h2><span class="emoji">💬</span>Chatbot (OpenAI API)</h2>
+      <p>OpenAI 相容 API 的網頁對話程式：填入 API 網址與金鑰即可與大語言模型聊天，設定與對話歷史存在瀏覽器 localStorage。含多版本（Qwen2.5、GPT-4.1、Gemini 整合版），支援圖片辨識、Markdown、Mermaid 與 MathJax 數學公式。</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="https://pondahai.github.io/chatbot_openaiapi/" target="_blank" rel="noopener">開啟</a>
+        <a class="btn btn-ghost" href="https://github.com/pondahai/chat_openaiapi_qwen2_5" target="_blank" rel="noopener">原始碼</a>
+      </div>
+    </article>
+
+    <article class="card">
+      <h2><span class="emoji">🧱</span>Tetris</h2>
+      <p>與 Qwen2.5 協作生成的俄羅斯方塊遊戲，開發對話過程也記錄在 repo 裡。</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="https://pondahai.github.io/Tetris_from_Qwen2_5_Coder_Artifacts/" target="_blank" rel="noopener">開啟</a>
+        <a class="btn btn-ghost" href="https://github.com/pondahai/Tetris_from_Qwen2_5_Coder_Artifacts" target="_blank" rel="noopener">原始碼</a>
+      </div>
+    </article>
+
+    <article class="card">
+      <h2><span class="emoji">🧩</span>4×4 Puzzle</h2>
+      <p>4×4 數字滑塊拼圖。記錄了如何用「先做表象、反向思考」的方式，引導 AI 一步步把移動邏輯做對的實驗過程。</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="https://pondahai.github.io/4x4_puzzle/" target="_blank" rel="noopener">開啟</a>
+        <a class="btn btn-ghost" href="https://github.com/pondahai/4x4_puzzle" target="_blank" rel="noopener">原始碼</a>
+      </div>
+    </article>
+
+    <article class="card">
+      <h2><span class="emoji">🪙</span>3D Push Coin</h2>
+      <p>3D 推金幣機（推硬幣）遊戲。</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="https://pondahai.github.io/3d_push_coin/" target="_blank" rel="noopener">開啟</a>
+        <a class="btn btn-ghost" href="https://github.com/pondahai/3d_push_coin" target="_blank" rel="noopener">原始碼</a>
+      </div>
+    </article>
+
+    <article class="card">
+      <h2><span class="emoji">🍉</span>Synth Watermelon</h2>
+      <p>基於 Matter.js 物理引擎的「合成大西瓜」Emoji 版：用 PCA 主成分分析算出貼合各水果的橢圓碰撞箱，滾動更真實。含計分、下一顆預覽、結束判定，支援桌機與手機。</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="https://pondahai.github.io/synth_watermelon/" target="_blank" rel="noopener">開啟</a>
+        <a class="btn btn-ghost" href="https://github.com/pondahai/synth_watermelon" target="_blank" rel="noopener">原始碼</a>
+      </div>
+    </article>
+
+    <article class="card">
+      <h2><span class="emoji">🤖</span>TARS</h2>
+      <p>大海版 TARS——《星際效應》機器人風格的互動實驗。</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="https://pondahai.github.io/dahai_de_TARS/" target="_blank" rel="noopener">開啟</a>
+        <a class="btn btn-ghost" href="https://github.com/pondahai/dahai_de_TARS" target="_blank" rel="noopener">原始碼</a>
+      </div>
+    </article>
+
+    <article class="card">
+      <h2><span class="emoji">🗒️</span>Post-it Chat</h2>
+      <p>便利貼（Post-it）風格的聊天／留言介面實驗。</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="https://pondahai.github.io/postit-chat/" target="_blank" rel="noopener">開啟</a>
+        <a class="btn btn-ghost" href="https://github.com/pondahai/postit-chat" target="_blank" rel="noopener">原始碼</a>
+      </div>
+    </article>
+
+    <article class="card">
+      <h2><span class="emoji">📊</span>Mermaid to SVG</h2>
+      <p>把 Mermaid 圖表語法轉換並匯出成 SVG 的網頁工具。</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="https://pondahai.github.io/mermaid_to_svg/" target="_blank" rel="noopener">開啟</a>
+        <a class="btn btn-ghost" href="https://github.com/pondahai/mermaid_to_svg" target="_blank" rel="noopener">原始碼</a>
+      </div>
+    </article>
+
+    <article class="card">
+      <h2><span class="emoji">📝</span>Summy</h2>
+      <p>智能聊天與網頁摘要的 Chrome 擴充功能：可在瀏覽器中直接與 AI 對話，並一鍵摘要當前分頁內容，自訂 OpenAI 相容 API 與模型。</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="https://pondahai.github.io/summy/" target="_blank" rel="noopener">說明</a>
+        <a class="btn btn-ghost" href="https://github.com/pondahai/summy" target="_blank" rel="noopener">原始碼</a>
+      </div>
+    </article>
+
+    <article class="card">
+      <h2><span class="emoji">📱</span>Barbara PWA</h2>
+      <p>可安裝的 PWA AI 助理，與自訂 LLM API 對話：支援串流回覆、Markdown、把 &lt;think&gt; 思考過程折疊顯示、多組 API 設定、離線介面快取，以及剪貼簿一鍵摘要／翻譯。</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="https://pondahai.github.io/barbara-pwa/" target="_blank" rel="noopener">開啟</a>
+        <a class="btn btn-ghost" href="https://github.com/pondahai/barbara-pwa" target="_blank" rel="noopener">原始碼</a>
+      </div>
+    </article>
+
+  </main>
+
+  <footer>
+    © <span id="yr"></span> pondahai · 由 GitHub Pages 託管
+  </footer>
+</div>
+<script>document.getElementById('yr').textContent=new Date().getFullYear();</script>
+</body>
+</html>
