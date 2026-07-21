@@ -63,7 +63,7 @@
 <div class="wrap">
   <header class="hero">
     <h1>🧪 pondahai 的專案實驗室</h1>
-    <p>一堆用網頁做的小工具、小遊戲與 AI 實驗，點卡片直接玩／使用。</p>
+    <p>一堆用網頁做的小工具、小遊戲、古典小說資料庫與 AI 實驗，點卡片直接玩／使用。</p>
     <p class="sub">
       回 <a href="./index.html">主頁</a> ·
       GitHub <a href="https://github.com/pondahai" target="_blank" rel="noopener">@pondahai</a>
@@ -71,6 +71,79 @@
   </header>
 
   <main class="grid">
+
+    <article class="card">
+      <h2><span class="emoji">📜</span>三國演義 Wiki</h2>
+      <p>把一本《三國演義》原文 PDF 一鍵變成可查證的 wiki 資料庫：120 回正文自動切分、人名自動連結，200 餘位人物各有條目。生平由本地 LLM 以 map-reduce「全文閱讀」原著後生成，<strong>每條事蹟都附回數出處</strong>——能用程式做的絕不用 LLM，必須用 LLM 的不讓它憑記憶說話。可線上瀏覽，也可用 Obsidian 開 vault 看人物關係圖。</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="https://pondahai.github.io/sanguo-wiki/" target="_blank" rel="noopener">開啟</a>
+        <a class="btn btn-ghost" href="https://github.com/pondahai/sanguo-wiki" target="_blank" rel="noopener">原始碼</a>
+      </div>
+    </article>
+
+    <article class="card">
+      <h2><span class="emoji">🐒</span>西遊記 Wiki</h2>
+      <p>古典小說 Wiki 系列第二作。《西遊記》原文（好讀網 epub）自動切分 100 回、人名連結，90 位人物條目附回數出處，方法論承襲三國版。</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="https://pondahai.github.io/xiyouji-wiki/" target="_blank" rel="noopener">開啟</a>
+        <a class="btn btn-ghost" href="https://github.com/pondahai/xiyouji-wiki" target="_blank" rel="noopener">原始碼</a>
+      </div>
+    </article>
+
+    <article class="card">
+      <h2><span class="emoji">💧</span>水滸傳 Wiki</h2>
+      <p>《水滸傳》120 回本（維基文庫）自動建成的 wiki：回目全文、人名連結、126 位人物生平，每條事蹟可回溯查證原文回數。</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="https://pondahai.github.io/shuihu-wiki/" target="_blank" rel="noopener">開啟</a>
+        <a class="btn btn-ghost" href="https://github.com/pondahai/shuihu-wiki" target="_blank" rel="noopener">原始碼</a>
+      </div>
+    </article>
+
+    <article class="card">
+      <h2><span class="emoji">🏮</span>紅樓夢 Wiki</h2>
+      <p>《紅樓夢》程高本 120 回（維基文庫）自動建成的 wiki：回目全文、人名連結、97 位人物生平，每條事蹟附回數出處。</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="https://pondahai.github.io/honglou-wiki/" target="_blank" rel="noopener">開啟</a>
+        <a class="btn btn-ghost" href="https://github.com/pondahai/honglou-wiki" target="_blank" rel="noopener">原始碼</a>
+      </div>
+    </article>
+
+    <article class="card">
+      <h2><span class="emoji">⚡</span>封神演義 Wiki</h2>
+      <p>《封神演義》原文（維基文庫）自動切回 100 回、人名連結，118 位人物生平由本地 LLM 生成並附回數出處。</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="https://pondahai.github.io/fengshen-wiki/" target="_blank" rel="noopener">開啟</a>
+        <a class="btn btn-ghost" href="https://github.com/pondahai/fengshen-wiki" target="_blank" rel="noopener">原始碼</a>
+      </div>
+    </article>
+
+    <article class="card">
+      <h2><span class="emoji">⚔️</span>三國志（網頁版）</h2>
+      <p>以光榮《三國志 I/II》為範本的純靜態網頁策略遊戲，零框架零素材：165 名武將的頭像全是程式生成的<strong>國劇臉譜式八位元 SVG</strong>（底色對應性格、眉眼由武力智力驅動、紫臉靠藍紅抖色抖出來）。40 州郡節點圖、月回合、方格戰棋、單挑、挖角勸降；武將數值轉自 sanguo-wiki 的原著事實抽取，點頭像可直連列傳。還能填自己的 LLM 端點，把存檔戰局寫成專屬你的章回小說。</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="https://pondahai.github.io/sanguo-game/" target="_blank" rel="noopener">開始遊戲</a>
+        <a class="btn btn-primary" href="https://pondahai.github.io/sanguo-game/face.html" target="_blank" rel="noopener">臉譜工房</a>
+        <a class="btn btn-ghost" href="https://github.com/pondahai/sanguo-game" target="_blank" rel="noopener">原始碼</a>
+      </div>
+    </article>
+
+    <article class="card">
+      <h2><span class="emoji">🏙️</span>立體模擬城市</h2>
+      <p>網頁版 3D 復刻初代《模擬城市》(1989)：Three.js 低多邊形城市，RCI 分區生長、電網 BFS 供電、道路可達性、稅務財政與災難系統全部重現。<strong>雙視角且模擬不中斷</strong>——鳥瞰施政與第一人稱街景（按 V 切換），存檔自動寫入瀏覽器並可匯出 JSON。</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="https://pondahai.github.io/simcity3d/" target="_blank" rel="noopener">開啟</a>
+        <a class="btn btn-ghost" href="https://github.com/pondahai/simcity3d" target="_blank" rel="noopener">原始碼</a>
+      </div>
+    </article>
+
+    <article class="card">
+      <h2><span class="emoji">📰</span>大海每日回顧報</h2>
+      <p>「歷史上的今天」自動生成頁：每天由排程掃描數位分身知識庫（兩萬餘筆 FB／部落格紀錄）中同月同日的舊事，用 LLM 改寫成口語回顧後推上 GitHub Pages。含年度歸檔按需載入。</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="https://pondahai.github.io/dahai/" target="_blank" rel="noopener">開啟</a>
+        <a class="btn btn-ghost" href="https://github.com/pondahai/dahai" target="_blank" rel="noopener">原始碼</a>
+      </div>
+    </article>
 
     <article class="card">
       <h2><span class="emoji">💬</span>Chatbot (OpenAI API)</h2>
